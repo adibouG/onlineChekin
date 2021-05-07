@@ -1,7 +1,7 @@
 /** @jsxImportSource theme-ui */
 
 function Foo(props) {
-    return <p sx={{color: 'primary'}}>{props.text}</p>;
+    return <p sx={{color: 'primaryText'}}>{props.text}</p>;
 }
 
 export default Foo;

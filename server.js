@@ -3,6 +3,7 @@ const express = require('express');
 const AdminBro = require('admin-bro');
 const AdminBroExpress = require('@admin-bro/express');
 const { Hotel } = require('./api/model/hotel');
+const { Theme } = require('./api/model/theme');
 const api = require('./routes/api');
 const { Resource, Database } = require('admin-bro-typeorm');
 const db = require('./api/common/db');
@@ -16,7 +17,36 @@ module.exports.create = db.connect().then(() => {
         rootPath: "/admin",
         databases: [],
         resources: [
-            { resource: Hotel, options: {} },
+            { 
+                resource: Hotel, 
+                options: { 
+                    properties: {
+                        theme: {
+                            components: {
+                                list: AdminBro.bundle('./admin/components/hotel-theme-in-list'),
+                                show: AdminBro.bundle('./admin/components/hotel-theme-show')
+                            }
+                        }
+                    }
+                } 
+            },
+            { 
+                resource: Theme, 
+                options: {
+                    properties: {
+                        primaryBackgroundColor: {
+                            components: {
+                                edit: AdminBro.bundle('./admin/components/theme-color-edit')
+                            }
+                        },
+                        primaryTextColor: {
+                            components: {
+                                edit: AdminBro.bundle('./admin/components/theme-color-edit')
+                            }
+                        }
+                    }
+                } 
+            },
         ],
     }
     

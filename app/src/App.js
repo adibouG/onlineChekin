@@ -1,3 +1,5 @@
+/** @jsxImportSource theme-ui */
+
 import React from "react";
 import "./App.css";
 import { ThemeProvider } from "theme-ui";
@@ -17,7 +19,9 @@ function App() {
   } else {
     return (
       <ThemeProvider theme={data.theme}>
-        <Foo text={data.title} />
+        <p sx={{backgroundColor: 'primaryBackground'}}>
+          <Foo text={data.title} />
+        </p>
       </ThemeProvider>
     );
   }

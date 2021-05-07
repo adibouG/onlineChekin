@@ -8,9 +8,8 @@ module.exports = async (req, res) => {
     res.send({
         theme: {
             colors: {
-                text: '#000',
-                background: '#fff',
-                primary: '#33e'
+                primaryBackground: result[0].theme.primaryBackgroundColor,
+                primaryText: result[0].theme.primaryTextColor
             }
         },
         title: `Check-in ${result[0].name}`

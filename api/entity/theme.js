@@ -1,9 +1,9 @@
 const EntitySchema = require("typeorm").EntitySchema;
-const Hotel = require("../model/hotel").Hotel;
+const Theme = require("../model/theme").Theme;
 
 module.exports = new EntitySchema({
-    name: "Hotel",
-    target: Hotel,
+    name: "Theme",
+    target: Theme,
     columns: {
         id: {
             primary: true,
@@ -12,14 +12,12 @@ module.exports = new EntitySchema({
         },
         name: {
             type: "varchar"
-        }
-    },
-    relations: {
-        theme: {
-            target: "Theme",
-            type: "many-to-one",
-            nullable: false,
-            eager: true
+        },
+        primaryBackgroundColor: {
+            type: "varchar"
+        },
+        primaryTextColor: {
+            type: "varchar"
         }
     }
 });

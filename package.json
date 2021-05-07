@@ -17,6 +17,7 @@
     "admin-bro-typeorm": "*",
     "express": "^4.17.1",
     "express-formidable": "^1.2.0",
+    "react-color": "^2.19.3",
     "sqlite3": "^5.0.2",
     "typeorm": "^0.2.32"
   }
