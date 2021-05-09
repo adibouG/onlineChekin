@@ -51,6 +51,15 @@ module.exports.create = db.connect().then(() => {
     }
     
     const adminBro = new AdminBro(adminBroOptions);
+
+    app.use(function(request, response, next) {
+
+        if (process.env.NODE_ENV != 'dev' && !request.secure) {
+           return response.redirect("https://" + request.headers.host + request.url);
+        }
+    
+        next();
+    })
     
     app.use(express.static(path.resolve(__dirname, './app/build')));
     
