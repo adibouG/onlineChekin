@@ -54,13 +54,15 @@ module.exports.create = db.connect().then(() => {
     
     const adminBro = new AdminBro(adminBroOptions);
 
-    app.use(function(request, response, next) {
-        if (environment !== 'dev' && !request.secure) {
-           return response.redirect("https://" + request.headers.host + request.url);
-        }
-        next();
-    })
-    
+    if (environment === 'production') {
+        app.use('*', (req, res, next) => {
+            if (req.headers['x-forwarded-proto'] !== 'https') {
+                return res.redirect(['https://', req.get('Host'), req.url].join(''));
+            }
+            return next();
+        });
+    }
+
     app.use(express.static(path.resolve(__dirname, './app/build')));
     
     app.use('/api', api);
