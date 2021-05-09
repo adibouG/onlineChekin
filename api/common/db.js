@@ -3,9 +3,10 @@ const Hotel = require("../model/hotel").Hotel
 const environment = process.env.NODE_ENV || "dev";
 
 async function getConfiguration() {
-    if (environment !== "dev") {
-        return new Promise((s) => {s()});
-    }
+    // Disabled to test on heroku
+    // if (environment !== "dev") {
+    //     return new Promise((s) => {s()});
+    // }
     return require("../../ormconfig.dev.json");
 }
 
