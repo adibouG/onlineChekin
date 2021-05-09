@@ -9,6 +9,8 @@ const { Resource, Database } = require('admin-bro-typeorm');
 const db = require('./api/common/db');
 const app = express();
 
+const environment = process.env.NODE_ENV || "dev";
+
 module.exports.create = db.connect().then(() => {
     
     AdminBro.registerAdapter({Database, Resource});
@@ -53,11 +55,9 @@ module.exports.create = db.connect().then(() => {
     const adminBro = new AdminBro(adminBroOptions);
 
     app.use(function(request, response, next) {
-
-        if (process.env.NODE_ENV != 'dev' && !request.secure) {
+        if (environment !== 'dev' && !request.secure) {
            return response.redirect("https://" + request.headers.host + request.url);
         }
-    
         next();
     })
     
