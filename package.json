@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "(cd app && npm run build) && node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "cd app && npm install && npm run build"
   },
@@ -17,6 +17,7 @@
     "admin-bro-typeorm": "*",
     "express": "^4.17.1",
     "express-formidable": "^1.2.0",
+    "express-session": "^1.17.1",
     "react-color": "^2.19.3",
     "sqlite3": "^5.0.2",
     "typeorm": "^0.2.32"
