@@ -3,7 +3,7 @@
 import React from 'react'
 import reactCSS from 'reactcss'
 import { SketchPicker } from 'react-color'
-import { Box, Label } from '@admin-bro/design-system'
+import { ValueGroup, Label } from '@admin-bro/design-system'
 
 class ThemeColorEdit extends React.Component {
 
@@ -68,18 +68,21 @@ class ThemeColorEdit extends React.Component {
     });
 
     return (
-      <Box p={['default', 'xl']}>
-        <Label>{this.props.property.label}</Label>
+      <ValueGroup label={this.props.property.label}>
         <div>
             <div style={ styles.swatch } onClick={ this.handleClick }>
-            <div style={ styles.color } />
+              <div style={ styles.color } />
             </div>
-            { this.state.displayColorPicker ? <div style={ styles.popover }>
-            <div style={ styles.cover } onClick={ this.handleClose }/>
-            <SketchPicker color={ this.state.color } onChange={ this.handleChange } />
-            </div> : null }
+            { 
+              this.state.displayColorPicker ? 
+              <div style={ styles.popover }>
+                <div style={ styles.cover } onClick={ this.handleClose }/>
+                <SketchPicker color={ this.state.color } onChange={ this.handleChange } />
+              </div> : 
+              null 
+            }
         </div>
-      </Box>
+      </ValueGroup>
     )
   }
 }
