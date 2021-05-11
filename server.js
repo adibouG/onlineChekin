@@ -8,6 +8,7 @@ const api = require('./routes/api');
 const { Resource, Database } = require('admin-bro-typeorm');
 const db = require('./api/common/db');
 const app = express();
+const cors = require('cors');
 
 const environment = process.env.NODE_ENV || "dev";
 
@@ -63,6 +64,7 @@ module.exports.create = db.connect().then(() => {
         });
     }
 
+    app.use(cors());
     app.use(express.static(path.resolve(__dirname, './app/build')));
     
     app.use('/api', api);

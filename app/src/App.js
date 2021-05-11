@@ -4,6 +4,7 @@ import React from "react";
 import "./App.css";
 import { ThemeProvider } from "theme-ui";
 import Foo from "./components/Foo";
+import NavBar from "./components/NavBar";
 
 function App() {
   const [data, setData] = React.useState(null);
@@ -20,6 +21,7 @@ function App() {
     return (
       <ThemeProvider theme={data.theme}>
         <p sx={{backgroundColor: 'primaryBackground'}}>
+          <NavBar />
           <Foo text={data.title} />
         </p>
       </ThemeProvider>
