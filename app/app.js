@@ -71,7 +71,7 @@ service
             break;
           case "startCheckin":
             console.log("Start check-in");
-            content.innerHTML = "<>";
+            content.innerHTML = `<div class="card" style="width: 18rem;"><div class="card-body"><h5 class="card-title text-center">${state.context.reservation.guest.firstName + ' ' + state.context.reservation.guest.lastName}</h5></div></div>`;
             break;
           default:
             break;
