@@ -2,28 +2,19 @@
   "name": "checkin",
   "version": "1.0.0",
   "engines": {
-    "node": "14.x"
+    "node": "16.x"
   },
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "(cd app && npm run build) && node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "cd app && npm install && npm run build"
+    "start": "node index.js",
+    "build": "npm install && (cd app && npm install)"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@admin-bro/express": "^3.1.0",
-    "admin-bro": "^4.0.1",
-    "admin-bro-typeorm": "^0.1.6-alpha.9",
     "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "express-formidable": "^1.2.0",
-    "express-session": "^1.17.1",
-    "react-color": "^2.19.3",
-    "sqlite3": "^5.0.2",
-    "typeorm": "^0.2.32"
+    "express": "^4.17.1"
   }
 }
