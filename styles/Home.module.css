@@ -8,6 +8,14 @@
   height: 100vh;
 }
 
+.top {
+  z-index: 1000;
+}
+
+.no_mouse {
+  pointer-events: none;
+}
+
 .grid {
   display: flex;
   align-items: center;
