@@ -3,10 +3,7 @@ import useSWR from 'swr'
 import Spinner from 'react-bootstrap/Spinner'
 import dynamic from 'next/dynamic'
 
-const Test = dynamic(() => 
-  import('components/Test').then((mod) => mod.Test), 
-  { ssr: false }
-);
+const Test = dynamic(() => import('components/Test').then((mod) => mod.Test), { ssr: false });
 const fetcher = url => fetch(url).then(res => res.json());
 
 export default function Home() {
