@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Frame, addPropertyControls, ControlType } from "framer"
+import { Frame } from "framer"
 
 export function Test(props) {
     const { tint, hoverTint, onTap, size, radius } = props
@@ -34,17 +34,3 @@ Test.defaultProps = {
     tint: "#09F",
     hoverTint: "#07F",
 }
-
-addPropertyControls(Test, {
-    tint: {
-        title: "Tint",
-        type: ControlType.Color,
-    },
-    hoverTint: {
-        title: "Hover Tint",
-        type: ControlType.Color,
-    },
-    onTap: {
-        type: ControlType.EventHandler,
-    },
-})
