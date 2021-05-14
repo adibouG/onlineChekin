@@ -27,8 +27,6 @@ export function Test(props) {
 }
 
 Test.defaultProps = {
-    height: 200,
-    width: 200,
     size: 200,
     radius: 25,
     tint: "#09F",
