@@ -2,12 +2,13 @@ import * as React from "react"
 import F from "react-bootstrap/Form"
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
+import styles from './Form.module.css'
 
 export function Form(props) {
     const { defaultValue } = props
 
     return (
-        <Card>
+        <Card className={styles.card}>
             <Card.Header>Enter your details</Card.Header>
             <Card.Body>
                 <F>

@@ -14,3 +14,8 @@ a {
 * {
   box-sizing: border-box;
 }
+
+:root {
+    --shadow-small: 0 5px 10px rgba(0,0,0,0.12);
+    --shadow-large: 0 30px 60px rgba(0,0,0,0.12);
+}
