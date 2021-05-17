@@ -1,6 +1,10 @@
 const axios = require('axios');
 
 export default async (req, res) => {
+
+  // This is a working example of how in here we can call whatever third party
+  // to fetch exxternal data and return that (how ever we like).
+
   await axios({
       method: 'get',
       url: 'https://api.vercel.com/www/user',
