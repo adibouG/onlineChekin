@@ -1,6 +1,6 @@
 ## Housekeeping
 
-We work in **feature** branches, based on branch **develop**. When the work is done we make a merge request back into **develop**. When enough work is done in **develop** we decide to make a **release**, by creating a **release/x.x.x** branch based on **develop** (pointing to the cloud staging environment). This build can then be tested internally, leading to possible **fix** branches, merge requested back into the **release/x.x.x** branch. When the release goes live, we merge it into **master** and into **develop** and apply the tag the **vx.x.x**.
+We work in **feature** branches, based on branch **develop**. When the work is done we make a merge request back into **develop**. When enough work is done in **develop** we decide to make a **release**, by creating a **release/x.x.x** branch based on **develop**. This build can then be tested internally, leading to possible **fix** branches, merge requested back into the **release/x.x.x** branch. When the release goes live, we merge it into **master** and into **develop** and apply the tag the **vx.x.x**.
 
 **Hotfixes** branches are based on **master** and after a merge request merged into **master** and **develop**.
 
