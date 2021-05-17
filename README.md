@@ -1,6 +1,10 @@
 ## Housekeeping
 
-We work in **feature** branches, based on branch **develop**. When the work is done we make a merge request back into **develop**. When enough work is done in **develop** we decide to make a **release**, by creating a **release-x** branch based on **develop** (pointing to the cloud staging environment). This build can then be tested internally, leading to possible **fix** branches, merged one by one after code review back into the **release** branch. When the release goes live, we merge it into **master** and into **develop** and tag the **release**. Feature and fix branches are safe to delete after being merged back into **develop** and **release-x** branches. 
+We work in **feature** branches, based on branch **develop**. When the work is done we make a merge request back into **develop**. When enough work is done in **develop** we decide to make a **release**, by creating a **release/x.x.x** branch based on **develop** (pointing to the cloud staging environment). This build can then be tested internally, leading to possible **fix** branches, merged one by one after code review back into the **release/x.x.x** branch. When the release goes live, we merge it into **master** and into **develop** and apply the tag the **vx.x.x**. Feature and fix branches are safe to delete after being merged back into **develop** and **release-x** branches.
+
+**Hotfixes** branches are based on **master** and after a merge request merged into **master** and **develop**.
+
+This process is called [Gitflow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow) and works really well in a multi developer team.
 
 ## First use
 
