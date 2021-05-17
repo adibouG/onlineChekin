@@ -8,11 +8,6 @@ We work in **feature** branches, based on branch **develop**. When the work is d
 
 This process is called [Gitflow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow) and works really well in a multi developer team.
 
-- **Develop** branch points to the develop environment in cloud. 
-- **Feature** branches point to the private/local environment or an optional per feature branch environment in the cloud.
-- **Release** branches point to the staging environment in cloud. 
-- **Master**, **hotfix** branches points to the latest release on production in cloud.
-
 ## First use
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
