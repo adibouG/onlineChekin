@@ -4,7 +4,7 @@ We work in **feature** branches, based on branch **develop**. When the work is d
 
 **Hotfixes** branches are based on **master** and after a merge request merged into **master** and **develop**.
 
-**Feature**, **fix** and **hotfix** branches are safe to delete after being merged back into their respective **develop**, **release/x.x.x** and **master** branches.
+**Feature**, **fix** and **hotfix** branches are safe to delete after being merged back into their respective **develop**, **release/x.x.x** and **master** branch.
 
 This process is called [Gitflow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow) and works really well in a multi developer team.
 
