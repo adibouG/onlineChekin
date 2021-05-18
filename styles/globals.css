@@ -2,8 +2,7 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: var(--default-font);
 }
 
 a {
@@ -16,6 +15,6 @@ a {
 }
 
 :root {
-    --shadow-small: 0 5px 10px rgba(0,0,0,0.12);
-    --shadow-large: 0 30px 60px rgba(0,0,0,0.12);
+    --default-font: Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    --text-color: #343A40;
 }
