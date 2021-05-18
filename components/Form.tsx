@@ -11,9 +11,9 @@ export function Form(props) {
             <div className={styles.content}>
                 <div className={styles.logo}/>
                 <Card 
-                    title="Welcome!" 
-                    subtitle="John Bosma"
-                    message="Are you ready to check-in?"
+                    supertitle="Welcome!" 
+                    title="Franciscus Hubertus Hendrikus Schouenberg von Wienerschnitzel III"
+                    subtitle="Are you ready to check-in?"
                     buttonTitle="Yes, start check-in"
                 />
             </div>

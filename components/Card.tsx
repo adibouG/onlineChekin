@@ -3,14 +3,25 @@ import Button from 'react-bootstrap/Button'
 import styles from './Card.module.css'
 
 export function Card(props) {
-    const { title, subtitle, message, buttonTitle } = props
+    const { supertitle, title, subtitle, buttonTitle } = props
 
+      
     return (
+        <>
+        <style type="text/css">
+        {`
+        .btn-custom:enabled {
+            background-color: var(--button-background-color);
+            color: var(--button-color);
+        }
+        `}
+        </style>
         <div className={styles.card}>
-            <h2>{title}</h2>
-            <h1>{subtitle}</h1>
-            <p>{message}</p>
-            <Button variant="primary" type="submit" className={styles.submit} size='lg'>{buttonTitle}</Button>
+            <div className={styles.supertitle}>{supertitle}</div>
+            <div className={styles.title}>{title}</div>
+            <div className={styles.subtitle}>{subtitle}</div>
+            <Button variant="custom" type="submit" className={styles.submit} size='lg'>{buttonTitle}</Button>
         </div>
+        </>
     )
 }

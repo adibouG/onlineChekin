@@ -13,8 +13,9 @@
 }
 
 .content {
-    padding: 30px 36px;
-    width: 375px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    width: 550px;
     height: 667px;
     justify-content: center;
     align-items: flex-end;

@@ -17,4 +17,6 @@ a {
 :root {
     --default-font: Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
     --text-color: #343A40;
+    --button-background-color: #0069D9;
+    --button-color: #fff;
 }
