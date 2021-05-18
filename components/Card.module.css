@@ -1,11 +1,11 @@
 .card {
-    background: rgba(255, 255, 255, 0.6);
-    box-shadow: 0px 3px 6px #00000029;
-    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(50px) brightness(149%);
     -webkit-backdrop-filter: blur(50px) brightness(149%);
-    padding: 5px 36px 18px;
-    width: fit-content;
+    box-shadow: 0px 3px 6px #00000029;
+    border-radius: 10px;
+    padding: 10px 36px 18px;
+    width: 302px;
     height: fit-content;
     text-align: center;
 }
@@ -13,9 +13,9 @@
 .card h2 {
     font-weight: 400;
     font-size: 20px;
-    line-height: 27px;
+    line-height: 24px;
     color: var(--text-color);
-    margin-bottom: 3px;
+    margin-bottom: 6px;
 }
 
 .card h1 {
@@ -37,6 +37,6 @@
 .submit {
     font-size: 16px;
     line-height: 18px;
-    font-family: var(--helveticaneue-medium);
+    font-family: var(--default-font);
     width: 100%;
 }
