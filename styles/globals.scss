@@ -1,7 +1,7 @@
 @import "mixins";
 
 :root {
-  --default-font: Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  --default-font: Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   --text-color: #343A40;
   --button-background-color: #0069D9;
   --button-color: #fff;
@@ -39,6 +39,10 @@ body {
 $min_window_width: 320px;
 $max_window_width: 1600px;
 
+/* FIXME: These are specified in here since components don't seem to be able to import the mixin somehow */
+
 .card-title {
   @include fluid-type($min_window_width, $max_window_width, 14px, 36px);
 }
+
+/* TODO: add ones ones for card */
