@@ -1,5 +1,3 @@
-@import "mixins";
-
 :root {
   --default-font: Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   --text-color: #343A40;
@@ -23,7 +21,6 @@ a {
   box-sizing: border-box;
 }
 
-
 html {
   background: url("https://enzosystems.com/wp-content/uploads/2018/10/Enzosystems_Header_FrontPage.jpg") no-repeat center center fixed;
   -webkit-background-size: cover;
@@ -35,14 +32,3 @@ html {
 body {
   background-color: transparent !important;
 }
-
-$min_window_width: 320px;
-$max_window_width: 1600px;
-
-/* FIXME: These are specified in here since components don't seem to be able to import the mixin somehow */
-
-.card-title {
-  @include fluid-type($min_window_width, $max_window_width, 14px, 36px);
-}
-
-/* TODO: add ones ones for card */

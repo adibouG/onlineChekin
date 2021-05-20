@@ -7,36 +7,42 @@
     padding: 10px 36px 18px;
     width: fit-content;
     max-width: 100%;
-    min-width: 300px;
     height: fit-content;
+}
+
+.grid {
+    display: grid;
+    grid-template-rows: auto 1fr auto auto;
     text-align: center;
+    gap: 8px;
+    overflow: hidden;
+    justify-items: center;
+}
+
+.grid * {
+    margin: 0;
+    color: var(--text-color);
 }
 
 .title {
     font-weight: bold;
-    color: var(--text-color);
-    margin-bottom: 50px;
+    line-height: 90%;
+    font-size: 4.5vh;
+    overflow: hidden;
 }
 
 .supertitle {
     font-weight: normal;
     font-size: 20px;
-    line-height: 24px;
-    color: var(--text-color);
-    margin-bottom: 6px;
 }
 
 .subtitle {
     font-weight: lighter;
     font-size: 16px;
-    line-height: 21px;
-    color: var(--text-color);
-    margin-bottom: 20px;
 }
 
 .submit {
+    padding: 0 2em;
+    min-height: 40px;
     font-size: 16px;
-    line-height: 18px;
-    padding-left: 50px;
-    padding-right: 50px;
 }
