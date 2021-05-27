@@ -1,0 +1,144 @@
+:root {
+  --default-font: Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  --text-color: #343A40;
+  --background-color: #fff;
+  --button-background-color: #0069D9;
+  --button-secondary-background-color: #6C757D;
+  --button-text-color: #fff;
+  --brand-primary-color: #ED7829;
+  --brand-secondary-color: #386C7D;
+  --header-height: 55px;
+  --footer-height: 110px;
+  --background: url("https://enzosystems.com/wp-content/uploads/2018/10/Enzosystems_Header_FrontPage.jpg") no-repeat center center fixed;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: var(--default-font) !important;
+  color: var(--text-color);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+*, 
+::after, 
+::before {
+  box-sizing: border-box;
+}
+
+[type=button], 
+[type=reset], 
+[type=submit], 
+button {
+  -webkit-appearance: button;
+}
+
+button, 
+select {
+  text-transform: none;
+}
+
+button, 
+input, 
+optgroup, 
+select, 
+textarea {
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+button {
+  border-radius: 0;
+}
+
+.background {
+  background: var(--background);
+  background-size: cover;
+}
+
+.possible_background {
+  background: initial;
+  background-size: cover;
+}
+
+.visually-hidden, 
+.visually-hidden-focusable:not(:focus):not(:focus-within) {
+  position: absolute!important;
+  width: 1px!important;
+  height: 1px!important;
+  padding: 0!important;
+  margin: -1px!important;
+  overflow: hidden!important;
+  clip: rect(0,0,0,0)!important;
+  white-space: nowrap!important;
+  border: 0!important;
+}
+
+@keyframes spinner-border {
+  to { transform: rotate(360deg) }
+}
+
+.spinner {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  vertical-align: -.125em;
+  border: .25em solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: .75s linear infinite spinner-border;
+}
+
+button {
+  cursor: pointer;
+  margin: .25rem .125rem;
+  min-height: 40px;
+  font-size: 16px;
+  display: inline-block;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  cursor: pointer;
+  user-select: none;
+  border: 1px solid transparent;
+  font-size: 1rem;
+  border-radius: .25rem;
+  transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  padding: 0 1em;
+}
+
+.primary_button {
+  color: var(--button-text-color);
+  background-color: var(--button-background-color);
+  border-color: var(--button-background-color);
+}
+
+.secondary_button {
+  color: var(--button-text-color);
+  background-color: var(--button-secondary-background-color);
+  border-color: var(--button-secondary-background-color);
+}
+
+@media screen and (min-device-width: 768px) { /* iPad/Desktop */
+
+  :root {
+    --header-height: 84px;
+  }
+
+  button {
+    padding: 0 2em;
+  }
+
+  .possible_background {
+    background: var(--background);
+  }
+}

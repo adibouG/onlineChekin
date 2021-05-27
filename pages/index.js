@@ -1,27 +1,54 @@
-import styles from '../styles/Home.module.css'
-import useSWR from 'swr'
-import Spinner from 'react-bootstrap/Spinner'
+import React, { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
+import useSWR from 'swr'
+import Spinner from '../components/Spinner'
+import Screen from '../components/Screen'
 
-const Form = dynamic(() => import('components/Form').then((mod) => mod.Form), { ssr: false });
 
 const fetcher = url => fetch(url).then(res => res.json());
+const Welcome = dynamic(() => import('../components/Welcome'))
+const Confirmation = dynamic(() => import('../components/Confirmation'))
 
-export default function Home() {
-  
-  const { data, error } = useSWR('/api/fetch', fetcher);
+const Home = () => {
 
-  const content = () => {
+  const { data, error } = useSWR('/api/fetch', fetcher)
+  const [ step, setStep ] = useState(0)
+  const steps = ['welcome', 'confirm', 'details']
+
+  useEffect(() => {
+    const vhCheck = require('vh-check')
+    vhCheck('browser-address-bar')
+  });
+
+  const previous = () => {
+    setStep(Math.max(step - 1, 0))
+  }
+
+  const next = () => { 
+    setStep(Math.min(step + 1, steps.length - 1))
+  }
+
+  const content = (props) => {
     if (error) {
       return `Error: ${error.message}`;
     } else if (!data) {
-      return <Spinner animation="border" role="status"/>;
-    } else {
-      return <Form defaultValue={data.name} />
+      return <Spinner/>
+    } else if (step === 0) {
+      return <Welcome guest={data.guest.fullName} onContinue={next} {...props}/>
+    } else if (step === 1) {
+      return <Confirmation reservation={data.reservation}/>
+    } else if (step == 2) {
+      return <div>TODO: Enter details</div>
     }
-  };
-
-  return <div className={styles.container}>
-    {content()}
-  </div>;
+  }
+  
+  return <Screen 
+    isLoading={!data} 
+    canNavigate={step !== 0} 
+    onBack={previous}
+    onContinue={next}>
+      {content()}
+    </Screen>
 }
+
+export default Home

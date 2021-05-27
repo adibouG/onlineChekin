@@ -1,15 +1,26 @@
-const axios = require('axios');
-
 export default async (req, res) => {
 
-  // This is a working example of how in here we can call whatever third party
-  // to fetch exxternal data and return that (how ever we like).
+  // TODO: get this from db
 
-  await axios({
-      method: 'get',
-      url: 'https://api.vercel.com/www/user',
-      headers: { 'Authorization': `Bearer ${process.env.TOKEN}` }
-    })
-    .then(response => res.status(200).json({name: response.data.user.email}))
-    .catch(error => res.status(200).send(error));
+  const start = new Date()
+  const end = new Date(start.getDate() + 2)
+  const options = { weekday: 'long', month: 'short', day: 'numeric' };
+  const locale = undefined
+  const startDate = start.toLocaleDateString(locale, options)
+  const endDate = end.toLocaleDateString(locale, options)
+
+  // TODO: locale based on header
+
+  res.status(200).json({
+    guest: {
+      fullName: "Franciscus Hubertus Schouenberg"
+    },
+    reservation: {
+      startDate: startDate,
+      endDate: endDate,
+      guestCount: 2,
+      roomType: "Queens Room Deluxe",
+      options: ["Breakfast", "Late Checkout"]
+    }
+  })
 }
