@@ -1,8 +1,7 @@
-import '../styles/globals.scss'
-import 'bootstrap/dist/css/bootstrap.min.css';
+import '../styles/globals.css'
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+function MyApp({ Component, props }) {
+  return <Component {...props} />
 }
 
 export default MyApp

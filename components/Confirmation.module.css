@@ -1,0 +1,36 @@
+.stack {
+    display: grid;
+    justify-content: center;
+    text-align: center;
+    padding: 1em 3em var(--footer-height);
+}
+
+.title {
+    font-weight: 300;
+    padding-bottom: .3em;
+}
+
+.value {
+    font-weight: 500;
+    white-space: pre-line;
+}
+
+.value:not(:last-child) {
+    padding-bottom: 1em;
+}
+
+.header {
+    font-size: 1.2em;
+    padding-bottom: 2em;
+}
+
+.item {
+    padding-bottom: 2em;
+}
+
+@media screen and (min-device-width: 768px) { /* iPad/Desktop */
+    .stack {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+}
