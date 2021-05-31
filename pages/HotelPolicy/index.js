@@ -1,5 +1,6 @@
 import * as React from 'react'
 import styles from './index.module.css'
+import ToggleSwitch from '../../components/ToggleSwitch.js' ;
 import Card from '../../components/Card.js' ;
 
 const TITLE = "Please accept our hotel and privacy policies" ;
@@ -11,26 +12,8 @@ of departure with full details and where possible photographic evidence. Please 
 
 const POLICY_VALIDATION_TEXT = "I accept all policies"  ;
 
-const PolicySelector = ({elmntLabel, elmntName , val = false , elmntId = null}) => {
 
-    let accepted = val ? "checked" : null ;
-    
-    elmntId = elmntId || elmntName ;
-
-    return(
-        <div className={styles.policySelectorWrapper}>
-            <div className={styles.policySelector}>
-                <input type="checkbox" name={elmntName} id={elmntId} className={styles.policySelector__input} value={accepted} />
-                <span className={styles.policySelector__cssInput} ></span>
-            </div>
-            <div className={styles.policySelector__label} >
-                <span className={styles.policySelector__label__text}> {elmntLabel}</span>
-            </div>
-        </div>
-    )
-}
-
-const PolicyBlock = ({ policy }) => {
+const PolicyBlock = ({ policy , isAccepted }) => {
     
     let splitedPolicyTerm = policy.split('\n\n') ;
 
@@ -52,8 +35,13 @@ const PolicyBlock = ({ policy }) => {
 
     return (
         <div className={styles.policyBlock}>
-           {title}
-           {body}
+            <div  className={styles.hotelPolicy__wrapper} >
+                {title}
+                {body}
+            </div>
+            <div className={styles.hotelPolicy__selectorWrapper} >
+                <ToggleSwitch labelText={POLICY_VALIDATION_TEXT} name={`policies`} isAccepted={isAccepted}  />
+            </div>
         </div>
     )
 } 
@@ -62,9 +50,6 @@ const PolicyBlock = ({ policy }) => {
 
 const Stack = (props) => <div className={styles.stack} {...props}> {props.children}</div>
 const Header = (props) => <div className={styles.header} {...props}>{props.children}</div>
-const Item = (props) => <div className={styles.item}>{props.children}</div>
-const Title = (props) => <div className={styles.title} {...props}>{props.children}</div>
-const Value = (props) => <div className={styles.value} {...props}>{props.children}</div>
 
 const HotelPolicy = ({  hotelPolicies ,isAccepted }) => {
     return (
@@ -72,12 +57,8 @@ const HotelPolicy = ({  hotelPolicies ,isAccepted }) => {
             <Header>
                 {TITLE}
             </Header>
-            <div  className={styles.hotelPolicy__wrapper} >
-                <PolicyBlock policy={POLICY} isAccepted={false}  />
-            </div>
-            <div className={styles.hotelPolicy__selectorWrapper} >
-                <PolicySelector elmntLabel={POLICY_VALIDATION_TEXT} elmntName={`policies`} val={isAccepted}  />
-            </div>
+            <PolicyBlock policy={POLICY} isChecked={isAccepted}  />
+
         </Stack>
      
     )
