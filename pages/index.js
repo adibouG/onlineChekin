@@ -9,17 +9,35 @@ const fetcher = url => fetch(url).then(res => res.json());
 const Welcome = dynamic(() => import('../components/Welcome'))
 const Confirmation = dynamic(() => import('../components/Confirmation'))
 const HotelPolicy = dynamic(() => import('./HotelPolicy/index.js'))
+const PersonalDetails = dynamic(() => import('./PersonalDetails/index.js'))
+
+
 
 const Home = () => {
 
   const { data, error } = useSWR('/api/fetch', fetcher)
   const [ step, setStep ] = useState(0)
-  const steps = ['welcome', 'confirm',  'policies' , 'details' ]
+  const steps = ['welcome', 'confirm',  'policies' , 'details', 'payment' ]
 
   useEffect(() => {
     const vhCheck = require('vh-check')
     vhCheck('browser-address-bar')
   });
+
+
+  const updateDb = (updatedData) => {
+
+
+    
+  }
+
+  const updateGuestDetails = (guest) => {
+
+    console.log(data)
+    console.log(guest)
+    next()
+
+  }
 
   const previous = () => {
     setStep(Math.max(step - 1, 0))
@@ -40,7 +58,9 @@ const Home = () => {
       return <Confirmation reservation={data.reservation}/>
     } else if (step == 2) {
       return <HotelPolicy policy={data.policy}/>
-    } else if (step == 3) {
+    }  else if (step == 3) {
+      return <PersonalDetails guest={data.guest} onContinue={updateGuestDetails} />
+    } else if (step == 4) {
       return <div>TODO: Enter details</div>
     }
   }

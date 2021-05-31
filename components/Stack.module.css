@@ -1,0 +1,18 @@
+.stack {
+    display: grid;
+    justify-content: center;
+    text-align: center;
+    padding: 1em 2em var(--footer-height);
+}
+
+.header {
+    font-size: var(--title-font-size);
+    padding-bottom: 2em;
+}
+
+@media screen and (min-device-width: 768px) { /* iPad/Desktop */
+    .stack {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+}

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import styles from './index.module.css'
 import ToggleSwitch from '../../components/ToggleSwitch.js' ;
-import Card from '../../components/Card.js' ;
+import { Stack, Header } from '../../components/Stack.js'
 
 const TITLE = "Please accept our hotel and privacy policies" ;
 
@@ -48,8 +48,8 @@ const PolicyBlock = ({ policy , isAccepted }) => {
 
 
 
-const Stack = (props) => <div className={styles.stack} {...props}> {props.children}</div>
-const Header = (props) => <div className={styles.header} {...props}>{props.children}</div>
+//const Stack = (props) => <div className={styles.stack} {...props}> {props.children}</div>
+//const Header = (props) => <div className={styles.header} {...props}>{props.children}</div>
 
 const HotelPolicy = ({  hotelPolicies ,isAccepted }) => {
     return (
