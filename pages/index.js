@@ -8,12 +8,13 @@ import Screen from '../components/Screen'
 const fetcher = url => fetch(url).then(res => res.json());
 const Welcome = dynamic(() => import('../components/Welcome'))
 const Confirmation = dynamic(() => import('../components/Confirmation'))
+const HotelPolicy = dynamic(() => import('./HotelPolicy/index.js'))
 
 const Home = () => {
 
   const { data, error } = useSWR('/api/fetch', fetcher)
   const [ step, setStep ] = useState(0)
-  const steps = ['welcome', 'confirm', 'details']
+  const steps = ['welcome', 'confirm',  'policies' , 'details' ]
 
   useEffect(() => {
     const vhCheck = require('vh-check')
@@ -38,6 +39,8 @@ const Home = () => {
     } else if (step === 1) {
       return <Confirmation reservation={data.reservation}/>
     } else if (step == 2) {
+      return <HotelPolicy policy={data.policy}/>
+    } else if (step == 3) {
       return <div>TODO: Enter details</div>
     }
   }
