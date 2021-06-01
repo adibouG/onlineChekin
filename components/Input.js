@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import styles from './Input.module.css' ;
+import Image from 'next/image' ;
 
 
 const Input = ({title, id, type, name, pattern, required, value , autocomplete, handleChange}) => {
@@ -19,6 +20,7 @@ const Input = ({title, id, type, name, pattern, required, value , autocomplete, 
 
         return(
             <div className={styles.field}>
+                <label htmlFor={id}>{title}</label>
 	            <select  required={required}
                         name={name} 
                         id={id} 
@@ -27,13 +29,14 @@ const Input = ({title, id, type, name, pattern, required, value , autocomplete, 
                 >
                     {o}
                 </select>
-	            <label htmlFor={id}>{title}</label>
             </div>
 
 
         )
     }
 
+    pattern = name === 'emailConf' ? new RegExp(pattern , 'g') : pattern
+    
     return(
         <div className={styles.field}>
 	        <input  required={required}
@@ -47,7 +50,9 @@ const Input = ({title, id, type, name, pattern, required, value , autocomplete, 
                     onChange={onChange}
             />
 	        <label htmlFor={id}>{title}</label>
-            <button className={value && value.length ? styles.clearButton_show : styles.clearButton} onClick={handleClear}></button>
+            <button className={value && value.length ? styles.clearButton_show : styles.clearButton} onClick={handleClear}>
+               
+            </button>
         </div>
     )
 }

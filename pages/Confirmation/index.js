@@ -1,13 +1,8 @@
 import * as React from 'react'
-import styles from './Confirmation.module.css'
+import styles from './index.module.css'
+import { Stack, Header } from '../../components/Stack.js'
 
-const Stack = (props) => {
-    return <div className={styles.stack} {...props}/>
-}
 
-const Header = (props) => {
-    return <div className={styles.header} {...props}/>
-}
 
 const Item = (props) => {
     return <div className={styles.item}>{props.children}</div>
