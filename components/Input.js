@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styles from './Input.module.css' ;
-import Image from 'next/image' ;
+
 
 const Input = ({title, id, type, name, pattern, required, value , autocomplete, handleChange}) => {
     
@@ -10,21 +10,46 @@ const Input = ({title, id, type, name, pattern, required, value , autocomplete, 
 
     const handleClear = () => handleChange( '' )
 
-    return  <div className={styles.field}>
-	    <input  required={required}
-                type={type} 
-                autoComplete={autocomplete} 
-                pattern={pattern}
-                name={name} 
-                id={id} 
-                value={value} 
-                placeholder=' ' 
-                onChange={onChange}
+    if (type === 'select' && Array.isArray(value))  {
+
+        console.log(value)
+        let o = [<option></option>]
+        value.forEach((v) => o.push(<option value={v}>{v}</option>))
+       // value.map((v) => <option value={v}>{v}</option>)
+
+        return(
+            <div className={styles.field}>
+	            <select  required={required}
+                        name={name} 
+                        id={id} 
+                        placeholder=' ' 
+                        onChange={onChange}
+                >
+                    {o}
+                </select>
+	            <label htmlFor={id}>{title}</label>
+            </div>
+
+
+        )
+    }
+
+    return(
+        <div className={styles.field}>
+	        <input  required={required}
+                    type={type} 
+                    autoComplete={autocomplete} 
+                    pattern={pattern}
+                    name={name} 
+                    id={id} 
+                    value={value} 
+                    placeholder=' ' 
+                    onChange={onChange}
             />
-	    <label htmlFor={id}>{title}</label>
-        <button className={value.length ? styles.clearButton_show : styles.clearButton} onClick={handleClear}>
-         </button>
-    </div>
+	        <label htmlFor={id}>{title}</label>
+            <button className={value && value.length ? styles.clearButton_show : styles.clearButton} onClick={handleClear}></button>
+        </div>
+    )
 }
 
 export default Input;

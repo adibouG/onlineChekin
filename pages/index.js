@@ -10,6 +10,7 @@ const Welcome = dynamic(() => import('../components/Welcome'))
 const Confirmation = dynamic(() => import('../components/Confirmation'))
 const HotelPolicy = dynamic(() => import('./HotelPolicy/index.js'))
 const PersonalDetails = dynamic(() => import('./PersonalDetails/index.js'))
+const Payment = dynamic(() => import('./Payment/index.js'))
 
 
 
@@ -39,6 +40,24 @@ const Home = () => {
 
   }
 
+  const updatePolicies = (policy) => {
+
+    console.log(data)
+    console.log(guest)
+    next()
+
+  }
+
+  
+  const updatePayment = (policy) => {
+
+    console.log(data)
+    console.log(guest)
+    next()
+
+  }
+  
+
   const previous = () => {
     setStep(Math.max(step - 1, 0))
   }
@@ -57,11 +76,11 @@ const Home = () => {
     } else if (step === 1) {
       return <Confirmation reservation={data.reservation}/>
     } else if (step == 2) {
-      return <HotelPolicy policy={data.policy}/>
+      return <HotelPolicy policy={data.hotelPolicies} update={updatePolicies}/>
     }  else if (step == 3) {
-      return <PersonalDetails guest={data.guest} onContinue={updateGuestDetails} />
+      return <PersonalDetails guest={data.guest} update={updateGuestDetails} />
     } else if (step == 4) {
-      return <div>TODO: Enter details</div>
+      return <Payment payment={data.payment} update={updatePayment}/>
     }
   }
   
