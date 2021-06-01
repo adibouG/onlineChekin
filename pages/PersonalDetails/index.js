@@ -19,10 +19,12 @@ const PersonalDetails = ({ guest = {} }) => {
     console.log(email)
 
     return <Stack>
-        <form className={styles.form} autoComplete='off' lpignore='true' 
-        >
-            <Header>Please fill in your details</Header>
-            
+        <Header>Please fill in your details</Header>
+            <form className={styles.form} 
+                    autoComplete='off' 
+                    lpignore='true' 
+            >
+            <div className={styles.group}>
             <Input title='Address' name='address' id='address' type='text'
                     handleChange={setAddress} value={address}
                     required={true} autocomplete='street-address'  lpignore='true'
@@ -37,13 +39,14 @@ const PersonalDetails = ({ guest = {} }) => {
                     handleChange={setCity} value={city}
                     required={true} autocomplete='address-level2'  lpignore='true'
             />
-            
+            </div>
+            <div className={styles.group}>
             <Input title='Email address' type='email'   name='email' id='email'
                     handleChange={setEmail}  value={email}   
                     required={true}  autocomplete='email' lpignore='true'
             />
             <Input title='Confirm email address' type='email'  name='emailConf' id='emailConf' 
-             pattern={email.length ? /^email$/ : null} 
+                pattern={email.length ? email : null} 
                 handleChange={setEmailConf}    value={emailConf}
                 required={true} autocomplete='email' lpignore='true'
             />
@@ -52,6 +55,7 @@ const PersonalDetails = ({ guest = {} }) => {
                 handleChange={setMobile} value={mobile}  
                 required={true} autocomplete='mobile' lpignore='true'
             />
+            </div>
 
 
 

@@ -6,8 +6,8 @@ import Screen from '../components/Screen'
 
 
 const fetcher = url => fetch(url).then(res => res.json());
-const Welcome = dynamic(() => import('../components/Welcome'))
-const Confirmation = dynamic(() => import('../components/Confirmation'))
+const Welcome = dynamic(() => import('./Welcome/index.js'))
+const Confirmation = dynamic(() => import('./Confirmation/index.js'))
 const HotelPolicy = dynamic(() => import('./HotelPolicy/index.js'))
 const PersonalDetails = dynamic(() => import('./PersonalDetails/index.js'))
 const Payment = dynamic(() => import('./Payment/index.js'))
@@ -48,7 +48,7 @@ const Home = () => {
 
   }
 
-  
+
   const updatePayment = (policy) => {
 
     console.log(data)

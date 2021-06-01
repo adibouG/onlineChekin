@@ -1,6 +1,6 @@
 import * as React from 'react'
-import styles from './Welcome.module.css'
-import Card from './Card'
+import styles from './index.module.css'
+import Card from '../../components/Card'
 
 const Welcome = ({ guest, onContinue }) => {
     return (

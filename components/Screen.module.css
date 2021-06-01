@@ -49,6 +49,7 @@
     height: calc(100% - var(--header-height) - var(--footer-height));
     display: grid;
     grid-template-rows: auto auto 1fr;
+    padding: 0 10%;
     align-content: stretch;
     justify-content: stretch;
 }
@@ -60,7 +61,7 @@
     height: var(--footer-height);
     z-index: 1;
     background-color: var(--background-color);
-    padding: 0 37px 50px;
+    padding: 0 10% 50px;
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
@@ -91,7 +92,7 @@
 
     .footer {
         position: absolute;
-        padding: 0 37px 31px;
+        padding: 0 10% 31px;
     }
     
     .container {

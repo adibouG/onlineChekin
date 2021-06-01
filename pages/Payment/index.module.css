@@ -100,7 +100,10 @@
 }
 
 .displayMethods_body_method {
-
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    align-items: center;
     margin: 0 -5px 35px -5px;
 
 }

@@ -1,8 +1,8 @@
 .stack {
-    display: grid;
+    /*display: grid;*/
     justify-content: center;
     text-align: center;
-    padding: 1em 2em var(--footer-height);
+  /*  padding: 1em 2em var(--footer-height); */
 }
 
 .header {
