@@ -8,6 +8,8 @@ const PersonalDetails = ({ guest = {} }) => {
     console.log(guest)
     console.log(guest.address)
     
+    const [firstName , setFirstName] = useState(guest.firstName || "" );
+    const [lastName , setLastName] = useState(guest.lastName || "" );
     const [address , setAddress] = useState(guest.address || "" );
     const [postalCode , setPostalCode] = useState(guest.postalCode || "" );
     const [city , setCity] = useState(guest.city || "" );
@@ -24,6 +26,17 @@ const PersonalDetails = ({ guest = {} }) => {
                     autoComplete='off' 
                     lpignore='true' 
             >
+            <div className={styles.group}>
+            <Input title='First Name' name='firstName' id='firstName' type='text'
+                    handleChange={setFirstName} value={firstName}
+                    required={true} autocomplete='true'  lpignore='true'
+            />
+            
+            <Input title='Last Name'  name='lastName' id='lastName' type='text'
+                    handleChange={setLastName} value={lastName}
+                    required={true} autocomplete='true'  lpignore='true'
+            />
+            </div>
             <div className={styles.group}>
             <Input title='Address' name='address' id='address' type='text'
                     handleChange={setAddress} value={address}
