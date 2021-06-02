@@ -9,7 +9,7 @@ const Card = ({ step , supertitle, title, subtitle, buttonTitle, onClick }) => {
                 <div className={`${step === 5 ?  styles.successtitle : styles.title} card-title`}>{title}</div>
                 <div className={step === 5 ?  styles.successSubtitle : styles.subtitle}>{subtitle}</div>
                 {
-                step === 0 &&  
+                step !== 5 &&  
                 <button className='primary_button' onClick={onClick}>{buttonTitle}</button>
                 }
             </div>
