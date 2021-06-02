@@ -67,6 +67,13 @@
     justify-content: space-between;
 }
 
+
+.disabled {
+    background-color: #baD1D1D1 ;
+    cursor: not-allowed;
+    
+}
+
 .xl {
     padding: 0 2.5em;
 }
