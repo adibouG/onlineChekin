@@ -2,6 +2,8 @@ import * as React from 'react'
 import styles from './index.module.css'
 import Card from '../../components/Card'
 
+
+
 const Welcome = ({ guest, onContinue }) => {
     return (
         <div className={styles.screen}>
