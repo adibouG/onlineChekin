@@ -146,13 +146,13 @@ button {
 .primary_button {
   color: var(--button-text-color);
   background-color: var(--button-background-color);
-  border-color: var(--button-background-color);
+  /* border-color: var(--button-background-color); */
 }
 
 .secondary_button {
   color: var(--button-text-color);
   background-color: var(--button-secondary-background-color);
-  border-color: var(--button-secondary-background-color);
+  /* border-color: var(--button-secondary-background-color); */
 }
 
 @media screen and (min-device-width: 768px) { /* iPad/Desktop */

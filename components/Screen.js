@@ -1,7 +1,11 @@
+import  React  from 'react'
+
 import styles from './Screen.module.css'
 
 const Screen = (props) => {
-    const { isLoading, canNavigate, onBack, onContinue } = props
+    
+    const { isLoading, canNavigate, onBack, onContinue , disabled  } = props ;
+
     if (isLoading) {
         return <div className={styles.center}>
             {props.children}
@@ -11,6 +15,7 @@ const Screen = (props) => {
             {props.children}
         </div>
     } else {
+
         return <div className={`${styles.container} possible_background`}>
             <div className={styles.header}/>
             <div className={styles.wrapper}>
@@ -19,7 +24,7 @@ const Screen = (props) => {
                 </div>
                 <div className={styles.footer}>
                     <button className='secondary_button' onClick={onBack}>Back</button>
-                    <button className={`primary_button ${styles.xl}`} onClick={onContinue}>Confirm</button>
+                    <button className={`primary_button ${styles.xl} ${disabled ? styles.disabled : false}`} disabled={disabled} onClick={onContinue}>Confirm</button>
                 </div>
             </div>
         </div>
