@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import styles from './Input.module.css' ;
 import Image from 'next/image' ;
 
-
+ 
 const Input = ({title, id, type, name, pattern, required, value , autocomplete, handleChange}) => {
     
-    console.log(value)
+   
     
     const onChange = (e) => handleChange(e.target.value)
 
@@ -13,14 +13,16 @@ const Input = ({title, id, type, name, pattern, required, value , autocomplete, 
 
     if (type === 'select' && Array.isArray(value))  {
 
-        console.log(value)
-        let o = [<option></option>]
+        
+        let o = [<option>{title}</option>]
         value.forEach((v) => o.push(<option value={v}>{v}</option>))
-       // value.map((v) => <option value={v}>{v}</option>)
+       
 
         return(
-            <div className={styles.field}>
-                <label htmlFor={id}>{title}</label>
+            <div className={styles.selectfield}>
+                {/*
+                <label htmlFor={id}></label>
+                */}
 	            <select  required={required}
                         name={name} 
                         id={id} 

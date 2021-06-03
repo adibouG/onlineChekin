@@ -18,7 +18,7 @@ const Success = dynamic(() => import('./Success/index.js'))
 
 
 let isValidGuest = false ;
-let originalValue ;
+let originalValue = {} ;
 const Home = () => {
 
   const steps = ['welcome', 'confirm',  'policies' , 'details', 'payment' , 'success']
@@ -29,10 +29,10 @@ const Home = () => {
   const [ data, setData ] = useState(null);
   const [ error, setError ] = useState(null);
 
-  
+  const formRef = useRef();
 
-  let ref = useRef(null);
-  let form = useRef(null);
+
+
 
   useEffect(() => {
     const vhCheck = require('vh-check')
@@ -44,25 +44,25 @@ const Home = () => {
     
   useEffect( async () => {
     const request =  await axios.get(url + token) ;
-    alert('getDB')
-    originalValue = request.data.checkin
-    return setData(request.data.checkin)
+    originalValue = request.data.checkin ;
+    return setData(request.data.checkin) ;
   } , [] );
 
 
   useEffect( () => {
-    alert('setData')
+    console.log('setData')
   }, [data]);
 
-  const objectCompare = (a , b) => Object.entries(a).sort().toString() === Object.entries(b).sort().toString()
-    const setDB = async () => {
-      if (originalValue && data && !objectCompare(originalValue , data)) {
-        alert('setDB')
-        let setRequest =  await axios.post(url , data) ;
-        originalValue = setRequest.data.checkin ;
-        return setData(setRequest.data.checkin) ;
-      }
-    } 
+  useEffect( () => {
+    console.log('setData')
+  }, [data]);
+
+   
+   const setDB = async () => {
+    let setRequest =  await axios.post(url , data) ;
+    originalValue = setRequest.data.checkin ;
+    return setData(setRequest.data.checkin) ;
+  }
 
   
   
@@ -72,21 +72,20 @@ const Home = () => {
       setDisabled(!data.privacyPolicy.accepted)
     }  
     if (step == 3) {
-      //alert('isValidGuest ' + isValidGuest)
+     
       setDisabled(!isValidGuest)
+      
     } 
     if (step == 4) {  
-      setDisabled(false)
-        setDB() ;
+      setDisabled(!data.payment.paid)
+        
     }
   } , [step , data] );
 
 
   
    useEffect(() => {
-     if (step == 2) {
-      setDB() ;
-     }  
+
      if (step == 3) {
         setDB() ;
      } 
@@ -104,7 +103,6 @@ const Home = () => {
 
   const updateGuestDetails = (guestDetail , value) => {
    
-    alert(value)
     if (data.guest[guestDetail] !== value) { 
       setData({ 
         ...data ,
@@ -124,6 +122,21 @@ const Home = () => {
 
   }
 
+const getFormValues = () => {
+  debugger
+ 
+  let details = {} ;
+  
+  let f = document.getElementById('form') ;
+  for ( let i = 0 ; i < 15 ; i+=2) {
+
+      if (f[i].name in data.guest) details[f[i].name] = f[i].value  ;
+  } 
+
+  return details;
+} 
+
+
 
   const updatePolicies = ({name , value}) => {
 
@@ -142,21 +155,28 @@ const Home = () => {
   }
 
   const next = () => { 
-    if (step == 2) {
-      //alert(data.privacyPolicy.accepted)
+   
+    if (step === 2) {
       setDisabled(!data.privacyPolicy.accepted)
-
     }  
-    if (step === 3) {
-      setDB()
-     // updateGuestDetails  // or await setDB(guestDetails) ;
+    if (step === 3) { 
+
+      let details = getFormValues() ;
+      
+      setData({ 
+        ...data ,
+        guest : details
+      })
+    }
+    if (step === 4) {
+    
     }
     setStep(Math.min(step + 1, steps.length - 1))
   }
 
   const GUEST_DISPLAY_NAME = data ? ( data.guest.firstName + ' ' + data.guest.lastName ) : "";
   const content = (props) => {
-    console.log(data)
+    
     if (error) {
       return `Error: ${error.message}`;
     } else if (!data) {
@@ -170,8 +190,9 @@ const Home = () => {
                           update={updatePolicies} 
                           />
     }  else if (step === 3) {
-      return <PersonalDetails ref={form} guest={data.guest} 
-      update={updateGuestDetails} isValid={validate} />
+      return <PersonalDetails ref={formRef} guest={data.guest} 
+      update={updateGuestDetails} isValid={validate} 
+      />
     } else if (step === 4) {
       return <Payment payment={data.payment} update={updatePayment}/>
     } else if (step === 5) {
@@ -185,7 +206,7 @@ const Home = () => {
     onBack={previous}
     onContinue={next}
     disabled={disabled}
-    ref={ref}
+    // ref={ref}
     >
       {content()}
     </Screen>
