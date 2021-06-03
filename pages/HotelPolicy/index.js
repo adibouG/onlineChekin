@@ -15,6 +15,7 @@ const POLICY_VALIDATION_TEXT = "I accept all policies"  ;
 
 const PolicyBlock = ({ policy , handleAccept}) => {
     
+    
     let splitedPolicyTerm = policy.content.split('\n\n') ;
 
     let policyName = (polName) => 
@@ -40,19 +41,21 @@ const PolicyBlock = ({ policy , handleAccept}) => {
                 {body}
             </div>
             <div className={styles.hotelPolicy__selectorWrapper} >
-                <ToggleSwitch labelText={POLICY_VALIDATION_TEXT} name={`policies`} isAccepted={policy.accepted}  handleClick={handleAccept} />
+                <ToggleSwitch labelText={POLICY_VALIDATION_TEXT} name={`policies`} 
+                isChecked={policy.accepted}  handleClick={handleAccept} />
             </div>
         </div>
     )
 } 
 
-const HotelPolicy = ({  policy , isAccepted , update}) => {
+const HotelPolicy = ({  policy , update}) => {
+    
     return (
         <Stack>
             <Header>
                 {TITLE}
             </Header>
-            <PolicyBlock policy={policy} isAccepted={isAccepted} handleAccept={update} />
+            <PolicyBlock policy={policy}  handleAccept={update} />
 
         </Stack>
      
