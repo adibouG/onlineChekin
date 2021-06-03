@@ -1,11 +1,14 @@
 
+import axios from 'axios'
 
 
 
 export default async (req, res) => {
 
   // TODO: get this from db
-
+let url ='http://localhost:3003/reservation?token=43c98ac2-8493-49b0-95d8-de843d90e6ca' ;
+let reservation = await axios.get(url) ;
+/*
   const start = new Date()
   const end = new Date(start.getDate() + 2)
   const options = { weekday: 'long', month: 'short', day: 'numeric' };
@@ -50,12 +53,12 @@ export default async (req, res) => {
        paid: true
     }
   };
+  */
   
   
-  
-
+console.log(reservation.data)
   // TODO: locale based on header
 
-  res.status(200).json(reservation) 
+  res.status(200).send(reservation.data) 
 
 }

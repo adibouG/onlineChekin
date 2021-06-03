@@ -35,7 +35,6 @@ const Input = ({title, id, type, name, pattern, required, value , autocomplete, 
         )
     }
 
-    //pattern = name === 'emailConf' ? new RegExp(pattern) : pattern
     
     return(
         <div className={styles.field}>

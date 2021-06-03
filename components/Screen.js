@@ -2,7 +2,7 @@ import  React  from 'react'
 
 import styles from './Screen.module.css'
 
-const Screen = (props) => {
+const Screen =  React.forwardRef((props, ref) => {
     
     const { isLoading, canNavigate, onBack, onContinue , disabled  } = props ;
 
@@ -24,11 +24,11 @@ const Screen = (props) => {
                 </div>
                 <div className={styles.footer}>
                     <button className='secondary_button' onClick={onBack}>Back</button>
-                    <button className={`primary_button ${styles.xl} ${disabled ? styles.disabled : false}`} disabled={disabled} onClick={onContinue}>Confirm</button>
+                    <button ref={ref} className={`primary_button ${styles.xl} ${disabled ? styles.disabled : false}`} disabled={disabled} onClick={onContinue}>Confirm</button>
                 </div>
             </div>
         </div>
     }
-}
+})
 
 export default Screen
