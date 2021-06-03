@@ -1,4 +1,4 @@
-.field {
+.field , .selectfield {
     position: relative;
     height: 2.4em;
     width: 100%;
@@ -7,12 +7,16 @@
     border-radius: 5px;
 }
 
+
+
 .field:not(:last-child) {
     margin-bottom: .9em;
 }
 
 .field label, 
-.field input {
+.field input ,
+.selectfield label ,
+.selectfield select {
     position: absolute;
     margin: 0;
     padding: 0 12px;
@@ -25,7 +29,8 @@
     transition: all .15s ease-out;
 }
 
-.field label {
+.field label ,
+.selectfield label {
     top: 0;
     height: 50%;
     z-index: 1;
@@ -36,11 +41,22 @@
     color: #343A40;
 }
 
+.selectfield label {
+width: 90%;
+height: 50%;
+}
+
 .field input,
 .field input:hover,
 .field input:focus,
 .field input:valid,
-.field input:active {
+.field input:active ,
+.selectfield select:hover,
+.selectfield select:focus,
+.selectfield option:hover,
+.selectfield option:focus,
+.selectfield select:valid,
+.selectfield select:active {
     bottom: 0;
     /*height: 50%;*/
     /* test 
@@ -56,14 +72,32 @@
     font-size: 12px;
     background-color: transparent;
 }
+.selectfield select
+.selectfield select:hover,
+.selectfield select:focus,
+.selectfield option:hover,
+.selectfield option:focus,
+.selectfield select:valid,
+.selectfield select:active {
+bottom: 0;
+/* height: 50%; */
+padding: 10px;
+height: 100%;
+border-radius: 5px;
+border: 1px solid #E0E0E0;
+color: #868D96;
+font-size: .85em;
+/* font-size: 12px; */
 
-
-.field input:placeholder-shown:not(:focus) {
+}
+.field input:placeholder-shown:not(:focus) ,
+    .selectfield select:placeholder-shown:not(:focus) {
     height: 100%;
     bottom: 0;
 }
 
-.field input:placeholder-shown:not(:focus) + label {
+.field input:placeholder-shown:not(:focus) + label ,
+.selectfield select:placeholder-shown:not(:focus) + label {
     top: 25%;
     bottom: 0;
     font-size: .75em;
@@ -73,13 +107,13 @@
     padding-top: .3em;
 }
 
-.field select {
+.selectfield select {
     width: 100%;
     height: 100%;
    
 }
 
-.field select:placeholder-shown:not(:focus) + label {
+.selectfield select:placeholder-shown:not(:focus) + label {
     top: 15%;
      bottom: 0;/*
     font-size: .5em; */
@@ -99,7 +133,8 @@
     color: #868D96;
 }
 
-.field button {
+.field button ,
+.selectfield button {
     position: absolute !important;
     right: 0 !important;
     top: 0 !important;
@@ -129,6 +164,14 @@
     */
 }
 
+
+.selectfield option {
+display: block;
+height: 25px;
+line-height: 25px;
+font-size: 16px;
+padding: 5px;
+}
 .clearButton_show {
 
     color : #868D96;

@@ -1,15 +1,15 @@
-import  React, { useState , useEffect , useRefs }  from 'react'
+import  React, { useState , useEffect , useRef , useImperativeHandle}  from 'react'
 import styles from './index.module.css'
 import { Stack, Header } from '../../components/Stack.js'
 import Input from '../../components/Input.js'
 
-const PersonalDetails =  React.forwardRef((props, ref) => {
+const PersonalDetails = React.forwardRef((props, ref) => {
     
     let { guest  , update , isValid } = props ;
 
 
     console.log(guest)
-    console.log(guest.address)
+ 
    //if (!guest.firstName && !guest.lastName &&  guest.fullName && guest.fullName.length ) {
    //    guest.firstName = guest.fullName.split(' ')[0];
    //    guest.lastName = guest.fullName.split(' ')[1];
@@ -43,7 +43,11 @@ const PersonalDetails =  React.forwardRef((props, ref) => {
    
    const [emailConf , setEmailConf] = useState("");
    
-    let validForm = false;
+  
+   //useImperativeHandle(ref, () => ({getMyState: () => {return firstName}}), []);
+   
+   let validForm = false;
+
     useEffect(() => {
         
         let valid = false ;
@@ -74,8 +78,11 @@ const PersonalDetails =  React.forwardRef((props, ref) => {
     e.stopPropagation() ;
    // e.stopImmediatePropagation()
     e.preventDefault();
+ 
     if (fieldname in guest && fieldValue.length && valid) {
-        update(fieldname , fieldValue)
+        console.log(fieldValue)
+
+        update(fieldname , eval(`${fieldname}`))
     }
   }
 
@@ -87,7 +94,7 @@ const PersonalDetails =  React.forwardRef((props, ref) => {
                     autoComplete='off' 
                     lpignore='true' 
                     id='form'
-                    ref={ref}
+                    // ref={ref}
                     onBlur={checkAndSaveDetails}
             >
                 
@@ -140,6 +147,7 @@ const PersonalDetails =  React.forwardRef((props, ref) => {
         </form>
 
     </Stack>
-})
+}
+)
 
 export default PersonalDetails

@@ -11,7 +11,7 @@ const ToggleSwitch = ({labelText, name , isChecked = false , handleClick , id = 
     const handleChange = (e) => {
         let name = e.target.name ;  
         let value = e.target.checked ;
-        alert(value)
+      
         if (handleClick) { handleClick({name, value}) ;}
         return ({name , value})  ;
     } 
