@@ -1,4 +1,4 @@
-import  React, { useState }  from 'react'
+import  React, { useState ,useEffect }  from 'react'
 import styles from './index.module.css'
 import { Stack, Header } from '../../components/Stack.js'
 import Input from '../../components/Input.js'
@@ -6,7 +6,7 @@ import Image from 'next/image' ;
 
 
 
-const BankMethodButton = ({name , id , value , src , isChecked = false}) => {
+const BankMethodButton = ({name , id , value , src , isChecked , handleChange = false}) => {
 
     const onChange = (e) => {
         let name = e.target.name ;
@@ -18,13 +18,29 @@ const BankMethodButton = ({name , id , value , src , isChecked = false}) => {
     return(
         <label htmlFor={id} className={styles.bankMethodButton}>
             <input type="radio" name={name} id={id} value={value} checked={isChecked} onChange={onChange}/>
-            <img src={src} className={styles.bankMethodButton_img} />
+            <img src={isChecked ? `/${src}2.svg` : `/${src}.svg`} className={isChecked ? styles.bankMethodButton_img2 : styles.bankMethodButton_img} />
         </label>
     )
 }
 
+const MethodGroup = (props) => {
 
-const Payment = ({ payment = {}}) => {
+    const {names  , selected , setMethod} = props
+    let group = [] ;
+    for (let i of names) {
+        group.push(
+            <BankMethodButton handleChange={setMethod} name={"payMethod"} id={i}  value={i}   src={i}   isChecked={selected === i} />
+        )
+    }
+        
+    return(    
+        <div className={styles.displayMethods_body_method}>
+            {group}
+        </div>
+    )
+}
+
+const Payment = ({ payment = {} , update}) => {
 
     console.log(payment)
     console.log(payment.amount)
@@ -40,13 +56,22 @@ const Payment = ({ payment = {}}) => {
     const availableMethods = ['Ideal' , 'Visa' , 'PayPal' , 'ApplePay' ] ;
     const availableBanks = ['RaboBank' , 'Ing' ] ;
 
+    let selected 
     const selectPaymentMethod = ({name, value , checked}) => {
 
         if (name === "payMethod" && checked) setPaymentMethod(value)
 
     } ;
- 
+   
+         
+    useEffect(() => {
 
+if (amount === 0 || paid) return update(null , true )
+if (paymentMethod &&  bank ) return update({bank , paymentMethod , amount ,  currency }, true ) ;
+
+    } , [paid , paymentMethod , bank]
+)
+ 
     return <Stack>
             <Header>Please complete your payment</Header>
             
@@ -77,13 +102,9 @@ const Payment = ({ payment = {}}) => {
                     </span>
                 </div>
                 <div className={styles.displayMethods_body}>
-                   <div className={styles.displayMethods_body_method}>
-                        <BankMethodButton handlesChange={selectPaymentMethod} name={"payMethod"} id={"Ideal"}  value={"Ideal"}   src={"/ideal.svg"}   isChecked={false} />
-                        <BankMethodButton handleChange={selectPaymentMethod} name={"payMethod"} id={"Visa"}  value={"Visa"}   src={"/visa.svg"}   isChecked={false} />
-                        <BankMethodButton handleChange={selectPaymentMethod} name={"payMethod"} id={"PayPal"}  value={"PayPal"}   src={"/paypal.svg"}   isChecked={false} />
-                        <BankMethodButton handleChange={selectPaymentMethod} name={"payMethod"} id={"ApplePay"}  value={"ApplePay"}   src={"/applepay.svg"}   isChecked={false} />
-                   </div>
-                   <div className={styles.displayMethods_body_bank} >
+
+                    <MethodGroup names={availableMethods} setMethod={selectPaymentMethod} selected={paymentMethod} />
+                    <div className={styles.displayMethods_body_bank} >
                         <Input title='Select your bank' name='bank' id='bank' type='select' 
                         value={availableBanks} 
                         handleChange={setBank} > 

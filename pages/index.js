@@ -53,9 +53,6 @@ const Home = () => {
     console.log('setData')
   }, [data]);
 
-  useEffect( () => {
-    console.log('setData')
-  }, [data]);
 
    
    const setDB = async () => {
@@ -114,11 +111,17 @@ const Home = () => {
     } 
   }
 
-  const updatePayment = ({amount , currency , method , isPaid}) => {
+  const updatePayment = ({amount , currency , method , bank , isPaid}) => {
 
-    console.log(data)
-    console.log(guest)
-   // next()
+    setDisabled(false);
+    setData( {
+      ...data, 
+      payment : { 
+        ...data.payment ,
+        paid : true 
+      }
+      }
+    )
 
   }
 
