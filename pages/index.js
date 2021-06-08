@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import dynamic from 'next/dynamic'
 //import useSWR from 'swr'
 import axios from 'axios'
+import Card from '../components/Card'
 import Spinner from '../components/Spinner'
 import Screen from '../components/Screen'
 
@@ -30,26 +31,22 @@ const Home = (props) => {
   console.log(router.asPath)
 
   let  queryParams = new URLSearchParams(String(router.asPath).replace('/' , ''))
-
-  console.log(queryParams.has('token'))
-  console.log(queryParams.has('name'))
-  
-
-
-  
-
   
   const steps = ['welcome', 'confirm',  'policies' , 'details', 'payment' , 'success']
+  
   const [disabled , setDisabled] = useState(false);
+  
   //const { data, error } = useSWR('/api/fetch', fetcher)
 
   //const [ name, setName ] = useState(null);
   //const [ token, setToken ] = useState(null);
-  const [ step, setStep ] = useState(0);
+  const [ step, setStep ] = useState(-1);
   const [ data, setData ] = useState(null);
   const [ error, setError ] = useState(null);
 
   const formRef = useRef();
+  const nextButtonRef = useRef();
+  
 
   useEffect(() => {
     const vhCheck = require('vh-check')
@@ -63,7 +60,7 @@ const Home = (props) => {
     console.log(router.query.name)
     console.log(router.query.token)
     
-   // router.push(  {
+   // router.replace(  {
   //   pathname: `/`,
   //   query: {
   //     token : token,
@@ -87,7 +84,7 @@ const Home = (props) => {
     let getUrl = url + reservationId
     console.log(getUrl)
     try{
-      const request =  await axios.get(getUrl) ;
+      const request =   await axios.get(getUrl) ;
       originalValue = request.data.checkin ;
       return setData(request.data.checkin) ;
     }catch(e){
@@ -96,9 +93,9 @@ const Home = (props) => {
   } , [] );
 
 
-  useEffect( () => {
-    console.log('setData')
-  }, [data]);
+  // useEffect( () => {
+  //   console.log('setData')
+  // }, [data]);
 
 
    
@@ -112,6 +109,11 @@ const Home = (props) => {
   
   
   useEffect(() => {
+    
+    if (step === -1) {
+      if (data) setStep(0);  
+    }  
+
     if (step == 2) {
       setDisabled(!data.privacyPolicy.accepted)
     }  
@@ -172,9 +174,7 @@ const Home = (props) => {
 
   }
 
-const getFormValues = () => {
-  debugger
- 
+const getFormValues = () => { 
   let details = {} ;
   
   let f = document.getElementById('form') ;
@@ -224,15 +224,17 @@ const getFormValues = () => {
     setStep(Math.min(step + 1, steps.length - 1))
   }
 
-  const GUEST_DISPLAY_NAME = data ? ( data.guest.firstName + ' ' + data.guest.lastName ) : queryParams.get('name')
+  const GUEST_DISPLAY_NAME = data ? 
+    ( data.guest.firstName + ' ' + data.guest.lastName ) : 
+     queryParams.get('name') ? queryParams.get('name').replaceAll('.' , ' ') : null 
   const content = (props) => {
     
     if (error) {
       return `Error: ${error.message}`;
-    } else if (!data || router.isFallback) {
+    } else if ((!data && !GUEST_DISPLAY_NAME) || router.isFallback) {
       return <Spinner/>
-    } else if (step === 0) {
-      return <Welcome guest={GUEST_DISPLAY_NAME} onContinue={next} {...props}/>
+    } else if (step < 1) {
+      return <Welcome step={step} guest={GUEST_DISPLAY_NAME} onContinue={next} {...props}/>
     } else if (step === 1) {
       return <Confirmation reservation={data.reservation} />
     } else if (step === 2) {
@@ -256,32 +258,17 @@ const getFormValues = () => {
     onBack={previous}
     onContinue={next}
     disabled={disabled}
-    // ref={ref}
+    ref={nextButtonRef}
     >
       {content()}
     </Screen>
 }
 
 
-const WaitingWelcome = (props) => {
-
-  
-  return (
-    <div className={styles.screen}>
-        <div className={styles.content}>
-            <div className={styles.logo}/>
-            <Card step={-1}
-                supertitle={SUCCESS}
-                title={DETAILS}
-                subtitle={BYE}
-                
-            />
-        </div>
-    </div>
-)
 
 
-}  
+
+
 /*
 
 export async function getStaticPaths() {

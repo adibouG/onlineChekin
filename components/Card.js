@@ -1,5 +1,6 @@
 import * as React from "react"
 import styles from './Card.module.css'
+import Spinner from './Spinner'
 
 const Card = ({ step , supertitle, title, subtitle, buttonTitle, onClick }) => {
     return (
@@ -10,7 +11,12 @@ const Card = ({ step , supertitle, title, subtitle, buttonTitle, onClick }) => {
                 <div className={step === 5 ?  styles.successSubtitle : styles.subtitle}>{subtitle}</div>
                 {
                 step !== 5 &&  
+                step !== -1 &&
                 <button className='primary_button' onClick={onClick}>{buttonTitle}</button>
+                }
+                {
+                step === -1 &&
+                <Spinner />
                 }
             </div>
         </div>
