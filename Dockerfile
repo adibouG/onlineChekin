@@ -5,7 +5,7 @@ FROM node:16-alpine
 # apk add --no-cache libc6-compat
 
 ENV PORT 8080
-EXPOSE 3003
+EXPOSE 3000
 
 ARG NODE_ENV=dev
 ENV NODE_ENV $NODE_ENV
