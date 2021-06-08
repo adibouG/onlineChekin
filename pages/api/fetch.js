@@ -1,12 +1,8 @@
 
-import axios from 'axios'
-
-
-
 export default async (req, res) => {
 
   // TODO: get this from db
-let url ='http://localhost:3003/reservation?token=43c98ac2-8493-49b0-95d8-de843d90e6ca' ;
+let url =`${process.env.BACKEND_HOST}:${process.env.BACKEND_PORT}/reservation?token=43c98ac2-8493-49b0-95d8-de843d90e6ca` ;
 let reservation = await axios.get(url) ;
 /*
   const start = new Date()
