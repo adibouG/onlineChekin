@@ -1,4 +1,5 @@
 import React, { useEffect, useState , useRef } from 'react'
+import { useRouter } from 'next/router'
 import dynamic from 'next/dynamic'
 //import useSWR from 'swr'
 import axios from 'axios'
@@ -14,39 +15,84 @@ const PersonalDetails = dynamic(() => import('./PersonalDetails/index.js'))
 const Payment = dynamic(() => import('./Payment/index.js'))
 const Success = dynamic(() => import('./Success/index.js'))
 
-
-
-
 let isValidGuest = false ;
 let originalValue = {} ;
-const Home = () => {
 
+const Home = (props) => {
+
+  const router = useRouter() ;
+
+  console.log(router)
+
+  console.log(router.query.token)
+  console.log(router.query.name)
+
+  console.log(router.asPath)
+
+  let  queryParams = new URLSearchParams(String(router.asPath).replace('/' , ''))
+
+  console.log(queryParams.has('token'))
+  console.log(queryParams.has('name'))
+  
+
+
+  
+
+  
   const steps = ['welcome', 'confirm',  'policies' , 'details', 'payment' , 'success']
   const [disabled , setDisabled] = useState(false);
   //const { data, error } = useSWR('/api/fetch', fetcher)
 
+  //const [ name, setName ] = useState(null);
+  //const [ token, setToken ] = useState(null);
   const [ step, setStep ] = useState(0);
   const [ data, setData ] = useState(null);
   const [ error, setError ] = useState(null);
 
   const formRef = useRef();
 
-
-
-
   useEffect(() => {
     const vhCheck = require('vh-check')
     vhCheck('browser-address-bar')
   });
 
-  let backendUrl =`${process.env.BACKEND_HOST}:${process.env.BACKEND_PORT}`;
-  let url =`${backendUrl}/reservation`;
-  let token ='?token=43c98ac2-8493-49b0-95d8-de843d90e6ca' ;
+  
+  useEffect( () => {
+
+    console.log(router.query)
+    console.log(router.query.name)
+    console.log(router.query.token)
     
+   // router.push(  {
+  //   pathname: `/`,
+  //   query: {
+  //     token : token,
+  //     name:guestName
+  //   }
+  // },
+  ///',
+  //shallow: true}
+  //
+  } , [] );
+
+ 
+    
+  let backendUrl = `${process.env.BACKEND_HOST}:${process.env.BACKEND_PORT}`;
+  let url =`${backendUrl}/reservation`;
+  
+
   useEffect( async () => {
-    const request =  await axios.get(url + token) ;
-    originalValue = request.data.checkin ;
-    return setData(request.data.checkin) ;
+    let token = queryParams.get('token')
+    let reservationId =`?token=${token}` ;
+    let getUrl = url + reservationId
+    console.log(getUrl)
+    try{
+      const request =  await axios.get(getUrl) ;
+      originalValue = request.data.checkin ;
+      return setData(request.data.checkin) ;
+    }catch(e){
+      console.log(e)
+    }
   } , [] );
 
 
@@ -178,12 +224,12 @@ const getFormValues = () => {
     setStep(Math.min(step + 1, steps.length - 1))
   }
 
-  const GUEST_DISPLAY_NAME = data ? ( data.guest.firstName + ' ' + data.guest.lastName ) : "";
+  const GUEST_DISPLAY_NAME = data ? ( data.guest.firstName + ' ' + data.guest.lastName ) : queryParams.get('name')
   const content = (props) => {
     
     if (error) {
       return `Error: ${error.message}`;
-    } else if (!data) {
+    } else if (!data || router.isFallback) {
       return <Spinner/>
     } else if (step === 0) {
       return <Welcome guest={GUEST_DISPLAY_NAME} onContinue={next} {...props}/>
@@ -215,5 +261,54 @@ const getFormValues = () => {
       {content()}
     </Screen>
 }
+
+
+const WaitingWelcome = (props) => {
+
+  
+  return (
+    <div className={styles.screen}>
+        <div className={styles.content}>
+            <div className={styles.logo}/>
+            <Card step={-1}
+                supertitle={SUCCESS}
+                title={DETAILS}
+                subtitle={BYE}
+                
+            />
+        </div>
+    </div>
+)
+
+
+}  
+/*
+
+export async function getStaticPaths() {
+  return {
+    // Only `/posts/1` and `/posts/2` are generated at build time
+    params: [{ params: { id: '1' } }, { params: { id: '2' } }],
+    // Enable statically generating additional pages
+    // For example: `/posts/3`
+    fallback: true,
+  }
+}
+
+// This also gets called at build time
+export async function getStaticProps({ params }) {
+  // params contains the post `id`.
+  // If the route is like /posts/1, then params.id is 1
+  const res = await axios.(`https://.../posts/${params.id}`)
+  const post = await res.json()
+
+  // Pass post data to the page via props
+  return {
+    props: { post },
+    // Re-generate the post at most once per second
+    // if a request comes in
+    revalidate: 1,
+  }
+}
+*/
 
 export default Home
