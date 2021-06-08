@@ -1,6 +1,6 @@
 import React, { useEffect, useState , useRef } from 'react'
 import dynamic from 'next/dynamic'
-import useSWR from 'swr'
+//import useSWR from 'swr'
 import axios from 'axios'
 import Spinner from '../components/Spinner'
 import Screen from '../components/Screen'
@@ -39,7 +39,8 @@ const Home = () => {
     vhCheck('browser-address-bar')
   });
 
-  let url ='http://localhost:3003/reservation';
+  let backendUrl =`${process.env.BACKEND_HOST}:${process.env.BACKEND_PORT}`;
+  let url =`${backendUrl}/reservation`;
   let token ='?token=43c98ac2-8493-49b0-95d8-de843d90e6ca' ;
     
   useEffect( async () => {
