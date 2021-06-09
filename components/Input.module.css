@@ -1,0 +1,231 @@
+.field , .selectfield {
+    position: relative;
+    height: 2.4em;
+    width: 100%;
+    text-align: left;
+    /* border: 1px solid #E0E0E0; */
+    border-radius: 5px;
+}
+
+
+
+.field:not(:last-child) {
+    margin-bottom: .9em;
+}
+
+.field label, 
+.field input ,
+.selectfield label ,
+.selectfield select {
+    position: absolute;
+    margin: 0;
+    padding: 0 12px;
+    left: 0;
+    outline: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    line-height: 100%;
+    transition: all .15s ease-out;
+}
+
+.field label ,
+.selectfield label {
+    top: 0;
+    height: 50%;
+    z-index: 1;
+    font-size: 10px;
+    padding-top: .6em;
+    
+    font-weight: bold;
+    color: #343A40;
+}
+
+.selectfield label {
+width: 90%;
+height: 50%;
+}
+
+.field input,
+.field input:hover,
+.field input:focus,
+.field input:valid,
+.field input:active ,
+.selectfield select:hover,
+.selectfield select:focus,
+.selectfield option:hover,
+.selectfield option:focus,
+.selectfield select:valid,
+.selectfield select:active {
+    bottom: 0;
+    /*height: 50%;*/
+    /* test 
+    /* to replace the js verif of element.validity.valid = true/false property */
+    /* and apply css border colors to the parent div  */
+    padding: 15px 0 0 10px;
+    height: 100%;
+    border-radius: 5px;
+    border: 1px solid #E0E0E0;
+    /* end test */
+    color: #868D96;
+    /* font-size: .75em; */
+    font-size: 12px;
+    background-color: transparent;
+}
+.selectfield select
+.selectfield select:hover,
+.selectfield select:focus,
+.selectfield option:hover,
+.selectfield option:focus,
+.selectfield select:valid,
+.selectfield select:active {
+bottom: 0;
+/* height: 50%; */
+padding: 10px;
+height: 100%;
+border-radius: 5px;
+border: 1px solid #E0E0E0;
+color: #868D96;
+font-size: .85em;
+/* font-size: 12px; */
+
+}
+.field input:placeholder-shown:not(:focus) ,
+    .selectfield select:placeholder-shown:not(:focus) {
+    height: 100%;
+    bottom: 0;
+}
+
+.field input:placeholder-shown:not(:focus) + label ,
+.selectfield select:placeholder-shown:not(:focus) + label {
+    top: 25%;
+    bottom: 0;
+    font-size: .75em;
+    
+    font-weight: normal ;
+    color: #868D96;
+    padding-top: .3em;
+}
+
+.selectfield select {
+    width: 100%;
+    height: 100%;
+   
+}
+
+.selectfield select:placeholder-shown:not(:focus) + label {
+    top: 15%;
+     bottom: 0;/*
+    font-size: .5em; */
+    font-size: 12px;
+    color: #868D96;
+    padding-top: .15em;
+}
+
+
+.field input:-webkit-autofill,
+.field input:-webkit-autofill:hover, 
+.field input:-webkit-autofill:focus,
+.field input:-webkit-autofill::first-line {
+    -webkit-box-shadow: 0 0 0px 1000px #fff inset;
+    font-family: var(--default-font);
+   
+    color: #868D96;
+}
+
+.field button ,
+.selectfield button {
+    position: absolute !important;
+    right: 0 !important;
+    top: 0 !important;
+    padding: 0px !important;
+    margin: 0 !important;
+    border: none !important ;
+    height: 100% !important;
+    width:30px !important; 
+    
+}
+
+.clearButton{
+   /* visibility: hidden; */
+   
+   color : #868D96;
+   stroke : #868D96;
+}
+
+.clearButton {
+    height:24px ; 
+    width:24px ;
+    fill:#000000;   
+    color : #868D96;
+    stroke : #868D96;
+    visibility: hidden;
+   /* background: url(/clear.svg) 1px 1px/18px 18px no-repeat;
+    */
+}
+
+
+.selectfield option {
+display: block;
+height: 25px;
+line-height: 25px;
+font-size: 16px;
+padding: 5px;
+}
+.clearButton_show {
+
+    color : #868D96;
+    stroke : #868D96;
+    stroke-width:2px;
+    
+   background: url(/clear.svg) -2px 8px/23px 23px no-repeat;
+   visibility:visible;
+
+}
+
+.cross{
+height : 18px;
+width : 18px;
+
+}
+
+.field input:invalid {
+
+    border: 1px solid #DC3545;
+}
+
+.field input:placeholder-shown:not(:focus)  {
+
+    border: 1px solid #E0E0E0;
+}
+
+ 
+.field input:focus {
+    border: 3px solid #A6CBF3
+}
+
+.field input:valid {
+    border: 1px solid #28A745
+}
+
+
+
+/*
+.field input:focus:invalid {
+    box-shadow: 0px 0px 4px 2px #A6CBF3;
+
+    border: 1px solid #A6CBF3
+}
+
+.field input:focus:active {
+    box-shadow: 0px 0px 4px 2px #A6CBF3;
+
+    border: 1px solid #A6CBF3
+}
+
+.field input:focus {
+    box-shadow: 0px 0px 4px 2px #A6CBF3;
+
+    border: 1px solid #A6CBF3
+} 
+*/

@@ -1,0 +1,14 @@
+.form {
+    width: 100%;
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+
+}
+
+.group {
+
+    display: block;
+    margin: 18px 0 ;
+}
+

@@ -1,0 +1,115 @@
+.grid_no_nav {
+    grid-template-rows: 1fr;
+}
+
+.grid {
+    min-height: 100vh;
+    min-height: calc(100vh - var(--browser-address-bar, 0px));
+    display: grid;
+    grid-template-rows: 1fr auto;
+    align-content: stretch;
+    justify-content: stretch;
+}
+
+.container {
+    min-height: 100vh;
+    min-height: calc(100vh - var(--browser-address-bar, 0px));
+}
+
+.wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.center {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: var(--header-height);
+    background-color: var(--brand-primary-color);
+    border-bottom: 10px solid var(--brand-secondary-color);
+    z-index: 1;
+}
+
+.content {
+    /* TODO: fix scroll bug on Safari mobile (doesn't reveal bottom under footer) */
+    position: absolute;
+    top: var(--header-height);
+    bottom: var(--footer-height);
+    width: 100%;
+    height: calc(100% - var(--header-height) - var(--footer-height));
+    display: grid;
+    grid-template-rows: auto auto 1fr;
+    padding: 0 10%;
+    align-content: stretch;
+    justify-content: stretch;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: var(--footer-height);
+    z-index: 1;
+    background-color: var(--background-color);
+    padding: 0 10% 50px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+
+
+.disabled {
+    background-color: #baD1D1D1 ;
+    cursor: not-allowed;
+    
+}
+
+.xl {
+    padding: 0 2.5em;
+}
+
+
+@media screen and (min-device-width: 768px) { /* iPad/Desktop */
+
+    .wrapper {
+        --post-header-space: 45px;
+        --post-content-space: 30px;
+        width: 550px;
+        min-height: 100vh;
+        min-height: calc(calc(100vh - var(--browser-address-bar, 0px)) - var(--header-height) - var(--post-header-space) - var(--post-content-space));
+        border-radius: 10px;
+        background: var(--background-color);
+        overflow: hidden;
+        margin-bottom: var(--post-content-space);
+    }
+    
+    .header {
+        position: absolute;
+    }
+
+    .footer {
+        position: absolute;
+        padding: 0 10% 31px;
+    }
+    
+    .container {
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+    }
+
+    .content {
+        top: 50px;
+        height: auto;
+    }
+}

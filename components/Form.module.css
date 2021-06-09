@@ -1,9 +1,0 @@
-.card {
-    box-shadow: var(--shadow-small);
-    transition: box-shadow 0.2s ease 0s;
-}
-
-.card:hover {
-    box-shadow: var(--shadow-large);
-    z-index: 1;
-}

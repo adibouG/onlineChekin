@@ -1,15 +1,16 @@
-const axios = require('axios');
 
 export default async (req, res) => {
 
-  // This is a working example of how in here we can call whatever third party
-  // to fetch exxternal data and return that (how ever we like).
+  // TODO: get this from db
+  console.log("NEXT API FETCH req")
+  console.log(req)
+let url =`${process.env.BACKEND_HOST}:${process.env.BACKEND_PORT}/reservation?token=${req.query.token}` ;
+let reservation = await axios.get(url) ;
 
-  await axios({
-      method: 'get',
-      url: 'https://api.vercel.com/www/user',
-      headers: { 'Authorization': `Bearer ${process.env.TOKEN}` }
-    })
-    .then(response => res.status(200).json({name: response.data.user.email}))
-    .catch(error => res.status(200).send(error));
+  
+console.log(reservation.data)
+  // TODO: locale based on header
+
+  res.status(200).send(reservation.data) 
+
 }
