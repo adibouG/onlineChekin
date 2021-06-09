@@ -28,8 +28,9 @@ const MethodGroup = (props) => {
     const {names  , selected , setMethod} = props
     let group = [] ;
     for (let i of names) {
+        let src = i.toLowerCase();
         group.push(
-            <BankMethodButton handleChange={setMethod} name={"payMethod"} id={i}  value={i}   src={i}   isChecked={selected === i} />
+            <BankMethodButton key={i} handleChange={setMethod} name={"payMethod"} id={i}  value={i}   src={src}   isChecked={selected === i} />
         )
     }
         

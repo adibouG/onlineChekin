@@ -3,8 +3,6 @@ import styles from './index.module.css'
 import Card from '../../components/Card'
 
 
-
-
 const Welcome = ({ guest, onContinue , step }) => {
     return (
         <div className={styles.screen}>
