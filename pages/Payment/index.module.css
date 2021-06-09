@@ -66,25 +66,6 @@
 
 .displayAmount_body_currency {}
 
-/* HIDE RADIO */
-.bankMethodButton input[type=radio] { 
-    position: absolute;
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-  
-  /* IMAGE STYLES */
-.bankMethodButton  input[type=radio] + img {
-    cursor: pointer;
-  }
-  
-  /* CHECKED STYLES */
-   /* IMAGE STYLES */
-.bankMethodButton input[type=radio]:checked + img {
-
-  }
-
   .displayMethods {
     display: flex;
     flex-flow: column;

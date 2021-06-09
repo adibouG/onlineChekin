@@ -11,7 +11,7 @@ const Welcome = ({ guest, onContinue , step }) => {
                 <Card   step={step}
                         supertitle="Welcome!" 
                         title={guest}
-                        subtitle={step === 1 ? "Are you ready to check-in?" : "Getting your reservation details..."}
+                        subtitle={step === 0 ? "Are you ready to check-in?" : "Getting your reservation details..."}
                         buttonTitle="Yes, start check-in"
                         onClick={onContinue}
                 />
