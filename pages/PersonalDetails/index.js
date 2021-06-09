@@ -7,32 +7,8 @@ const PersonalDetails = React.forwardRef((props, ref) => {
     
     let { guest  , update , isValid } = props ;
 
-
     console.log(guest)
  
-   //if (!guest.firstName && !guest.lastName &&  guest.fullName && guest.fullName.length ) {
-   //    guest.firstName = guest.fullName.split(' ')[0];
-   //    guest.lastName = guest.fullName.split(' ')[1];
-   //}
-   //else if (guest.firstName && !guest.lastName  && guest.fullName )  {
-   //    if (guest.fullName.split(' ')[0] !== guest.firstName)  guest.lastName = guest.fullName.split(' ')[0]
-   //    if (guest.fullName.split(' ')[0] === guest.firstName)  guest.lastName = guest.fullName.split(' ')[1]
-   //
-   //}
-   //else if (!guest.firstName && guest.lastName  && guest.fullName )  {
-   //    if (guest.fullName.split(' ')[0] !== guest.lastName)  guest.firstName = guest.fullName.split(' ')[0]
-   //    if (guest.fullName.split(' ')[0] === guest.lastName)  guest.firstName = guest.fullName.split(' ')[1]
-   //
-   //}
-
-   //else if (guest.firstName && guest.lastName &&  !guest.fullName) {
-   //    guest.fullName = guest.firstName + ' ' + guest.lastName ;
-   //}
-   //else if (guest.lastName && !guest.firstName  && !guest.fullName) {
-   //    guest.fullName =  guest.lastName ;
-   //}
-  
-   // const innerRef = useRef(null);
    const [firstName , setFirstName] = useState(guest.firstName || "" );
    const [lastName , setLastName] = useState(guest.lastName || "" );
    const [address , setAddress] = useState(guest.address || "" );
