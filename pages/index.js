@@ -259,6 +259,7 @@ const getFormValues = () => {
     onContinue={next}
     disabled={disabled}
     ref={nextButtonRef}
+    nextLabel={step === 4 ? 'Pay' : false }
     >
       {content()}
     </Screen>
