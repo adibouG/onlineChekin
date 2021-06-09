@@ -1,11 +1,8 @@
 import React, { useState } from 'react'
 import styles from './Input.module.css' ;
-import Image from 'next/image' ;
 
  
 const Input = ({title, id, type, name, pattern, required, value , autocomplete, handleChange}) => {
-    
-   
     
     const onChange = (e) => handleChange(e.target.value)
 
@@ -13,11 +10,9 @@ const Input = ({title, id, type, name, pattern, required, value , autocomplete, 
 
     if (type === 'select' && Array.isArray(value))  {
 
-        
         let o = [<option>{title}</option>]
-        value.forEach((v) => o.push(<option value={v}>{v}</option>))
+        value.forEach((v , i) => o.push(<option key={i} value={v}>{v}</option>))
        
-
         return(
             <div className={styles.selectfield}>
                 {/*
@@ -32,12 +27,9 @@ const Input = ({title, id, type, name, pattern, required, value , autocomplete, 
                     {o}
                 </select>
             </div>
-
-
         )
     }
 
-    
     return(
         <div className={styles.field}>
 	        <input  required={required}
@@ -51,8 +43,9 @@ const Input = ({title, id, type, name, pattern, required, value , autocomplete, 
                     onChange={onChange}
             />
 	        <label htmlFor={id}>{title}</label>
-            <button className={value && value.length ? styles.clearButton_show : styles.clearButton} onClick={handleClear}>
-               
+            <button className={value && value.length ? styles.clearButton_show : styles.clearButton} 
+                    onClick={handleClear}
+            >
             </button>
         </div>
     )
