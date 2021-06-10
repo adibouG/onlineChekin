@@ -9,6 +9,8 @@
     grid-template-rows: 1fr auto;
     align-content: stretch;
     justify-content: stretch;
+    max-width: 1400px;
+    margin: auto;
 }
 
 .container {
@@ -19,7 +21,8 @@
 .wrapper {
     width: 100%;
     height: 100%;
-    position: relative;
+ position: relative;
+    /* top:20px;  */
     display: flex;
     justify-content: center;
     align-items: stretch;
@@ -46,7 +49,9 @@
 
 .content {
     /* TODO: fix scroll bug on Safari mobile (doesn't reveal bottom under footer) */
-    position: absolute;
+    /*  position: relative; */
+   position: absolute;
+
     overflow: auto;
     top: var(--header-height);
     bottom: var(--footer-height);

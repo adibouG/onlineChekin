@@ -9,6 +9,7 @@ import Screen from '../components/Screen'
 
 
 //const fetcher = url => fetch(url).then(res => res.json());
+const Failed = dynamic(() => import('./Failed/index.js'))
 const Welcome = dynamic(() => import('./Welcome/index.js'))
 const Confirmation = dynamic(() => import('./Confirmation/index.js'))
 const HotelPolicy = dynamic(() => import('./HotelPolicy/index.js'))
@@ -16,23 +17,23 @@ const PersonalDetails = dynamic(() => import('./PersonalDetails/index.js'))
 const Payment = dynamic(() => import('./Payment/index.js'))
 const Success = dynamic(() => import('./Success/index.js'))
 
+
+let backendUrl = `${process.env.BACKEND_HOST}:${process.env.BACKEND_PORT}`;
+let url =`${backendUrl}/reservation`;
+
 let isValidGuest = false ;
 let originalValue = {} ;
+
+const ForwardedRefComponent = React.forwardRef((props, ref) => (
+  <PersonalDetails {...props} forwardedRef={ref} />
+))
 
 const Home = (props) => {
 
   const router = useRouter() ;
-
-  console.log(router)
-
-  console.log(router.query.token)
-  console.log(router.query.name)
-
-  console.log(router.asPath)
-
   let  queryParams = new URLSearchParams(String(router.asPath).replace('/' , ''))
   
-  const steps = ['welcome', 'confirm',  'policies' , 'details', 'payment' , 'success']
+  const steps = ['error', 'failed', 'welcome', 'confirm',  'policies' , 'details', 'payment' , 'success']
   
   const [disabled , setDisabled] = useState(false);
   
@@ -43,18 +44,26 @@ const Home = (props) => {
   const [ step, setStep ] = useState(-1);
   const [ data, setData ] = useState(null);
   const [ error, setError ] = useState(null);
+  
+  const [ guestValidated, setGuestValidated ] = useState(false);
+ 
 
-  const formRef = useRef();
-  const nextButtonRef = useRef();
+
+  const formRef = useRef(null);
+  const nextButtonRef = useRef(null);
   
 
   useEffect(() => {
     const vhCheck = require('vh-check')
     vhCheck('browser-address-bar')
+  
+    console.log(formRef)
+    console.log(nextButtonRef)
   });
 
   
   useEffect( () => {
+    
 
     console.log(router.query)
     console.log(router.query.name)
@@ -72,10 +81,16 @@ const Home = (props) => {
   //
   } , [] );
 
+
+  
+  useEffect( () => {
+
+    if(error) setStep(-2) ;
+
+  }, [error] )
  
     
-  let backendUrl = `${process.env.BACKEND_HOST}:${process.env.BACKEND_PORT}`;
-  let url =`${backendUrl}/reservation`;
+ 
   
 
   useEffect( async () => {
@@ -92,14 +107,8 @@ const Home = (props) => {
     }
   } , [] );
 
-
-  // useEffect( () => {
-  //   console.log('setData')
-  // }, [data]);
-
-
    
-   const setDB = async () => {
+  const setDB = async () => {
     let setRequest =  await axios.post(url , data) ;
     originalValue = setRequest.data.checkin ;
     return setData(setRequest.data.checkin) ;
@@ -114,15 +123,15 @@ const Home = (props) => {
       if (data) setStep(0);  
     }  
 
-    if (step == 2) {
+    if (step === 2) {
       setDisabled(!data.privacyPolicy.accepted)
     }  
-    if (step == 3) {
-     
+    if (step === 3) {
+      
       setDisabled(!isValidGuest)
       
     } 
-    if (step == 4) {  
+    if (step === 4) {  
       setDisabled(!data.payment.paid)
         
     }
@@ -136,13 +145,14 @@ const Home = (props) => {
         setDB() ;
      } 
      if (step == 4) {  
-      setDB() ;
+       setDB() ;
      }
    } , [step] );
 
 
-  const validate = (v) => {
+  const validateGuest = (v) => {
     isValidGuest = v ;
+    setGuestValidated(v) ;
     setDisabled(!isValidGuest)
   }
 
@@ -160,6 +170,7 @@ const Home = (props) => {
     } 
   }
 
+ 
   const updatePayment = ({amount , currency , method , bank , isPaid}) => {
 
     setDisabled(false);
@@ -176,8 +187,8 @@ const Home = (props) => {
 
 const getFormValues = () => { 
   let details = {} ;
-  
-  let f = document.getElementById('form') ;
+  debugger
+  let f = formRef.current // document.getElementById('form') ;
   for ( let i = 0 ; i < 15 ; i+=2) {
 
       if (f[i].name in data.guest) details[f[i].name] = f[i].value  ;
@@ -229,11 +240,13 @@ const getFormValues = () => {
      queryParams.get('name') ? queryParams.get('name').replaceAll('.' , ' ') : null 
   const content = (props) => {
     
-    if (error) {
+    if (error === 'expired' || error === 'notFound') {
+      return <Failed reason={error} step={step} {...props}/>
+    } else if (error) {
       return `Error: ${error.message}`;
     } else if ((!data && !GUEST_DISPLAY_NAME) || router.isFallback) {
       return <Spinner/>
-    } else if (step < 1) {
+    } else if (step < 1 ) {
       return <Welcome step={step} guest={GUEST_DISPLAY_NAME} onContinue={next} {...props}/>
     } else if (step === 1) {
       return <Confirmation reservation={data.reservation} />
@@ -242,8 +255,11 @@ const getFormValues = () => {
                           update={updatePolicies} 
                           />
     }  else if (step === 3) {
-      return <PersonalDetails ref={formRef} guest={data.guest} 
-      update={updateGuestDetails} isValid={validate} 
+      return <ForwardedRefComponent ref={formRef} 
+                              guest={data.guest} 
+                              update={updateGuestDetails} 
+                              isValid={isValidGuest} 
+                              validate={validateGuest}
       />
     } else if (step === 4) {
       return <Payment payment={data.payment} update={updatePayment}/>
@@ -254,7 +270,7 @@ const getFormValues = () => {
   
   return <Screen 
     isLoading={!data} 
-    canNavigate={step !== 0 && step !== 5} 
+    canNavigate={step > 0 && step !== 5} 
     onBack={previous}
     onContinue={next}
     disabled={disabled}
