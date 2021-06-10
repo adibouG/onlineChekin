@@ -4,6 +4,7 @@ import Card from '../../components/Card'
 
 
 const Success = ({ date  }) => {
+    
     date = date ||  new Date(((new Date().getTime()) + (24 * 60 * 60 * 1000 ))).toLocaleDateString()
     let day = new Date(date).toLocaleDateString(false, { weekday: 'long' });
     const SUCCESS = 'Checked in!'

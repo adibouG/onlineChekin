@@ -10,7 +10,7 @@ const Input = ({title, id, type, name, pattern, required, value , autocomplete, 
 
     if (type === 'select' && Array.isArray(value))  {
 
-        let o = [<option>{title}</option>]
+        let o = [<option key={title}>{title}</option>]
         value.forEach((v , i) => o.push(<option key={i} value={v}>{v}</option>))
        
         return(
@@ -38,6 +38,7 @@ const Input = ({title, id, type, name, pattern, required, value , autocomplete, 
                     pattern={pattern}
                     name={name} 
                     id={id} 
+                    key={id} 
                     value={value} 
                     placeholder=' ' 
                     onChange={onChange}

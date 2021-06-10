@@ -10,8 +10,10 @@ import Select from '../../components/Select.js'
 
 const MethodGroup = (props) => {
 
-    const {names  , selected , setMethod} = props
+    const {names  , selected , setMethod} = props;
+
     let group = [] ;
+
     for (let i of names) {
         let src = i.toLowerCase();
         group.push(
@@ -28,7 +30,7 @@ const MethodGroup = (props) => {
 
 const Payment = ({ payment = {} , update}) => {
     
-    const [amount , setAmout] = useState(payment.amount || 0 );
+    const [amount , setAmount] = useState(payment.amount || 0 );
     const [currency , setCurrency] = useState(payment.currency || "€" );
     const [paid , setPaid] = useState(payment.paid || false );
     const [paymentMethod , setPaymentMethod] = useState( null );
@@ -47,10 +49,10 @@ const Payment = ({ payment = {} , update}) => {
          
     useEffect(() => {
 
-            if (amount === 0 || paid) return update(null , true )
-            if (paymentMethod &&  bank ) return update({bank , paymentMethod , amount ,  currency }, true ) ;
-
-        } , [paid , paymentMethod , bank]
+            if (paid) setAmount(0);
+            else if (amount === 0 ) setPaid(true)
+            if  (paymentMethod &&  bank) return update({amount, currency ,  paymentMethod , bank ,paid}) ;
+        } , [amount, paid , paymentMethod , bank]
     )
  
     return (
