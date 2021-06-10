@@ -139,18 +139,19 @@ const Home = (props) => {
   }
 
  
-  const updatePayment = ({amount , currency , method , bank , isPaid}) => {
+  const updatePayment = ({ amount , currency , method , bank , isPaid}) => {
 
-    setDisabled(false);
+    
     setData( {
       ...data, 
       payment : { 
         ...data.payment ,
         paid : true 
       }
-      }
+    }
     )
-
+    
+    setDisabled(!isPaid);
   }
 
 const getFormValues = () => { 
@@ -184,7 +185,7 @@ const getQrCode = async (data) => {
   
   try{
 
-    let request = await axios.post(qrUrl , data) ;
+    let request = await axios.post(qrUrl , data ) ;
     let response = request.data ;
     let qrCode = request.data.qrcode ;
     setQrCode(qrCode) ;
@@ -200,6 +201,10 @@ useEffect(() => {
     
   if (step === -1) {
     if (data) setStep(0);  
+  }  
+
+  if (step === 1) {
+    if (disabled) setDisabled(false);  
   }  
 
   if (step === 2) {
