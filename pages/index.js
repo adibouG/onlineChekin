@@ -20,6 +20,7 @@ const Success = dynamic(() => import('./Success/index.js'))
 
 let backendUrl = `${process.env.BACKEND_HOST}:${process.env.BACKEND_PORT}`;
 let url =`${backendUrl}/reservation`;
+let qrUrl =`${backendUrl}/qrcode`;
 
 let isValidGuest = false ;
 let originalValue = {} ;
@@ -40,12 +41,13 @@ const Home = (props) => {
   //const { data, error } = useSWR('/api/fetch', fetcher)
 
   //const [ name, setName ] = useState(null);
-  //const [ token, setToken ] = useState(null);
+  const [ token, setToken ] = useState(null);
   const [ step, setStep ] = useState(-1);
   const [ data, setData ] = useState(null);
   const [ error, setError ] = useState(null);
   
   const [ guestValidated, setGuestValidated ] = useState(false);
+  const [ qrCode, setQrCode ] = useState(null);
  
 
 
@@ -116,40 +118,6 @@ const Home = (props) => {
 
   
   
-  
-  useEffect(() => {
-    
-    if (step === -1) {
-      if (data) setStep(0);  
-    }  
-
-    if (step === 2) {
-      setDisabled(!data.privacyPolicy.accepted)
-    }  
-    if (step === 3) {
-      
-      setDisabled(!isValidGuest)
-      
-    } 
-    if (step === 4) {  
-      setDisabled(!data.payment.paid)
-        
-    }
-  } , [step , data] );
-
-
-  
-   useEffect(() => {
-
-     if (step == 3) {
-        setDB() ;
-     } 
-     if (step == 4) {  
-       setDB() ;
-     }
-   } , [step] );
-
-
   const validateGuest = (v) => {
     isValidGuest = v ;
     setGuestValidated(v) ;
@@ -211,6 +179,65 @@ const getFormValues = () => {
       )
 }
 
+const getQrCode = async (data) => {
+
+  
+  try{
+
+    let request = await axios.post(qrUrl , data) ;
+    let response = request.data ;
+    let qrCode = request.data.qrcode ;
+    setQrCode(qrCode) ;
+  }
+  catch(e){
+    console.log(e) ;
+    setError(e)
+  }
+}
+
+
+useEffect(() => {
+    
+  if (step === -1) {
+    if (data) setStep(0);  
+  }  
+
+  if (step === 2) {
+    setDisabled(!data.privacyPolicy.accepted)
+  }  
+  if (step === 3) {
+    
+    setDisabled(!isValidGuest)
+    
+  } 
+  if (step === 4) {  
+    setDisabled(!data.payment.paid)
+      
+  }
+  if (step === 5) {  
+   // getQrCode(data) //token ?
+      
+  }
+} , [step , data] );
+
+
+
+ useEffect(() => {
+
+   if (step === 3) {
+      setDB() ;
+   } 
+   if (step === 4) {  
+     setDB() ;
+   }
+   if (step === 5) {  
+    setDB() ;
+    getQrCode(data)
+  }
+ } , [step] );
+
+
+
   const previous = () => {
     setStep(Math.max(step - 1, 0))
   }
@@ -218,7 +245,7 @@ const getFormValues = () => {
   const next = () => { 
    
     if (step === 2) {
-      setDisabled(!data.privacyPolicy.accepted)
+    
     }  
     if (step === 3) { 
 
@@ -230,8 +257,11 @@ const getFormValues = () => {
       })
     }
     if (step === 4) {
-    
+     
+      //trigger payment  
+
     }
+
     setStep(Math.min(step + 1, steps.length - 1))
   }
 
