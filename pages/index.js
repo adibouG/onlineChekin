@@ -264,7 +264,7 @@ const getFormValues = () => {
     } else if (step === 4) {
       return <Payment payment={data.payment} update={updatePayment}/>
     } else if (step === 5) {
-      return <Success day={data.reservation} {...props} />
+      return <Success day={data.reservation.startDate} {...props} />
     }
   }
   
