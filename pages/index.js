@@ -3,14 +3,12 @@ import { useRouter } from 'next/router'
 import dynamic from 'next/dynamic'
 //import useSWR from 'swr'
 import axios from 'axios'
-import Card from '../components/Card'
-import Spinner from '../components/Spinner'
 import Screen from '../components/Screen'
 
 
 //const fetcher = url => fetch(url).then(res => res.json());
-const Failed = dynamic(() => import('./Failed/index.js'))
 const Welcome = dynamic(() => import('./Welcome/index.js'))
+const Failed = dynamic(() => import('./Failed/index.js'))
 const Confirmation = dynamic(() => import('./Confirmation/index.js'))
 const HotelPolicy = dynamic(() => import('./HotelPolicy/index.js'))
 const PersonalDetails = dynamic(() => import('./PersonalDetails/index.js'))
@@ -70,7 +68,7 @@ const Home = (props) => {
     console.log(router.query)
     console.log(router.query.name)
     console.log(router.query.token)
-    
+    //TODO:Remove token from url
    // router.replace(  {
   //   pathname: `/`,
   //   query: {
@@ -108,7 +106,7 @@ const Home = (props) => {
 
       console.log(e)
       setError(e.message);
-      
+
     }
   } , [] );
 
@@ -204,6 +202,7 @@ useEffect(() => {
     
   if (step === -1) {
     if (data) setStep(0);  
+    if (error) setStep(-2);  
   }  
 
   if (step === 1) {
@@ -276,15 +275,12 @@ useEffect(() => {
   const GUEST_DISPLAY_NAME = data ? 
     ( data.guest.firstName + ' ' + data.guest.lastName ) : 
      queryParams.get('name') ? queryParams.get('name').replaceAll('.' , ' ') : null 
+
   const content = (props) => {
     
-    if (error === 'expired' || error === 'notFound') {
-      return <Failed reason={error} step={step} {...props}/>
-    } else if (error) {
-      return `Error: ${error.message}`;
-    } else if ((!data && !GUEST_DISPLAY_NAME) || router.isFallback) {
-      return <Spinner/>
-    } else if (step < 1 ) {
+    if (step < -1) {
+        return <Failed reason={error} step={step} onContinue={false} {...props}  />
+    }  else if (step < 1 ) {
       return <Welcome step={step} guest={GUEST_DISPLAY_NAME} onContinue={next} {...props}/>
     } else if (step === 1) {
       return <Confirmation reservation={data.reservation} />
@@ -315,7 +311,7 @@ useEffect(() => {
     ref={nextButtonRef}
     nextLabel={step === 4 ? 'Pay' : false }
     >
-      {content()}
+      {content(props)}
     </Screen>
 }
 

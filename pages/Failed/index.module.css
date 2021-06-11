@@ -72,7 +72,13 @@ opacity: 1;
 
 .failed_title{
 
-    height:100px;
+    height: 100px;
+    flex: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    text-align: center;
 }
 
 
