@@ -46,6 +46,17 @@
 
 }
 
+.header_logoWrapper {
+    position: absolute;
+    background: transparent url(/logo.svg) center center no-repeat padding-box;
+    background-size: contain;
+    width: 100%;
+    height: -moz-calc(var(--header-height) - 12px);
+    height: calc(var(--header-height) - 20px);
+    opacity: 1;
+    margin: 6px 0 0 0;
+}
+
 .wrapper{
 
     width: 100%;
