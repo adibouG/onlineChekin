@@ -17,35 +17,51 @@ const Value = (props) => {
 }
 
 const Confirmation = ({ reservation }) => {
-    return <Stack>
-        <Header>Please confirm your reservation details</Header>
-        <Item>
-            <Title>Your stay</Title>
-            <Value>{new Date(reservation.startDate).toLocaleDateString()} - {new Date(reservation.endDate).toLocaleDateString()}</Value>
-            <Title>Number of guests</Title>
-            <Value>{reservation.guestCount}</Value>
-        </Item>
-        <Item>
-            <Title>Room type</Title>
-            <Value>{reservation.roomType}</Value>
-        </Item>
-        <Item>
-            <Title>Options</Title>
-            <Value>{reservation.options.join('\r\n')}</Value>
-        </Item>
-        <Item>
-            <Title>Options</Title>
-            <Value>{reservation.options.join('\r\n')}</Value>
-        </Item>
-        <Item>
-            <Title>Options</Title>
-            <Value>{reservation.options.join('\r\n')}</Value>
-        </Item>
-        <Item>
-            <Title>Options</Title>
-            <Value>{reservation.options.join('\r\n')}</Value>
-        </Item>
-    </Stack>
+
+    const startDate =  new Date(reservation.startDate)
+    const endDate = new Date(reservation.endDate)
+    
+    const numOfNight = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24))
+
+    const options = [] ;
+    if (reservation.options && reservation.options.length) {
+       for (let i of reservation.options) {
+           options.push(
+               <Item>
+                   <Title>Options</Title>
+                   <Value>{i}</Value>
+               </Item>
+           )
+        }
+    }
+    else {
+        options.push(
+            <Item>
+                <Title>Options</Title>
+                <Value>Breakfast</Value>
+            </Item>
+        )
+    }
+
+    return(
+        <Stack>
+            <Header>Please confirm your reservation details</Header>
+            
+            <Item>
+                <Title>Your stay</Title>
+                <Value>{startDate.toLocaleDateString()} - {endDate.toLocaleDateString()}</Value>
+                <Title>Number of night(s)</Title>
+                <Value>{numOfNight}</Value>
+                <Title>Number of guests</Title>
+                <Value>{reservation.guestCount}</Value>
+            </Item>
+            <Item>
+                <Title>Room type</Title>
+                <Value>{reservation.roomType}</Value>
+            </Item>
+            {options}
+        </Stack>
+    )
 }
 
 export default Confirmation
