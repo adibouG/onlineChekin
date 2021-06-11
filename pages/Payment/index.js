@@ -2,35 +2,22 @@ import  React, { useState ,useEffect }  from 'react'
 import styles from './index.module.css'
 import { Stack, Header } from '../../components/Stack.js'
 import Input from '../../components/Input.js'
-import Image from 'next/image' ;
+import RadioButton from '../../components/RadioButton.js'
+import Select from '../../components/Select.js'
 
 
 
-const BankMethodButton = ({name , id , value , src , isChecked , handleChange = false}) => {
-
-    const onChange = (e) => {
-        let name = e.target.name ;
-        let value = e.target.value ;
-        let checked = e.target.checked ;
-        handleChange({name , value , checked})
-    }
-
-    return(
-        <label htmlFor={id} className={styles.bankMethodButton}>
-            <input type="radio" name={name} id={id} value={value} checked={isChecked} onChange={onChange}/>
-            <Image width={69} height={60} alt={`${value}`} src={isChecked ? `/${src}2.svg` : `/${src}.svg`} className={isChecked ? styles.bankMethodButton_img2 : styles.bankMethodButton_img} />
-        </label>
-    )
-}
 
 const MethodGroup = (props) => {
 
-    const {names  , selected , setMethod} = props
+    const {names  , selected , setMethod} = props;
+
     let group = [] ;
+
     for (let i of names) {
         let src = i.toLowerCase();
         group.push(
-            <BankMethodButton key={i} handleChange={setMethod} name={"payMethod"} id={i}  value={i}   src={src}   isChecked={selected === i} />
+            <RadioButton key={i} w={69} h={60} handleChange={setMethod} name={"payMethod"} id={i}  value={i}   src={src}   isChecked={selected === i} />
         )
     }
         
@@ -43,7 +30,7 @@ const MethodGroup = (props) => {
 
 const Payment = ({ payment = {} , update}) => {
     
-    const [amount , setAmout] = useState(payment.amount || 0 );
+    const [amount , setAmount] = useState(payment.amount || 0 );
     const [currency , setCurrency] = useState(payment.currency || "€" );
     const [paid , setPaid] = useState(payment.paid || false );
     const [paymentMethod , setPaymentMethod] = useState( null );
@@ -62,10 +49,10 @@ const Payment = ({ payment = {} , update}) => {
          
     useEffect(() => {
 
-            if (amount === 0 || paid) return update(null , true )
-            if (paymentMethod &&  bank ) return update({bank , paymentMethod , amount ,  currency }, true ) ;
-
-        } , [paid , paymentMethod , bank]
+            if (paid) setAmount(0);
+            else if (amount === 0 ) setPaid(true)
+            if  (paymentMethod &&  bank) return update({amount, currency ,  paymentMethod , bank ,paid}) ;
+        } , [amount, paid , paymentMethod , bank]
     )
  
     return (
@@ -100,8 +87,19 @@ const Payment = ({ payment = {} , update}) => {
                         <div className={styles.displayMethods_body_bank} >
                             <Input title='Select your bank' name='bank' id='bank' type='select' 
                             value={availableBanks} 
-                            handleChange={setBank} > 
-                        </Input>
+                            handleChange={setBank} 
+                        /> 
+                            
+                        {
+                        /*    <Select title='Select your bank' 
+                            name='bank' id='bank'  
+                            selected={bank}
+                            values={availableBanks} 
+                            handleChange={setBank} 
+                        />
+                        */
+                        }
+                       
                        </div>
                     </div>
                 </div>

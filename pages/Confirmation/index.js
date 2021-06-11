@@ -21,7 +21,7 @@ const Confirmation = ({ reservation }) => {
         <Header>Please confirm your reservation details</Header>
         <Item>
             <Title>Your stay</Title>
-            <Value>{reservation.startDate} - {reservation.endDate}</Value>
+            <Value>{new Date(reservation.startDate).toLocaleDateString()} - {new Date(reservation.endDate).toLocaleDateString()}</Value>
             <Title>Number of guests</Title>
             <Value>{reservation.guestCount}</Value>
         </Item>

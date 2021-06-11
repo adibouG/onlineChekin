@@ -1,0 +1,19 @@
+
+/* HIDE RADIO */
+.RadioButton input[type=radio] { 
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  /* IMAGE STYLES */
+.RadioButton  input[type=radio] + img {
+    cursor: pointer;
+  }
+  
+  /* CHECKED STYLES */
+   /* IMAGE STYLES */
+.RadioButton input[type=radio]:checked + img {
+
+  }

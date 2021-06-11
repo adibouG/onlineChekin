@@ -66,25 +66,6 @@
 
 .displayAmount_body_currency {}
 
-/* HIDE RADIO */
-.bankMethodButton input[type=radio] { 
-    position: absolute;
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-  
-  /* IMAGE STYLES */
-.bankMethodButton  input[type=radio] + img {
-    cursor: pointer;
-  }
-  
-  /* CHECKED STYLES */
-   /* IMAGE STYLES */
-.bankMethodButton input[type=radio]:checked + img {
-
-  }
-
   .displayMethods {
     display: flex;
     flex-flow: column;
@@ -102,9 +83,11 @@
 .displayMethods_body_method {
     display: flex;
     flex-flow: row;
+
+    margin: 0 0px 35px 0px;
+    align-content: center;
     justify-content: space-between;
     align-items: center;
-    margin: 0 -5px 35px -5px;
 
 }
 

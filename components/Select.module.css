@@ -1,0 +1,96 @@
+/* The container must be positioned relative: */
+.Select {
+    position: relative;
+    font-family: Arial;
+    width: 100%;
+    height: 100%;
+    border:  1px solid #fbfbfb;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    border-radius: 5px;
+  }
+  
+  .Select select {
+     /*hide original SELECT element: 
+     height:0;
+     width:0;
+     opacity: 0;*/
+  }
+  
+  .Select ul {
+    /*hide original SELECT element: 
+        height:0;
+    width:0;
+    opacity: 0;*/
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    top:0px;
+    right:0px;
+    width: 100%;
+  text-align: left;
+
+  
+    font-weight:bold;
+    position: absolute;
+    background-color: #fbfbfb;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 5px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    overflow:hidden 
+}
+ 
+  .Select_selected {
+    background-color: #c9c9c9d5;
+  }
+  
+  /* Style the arrow inside the select element: */
+  .Select_selected:after {
+    position: absolute;
+    content: "";
+    top: 14px;
+    right: 10px;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-color:transparent transparent #fff   transparent;
+  }
+  
+  /* Point the arrow upwards when the select box is open (active): */
+  .Select_selected.Select_arrow_active:after {
+    border-color: transparent transparent #fff transparent;
+    top: 7px;
+  }
+  
+  /* style the items (options), including the selected item: */
+  .Select_items div,.Select_selected {
+    color: #ffffff;
+    padding: 8px 16px;
+    border: 1px solid transparent;
+    border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+    cursor: pointer;
+  }
+  
+  /* Style items (options): */
+  .Select_items {
+    /* position: absolute;
+    background-color: DodgerBlue;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 99; */
+  }
+  
+  /* Hide the items when the select box is closed: */
+  .Select_items_hidden {
+    composes: Select_items;
+    heigth: 37px;
+  }
+  
+  .Select_items div:hover, .same_as_selected {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+  
