@@ -13,69 +13,97 @@
     margin: auto;
 }
 
-.container {
-    min-height: 100vh;
+
+
+.container{
+
+    min-height: -moz-calc(100vh - var(--browser-address-bar, 0px));
     min-height: calc(100vh - var(--browser-address-bar, 0px));
-}
+    min-width: 100vw;
 
-.wrapper {
-    width: 100%;
-    height: 100%;
- position: relative;
-    /* top:20px;  */
-    display: flex;
-    justify-content: center;
-    align-items: stretch;
-    align-content: stretch;
-}
-
-.center {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.header {
     position: fixed;
+
+    display: flex;
+    flex-flow: column;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: center;
+
+}
+
+.header{
+
+    position: relative;
     top: 0;
     width: 100%;
     height: var(--header-height);
     background-color: var(--brand-primary-color);
     border-bottom: 10px solid var(--brand-secondary-color);
     z-index: 1;
+    flex: 0 0 auto;
+
 }
 
-.content {
-    /* TODO: fix scroll bug on Safari mobile (doesn't reveal bottom under footer) */
-    /*  position: relative; */
-   position: absolute;
+.wrapper{
 
-    overflow: auto;
-    top: var(--header-height);
-    bottom: var(--footer-height);
-    width: 80%; /*
-  height: calc(100% - var(--header-height) - var(--footer-height));
-    display: grid;
-    grid-template-rows: auto auto 1fr;
-   */ padding: 0 0 1em 0;
+    width: 100%;
+    height: calc( 100vh - var(--header-height));
+    position: relative;
+    /* overflow: auto; not here as the wrapper contains the footer with the button  */
+    top: 0;
+    display: -moz-box;
     display: flex;
-    flex-flow: column;
-    align-content: center; /*stretch*/
-    justify-content: flex-start;/*stretch*/
+    -moz-box-pack: center;
+    justify-content: flex-start;
+    -moz-box-align: stretch;
+    align-items: center;
+    align-content: center;
+    flex-direction: column;
+    background: var(--background-color);
+    flex-wrap: nowrap;
 }
 
-.footer {
-    position: fixed;
+
+.content{
+
+    position: relative;
+    /* position: absolute; */
+    overflow: auto;
+    /* top: var(--header-height); */
+    /* bottom: var(--footer-height); */
+    width: 100%;
+    height: 100%;
+    padding: 1em;
+    margin-bottom: px;
+    display: -moz-box;
+    display: flex;
+    -moz-box-orient: vertical;
+    -moz-box-direction: normal;
+    flex-flow: column;
+    align-content: center;
+    -moz-box-pack: start;
+    justify-content: flex-start;
+    /* height: fit-content; */
+    flex: 1;
+}
+
+
+.footer{
+    
+    position: relative;
     bottom: 0;
     width: 100%;
     height: var(--footer-height);
     z-index: 1;
     background-color: var(--background-color);
-    padding: 0 10% 50px;
+    padding: 0px 10% 50px;
+    display: -moz-box;
     display: flex;
+    -moz-box-align: end;
     align-items: flex-end;
+    -moz-box-pack: justify;
     justify-content: space-between;
 }
 
@@ -86,23 +114,31 @@
     
 }
 
+
 .xl {
     padding: 0 2.5em;
 }
 
 
-@media screen and (min-device-width: 768px) { /* iPad/Desktop */
+
+
+@media  only screen and  (min-width: 768px) and (min-device-width: 768px) { /* iPad/Desktop */
 
     .wrapper {
-        --post-header-space: 45px;
-        --post-content-space: 30px;
+        /* --post-header-space: 45px;
+        --post-content-space: 30px; */
         width: 550px;
         min-height: 100vh;
+        max-height: 750px;
+        position: sticky;
+        top: calc(var(--header-height) + 25px);
+        min-height: -moz-calc(-moz-calc(100vh - var(--browser-address-bar, 0px)) - var(--header-height) - var(--post-header-space) - var(--post-content-space));
         min-height: calc(calc(100vh - var(--browser-address-bar, 0px)) - var(--header-height) - var(--post-header-space) - var(--post-content-space));
         border-radius: 10px;
         background: var(--background-color);
         overflow: hidden;
         margin-bottom: var(--post-content-space);
+    
     }
     
     .header {
@@ -110,18 +146,27 @@
     }
 
     .footer {
-        position: absolute;
+        /* position: absolute; */
         padding: 0 10% 31px;
     }
     
     .container {
-        display: flex;
+        /* display: flex;
         align-items: flex-end;
         justify-content: center;
+         */
+    display: flex;
+    -moz-box-align: end;
+    align-items: center;
+    -moz-box-pack: center;
+    justify-content: center;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
     }
 
     .content {
-        top: 50px;
-        /* height: auto; */
+      /*  top: 50px;
+         height: auto; */
     }
 }

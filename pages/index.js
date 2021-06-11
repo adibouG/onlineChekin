@@ -105,7 +105,10 @@ const Home = (props) => {
       originalValue = request.data.checkin ;
       return setData(request.data.checkin) ;
     }catch(e){
+
       console.log(e)
+      setError(e.message);
+      
     }
   } , [] );
 
