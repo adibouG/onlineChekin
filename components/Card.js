@@ -6,9 +6,6 @@ const Card = ({ step , supertitle, title, subtitle, buttonTitle, onClick , style
 
     let text , subtext ;
 
-   // if (subtitle) subtitle = subtitle.replace(/\n/g, '<br />');
-
-
     return (
         <div className={ step === 5 ? styles.successCard : styles.card}>
             <div className={step === 5 || step < -1   ? styles.flex : styles.grid}>

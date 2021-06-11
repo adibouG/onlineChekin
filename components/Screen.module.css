@@ -75,8 +75,7 @@
     /* bottom: var(--footer-height); */
     width: 100%;
     height: 100%;
-    padding: 1em;
-    margin-bottom: px;
+    padding: 10px 1em 1em 1em;
     display: -moz-box;
     display: flex;
     -moz-box-orient: vertical;
@@ -168,5 +167,7 @@
     .content {
       /*  top: 50px;
          height: auto; */
+         
+    padding: 55px 1em 1em 1em;
     }
 }
