@@ -65,26 +65,27 @@ const Home = (props) => {
   useEffect( () => {
     
     let  queryParams = new URLSearchParams(String(router.asPath).replace('/' , ''))
-    let token = queryParams.get('token')
+    let tokenurl = queryParams.get('token')
     let guestName = queryParams.get('name')
     
-    setName(guestName.replace(/\./g , ' '))
-    setToken(token)
+    if (guestName) setName(guestName.replace(/\./g , ' '))
+    if (tokenurl) setToken(token)
 
-    //TODO:Remove token from url
-   router.replace(  {
-     pathname: `/`,
-     query: {}
-   }, '/', 
-  {shallow: true}
-   )
+  if (name && token){ //TODO:Remove token from url
+    router.replace(  {
+        pathname: `/`,
+        query: {}
+        }, '/', 
+        {shallow: true}
+      )
+  }
   }, [] );
 
 
   
   useEffect( () => {
 
-    if(error) setStep(-2) ;
+    if (error) setStep(-2) ;
 
   }, [error] )
  
