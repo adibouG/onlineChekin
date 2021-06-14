@@ -72,7 +72,7 @@ const Home = (props) => {
     if (tokenurl) setToken(tokenurl)
     else if (!tokenurl) setError('your start-checking-in token provided in your email could not be retrieved.')
 
-    if (window) /mobile/i.test(window.navigator.userAgent) && !location.hash && setTimeout(() => window.scrollTo(0, 1) , 1000) ;​
+    //if (window) (/mobile/i).test(window.navigator.userAgent) && !location.hash && setTimeout(() => window.scrollTo(0, 1) , 1000) ;​
     
   } , [] );
 
