@@ -27,7 +27,7 @@ const Confirmation = ({ reservation }) => {
     if (reservation.options && reservation.options.length) {
        for (let i of reservation.options) {
            options.push(
-               <Item>
+               <Item key={i}>
                    <Title>Options</Title>
                    <Value>{i}</Value>
                </Item>
