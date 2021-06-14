@@ -108,7 +108,7 @@
     height: var(--footer-height);
     z-index: 1;
     background-color: var(--background-color);
-    padding: 0px 10% 50px;
+    padding: 0px 10% 90px;
     display: -moz-box;
     display: flex;
     -moz-box-align: end;
