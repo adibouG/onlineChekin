@@ -22,7 +22,7 @@
     min-width: 100vw;
     
 
-    
+
     position: fixed;
 
     display: flex;
@@ -104,6 +104,8 @@
 .footerWrapper{
     position: relative;
     bottom: 0;
+    left: 0;
+    right: 0;
     width: 100%;
     height: var(--footer-height);
     background:transparent;
@@ -145,8 +147,8 @@
 @media  only screen and  (min-width: 768px) and (min-device-width: 768px) { /* iPad/Desktop */
 
     .wrapper {
-        /* --post-header-space: 45px;
-        --post-content-space: 30px; */
+        /* --post-header-space: 45px; */
+        --post-content-space: 30px;
         width: 550px;
         min-height: 100vh;
         max-height: 750px;
