@@ -69,7 +69,7 @@ const Home = (props) => {
     let guestName = queryParams.get('name')
     
     if (guestName) setName(guestName.replace(/\./g , ' '))
-    if (tokenurl) setToken(token)
+    if (tokenurl) setToken(tokenurl)
 
   if (name && token){ //TODO:Remove token from url
     router.replace(  {
@@ -99,6 +99,8 @@ const Home = (props) => {
     
     let reservationId =`?token=${token}` ;
     let getUrl = url + reservationId
+
+    console.log(getUrl)
 
     try{
       const request =   await axios.get(getUrl) ;
