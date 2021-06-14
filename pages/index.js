@@ -70,16 +70,8 @@ const Home = (props) => {
     
     if (guestName) setName(guestName.replace(/\./g , ' '))
     if (tokenurl) setToken(tokenurl)
-
-  if (name && token){ //TODO:Remove token from url
-    router.replace(  {
-        pathname: `/`,
-        query: {}
-        }, '/', 
-        {shallow: true}
-      )
   }
-  }, [] );
+  );
 
 
   
@@ -113,6 +105,23 @@ const Home = (props) => {
 
     }
   } , [token] );
+
+
+
+  useEffect( async () => {
+
+    if (name && token){ //TODO:Remove token from url
+      router.replace(  {
+          pathname: `/`,
+          query: {}
+          }, '/', 
+          {shallow: true}
+        )
+    }
+  } , [name , token] );
+
+
+
 
    
   const setDB = async () => {
