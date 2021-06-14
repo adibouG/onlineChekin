@@ -1,9 +1,3 @@
-.stack {
-    display: grid;
-    justify-content: center;
-    text-align: center;
-    padding: 1em 3em var(--footer-height);
-}
 
 .title {
     font-weight: 300;
