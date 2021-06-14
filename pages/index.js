@@ -30,7 +30,7 @@ const ForwardedRefComponent = React.forwardRef((props, ref) => (
 const Home = (props) => {
 
   const router = useRouter() ;
-  let  queryParams = new URLSearchParams(String(router.asPath).replace('/' , ''))
+  
   
   const steps = ['error', 'failed', 'welcome', 'confirm',  'policies' , 'details', 'payment' , 'success']
   
@@ -38,7 +38,7 @@ const Home = (props) => {
   
   //const { data, error } = useSWR('/api/fetch', fetcher)
 
-  //const [ name, setName ] = useState(null);
+  const [ name, setName ] = useState('');
   const [ token, setToken ] = useState(null);
   const [ step, setStep ] = useState(-1);
   const [ data, setData ] = useState(null);
@@ -64,22 +64,21 @@ const Home = (props) => {
   
   useEffect( () => {
     
+    let  queryParams = new URLSearchParams(String(router.asPath).replace('/' , ''))
+    let token = queryParams.get('token')
+    let guestName = queryParams.get('name')
+    
+    setName(guestName.replace(/\./g , ' '))
+    setToken(token)
 
-    console.log(router.query)
-    console.log(router.query.name)
-    console.log(router.query.token)
     //TODO:Remove token from url
-   // router.replace(  {
-  //   pathname: `/`,
-  //   query: {
-  //     token : token,
-  //     name:guestName
-  //   }
-  // },
-  ///',
-  //shallow: true}
-  //
-  } , [] );
+   router.replace(  {
+     pathname: `/`,
+     query: {}
+   }, '/', 
+  {shallow: true}
+   )
+  }, [] );
 
 
   
@@ -94,10 +93,12 @@ const Home = (props) => {
   
 
   useEffect( async () => {
-    let token = queryParams.get('token')
+
+    if (!token) return ;
+    
     let reservationId =`?token=${token}` ;
     let getUrl = url + reservationId
-    console.log(getUrl)
+
     try{
       const request =   await axios.get(getUrl) ;
       originalValue = request.data.checkin ;
@@ -108,7 +109,7 @@ const Home = (props) => {
       setError(e.message);
 
     }
-  } , [] );
+  } , [token] );
 
    
   const setDB = async () => {
@@ -202,7 +203,12 @@ useEffect(() => {
     
   if (step === -1) {
     if (data) setStep(0);  
-    if (error) setStep(-2);  
+    else if (error) setStep(-2);  
+  }  
+ 
+  if (step === 0) {
+  // if (data) setName( data.guest.firstName ));  
+   
   }  
 
   if (step === 1) {
@@ -272,16 +278,13 @@ useEffect(() => {
     setStep(Math.min(step + 1, steps.length - 1))
   }
 
-  const GUEST_DISPLAY_NAME = data ? 
-    ( data.guest.firstName + ' ' + data.guest.lastName ) : 
-     queryParams.get('name') ? queryParams.get('name').replaceAll('.' , ' ') : null 
 
   const content = (props) => {
     
     if (step < -1) {
         return <Failed reason={error} step={step} onContinue={false} {...props}  />
-    }  else if (step < 1 ) {
-      return <Welcome step={step} guest={GUEST_DISPLAY_NAME} onContinue={next} {...props}/>
+    }  else if (step === -1 || step === 0 ) {
+      return <Welcome step={step} guest={name} onContinue={next} {...props}/>
     } else if (step === 1) {
       return <Confirmation reservation={data.reservation} />
     } else if (step === 2) {
