@@ -70,7 +70,7 @@ const Home = (props) => {
     
     if (guestName) setName(guestName.replace(/\./g , ' '))
     if (tokenurl) setToken(tokenurl)
-
+  }
   );
 
 
@@ -121,7 +121,7 @@ const Home = (props) => {
   } , [name , token] );
 
 
-  }, []
+
 
    
   const setDB = async () => {
