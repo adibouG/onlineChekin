@@ -57,18 +57,22 @@ const Home = (props) => {
   useEffect(() => {
     const vhCheck = require('vh-check')
     vhCheck('browser-address-bar')
+
+
   });
 
   
   useEffect( () => {
-    
-    let  queryParams = new URLSearchParams(String(router.asPath).replace('/' , ''))
+    let location = router.asPath ;
+    let  queryParams = new URLSearchParams(String(location).replace('/?' , '?'))
     let tokenurl = queryParams.get('token')
     let guestName = queryParams.get('name')
     
     if (guestName) setName(guestName.replace(/\./g , ' '))
     if (tokenurl) setToken(tokenurl)
-    if (!tokenurl) setError('your start-checking-in token could not be retrieved.')
+    else if (!tokenurl) setError('your start-checking-in token provided in your email could not be retrieved.')
+
+    if (window) /mobile/i.test(window.navigator.userAgent) && !location.hash && setTimeout(() => window.scrollTo(0, 1) , 1000) ;​
     
   } , [] );
 

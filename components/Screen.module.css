@@ -17,10 +17,15 @@
 
 .container{
 
+  /* 
     min-height: -moz-calc(100vh - var(--browser-address-bar, 0px));
     min-height: calc(100vh - var(--browser-address-bar, 0px));
-    min-width: 100vw;
-    position: fixed;
+  */
+  /*
+  position: fixed;
+  */
+  position: relative;
+  min-width: 100vw;
     display: flex;
     flex-flow: column;
     flex-direction: column;
@@ -88,8 +93,10 @@
     /* top: var(--header-height); */
     /* bottom: var(--footer-height); */
     width: 100%;
-    height: calc(100% + var(--footer-height));
+   /* 
+   height: calc(100% + var(--footer-height));
     height: 100% ;
+   */
     padding: 10px 1em 1.5em 1em;
     display: -moz-box;
     display: flex;
@@ -122,7 +129,7 @@
     height: var(--footer-height);
     z-index: 1;
     background-color: var(--background-color);
-    padding: 0px 10% 31px;
+    padding: 0px 2em 31px;
     display: -moz-box;
     display: flex;
     -moz-box-align: end;
