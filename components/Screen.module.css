@@ -20,7 +20,9 @@
     min-height: -moz-calc(100vh - var(--browser-address-bar, 0px));
     min-height: calc(100vh - var(--browser-address-bar, 0px));
     min-width: 100vw;
-    height: ava
+    
+
+    
     position: fixed;
 
     display: flex;

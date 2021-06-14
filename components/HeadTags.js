@@ -11,7 +11,7 @@ function HeadTags() {
       <Head>
        
       </Head>
-      <p>Hello world!</p>
+    
     </div>
   )
 }
