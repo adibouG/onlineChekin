@@ -20,7 +20,7 @@
     min-height: -moz-calc(100vh - var(--browser-address-bar, 0px));
     min-height: calc(100vh - var(--browser-address-bar, 0px));
     min-width: 100vw;
-
+    height: ava
     position: fixed;
 
     display: flex;
@@ -104,6 +104,7 @@
     bottom: 0;
     width: 100%;
     height: var(--footer-height);
+    background:transparent;
 }
     
 
@@ -168,7 +169,8 @@
 
     .footer {
         position: absolute; 
-        padding: 0 10% 31px;
+
+        padding: 0px 1em 31px;
     }
     
     .container {
