@@ -24,7 +24,7 @@ let qrUrl =`${backendUrl}/qrcode`;
 let isValidGuest = false ;
 let originalValue = {} ;
 
-const ForwardedRefComponent = React.forwardRef((props, ref) => (
+const PersonalDetailsWithForwrdRef = React.forwardRef((props, ref) => (
   <PersonalDetails {...props} forwardedRef={ref} />
 ))
 
@@ -57,9 +57,6 @@ const Home = (props) => {
   useEffect(() => {
     const vhCheck = require('vh-check')
     vhCheck('browser-address-bar')
-  
-    console.log(formRef)
-    console.log(nextButtonRef)
   });
 
   
@@ -71,8 +68,9 @@ const Home = (props) => {
     
     if (guestName) setName(guestName.replace(/\./g , ' '))
     if (tokenurl) setToken(tokenurl)
-  }
-  );
+    if (!tokenurl) setError('your start-checking-in token could not be retrieved.')
+    
+  } , [] );
 
 
   
@@ -305,7 +303,7 @@ useEffect(() => {
                           update={updatePolicies} 
                           />
     }  else if (step === 3) {
-      return <ForwardedRefComponent ref={formRef} 
+      return <PersonalDetailsWithForwrdRef ref={formRef} 
                               guest={data.guest} 
                               update={updateGuestDetails} 
                               isValid={isValidGuest} 
