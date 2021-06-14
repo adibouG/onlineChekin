@@ -6,8 +6,12 @@ function HeadTags() {
       <Head>
         <title>Register your stay : Advanced Check In</title>
         <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta property="og:title" content="Check In" key="CheckIn" />
-      </Head>
+{
+  /*
+          <!-- <meta property="og:title" content="Check In" key="CheckIn" /> -->
+*/
+}
+          </Head>
       <Head>
        
       </Head>
