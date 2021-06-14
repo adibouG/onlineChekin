@@ -20,6 +20,8 @@
     min-height: -moz-calc(100vh - var(--browser-address-bar, 0px));
     min-height: calc(100vh - var(--browser-address-bar, 0px));
     min-width: 100vw;
+    
+
 
     position: fixed;
 
@@ -102,8 +104,11 @@
 .footerWrapper{
     position: relative;
     bottom: 0;
+    left: 0;
+    right: 0;
     width: 100%;
     height: var(--footer-height);
+    background:transparent;
 }
     
 
@@ -142,8 +147,8 @@
 @media  only screen and  (min-width: 768px) and (min-device-width: 768px) { /* iPad/Desktop */
 
     .wrapper {
-        /* --post-header-space: 45px;
-        --post-content-space: 30px; */
+        /* --post-header-space: 45px; */
+        --post-content-space: 30px;
         width: 550px;
         min-height: 100vh;
         max-height: 750px;
@@ -168,7 +173,8 @@
 
     .footer {
         position: absolute; 
-        padding: 0 10% 31px;
+
+        padding: 0px 1em 31px;
     }
     
     .container {
