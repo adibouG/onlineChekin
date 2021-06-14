@@ -83,6 +83,8 @@
     position: relative;
     /* position: absolute; */
     overflow: auto;
+    
+    -webkit-overflow-scrolling: auto;
     /* top: var(--header-height); */
     /* bottom: var(--footer-height); */
     width: 100%;
@@ -190,12 +192,13 @@
     flex-direction: column;
     flex-wrap: nowrap;
     align-content: center;
+    background-size: cover;
     }
 
     .content {
       /*  top: 50px;
          height: auto; */
-         
+     
     padding: 55px 1em 1.5em 1em;
     }
 }
