@@ -87,8 +87,9 @@
     /* top: var(--header-height); */
     /* bottom: var(--footer-height); */
     width: 100%;
-    height: 100%;
-    padding: 10px 1em 1em 1em;
+    height: calc(100% + var(--footer-height));
+
+    padding: 10px 1em 1.5em 1em;
     display: -moz-box;
     display: flex;
     -moz-box-orient: vertical;
@@ -98,7 +99,7 @@
     -moz-box-pack: start;
     justify-content: flex-start;
     /* height: fit-content; */
-    flex: 1;
+    flex: 1 ;
 }
 
 .footerWrapper{
@@ -196,6 +197,6 @@
       /*  top: 50px;
          height: auto; */
          
-    padding: 55px 1em 1em 1em;
+    padding: 55px 1em 1.5em 1em;
     }
 }
