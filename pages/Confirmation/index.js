@@ -36,7 +36,7 @@ const Confirmation = ({ reservation }) => {
     }
     else {
         options.push(
-            <Item>
+            <Item key={"Breakfast"}>
                 <Title>Options</Title>
                 <Value>Breakfast</Value>
             </Item>
