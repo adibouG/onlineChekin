@@ -80,6 +80,7 @@
     flex-direction: column;
     background: var(--background-color);
     flex-wrap: nowrap;
+    flex: 1 1 auto;
 }
 
 
@@ -107,7 +108,7 @@
     -moz-box-pack: start;
     justify-content: flex-start;
     /* height: fit-content; */
-    flex: 1 ;
+    flex: 1 1 auto;
 }
 
 .footerWrapper{
@@ -159,16 +160,19 @@
          --post-header-space: 45px; 
         --post-content-space: 30px;
         width: 550px;
-        min-height: 100vh;
-        max-height: 750px;
-        position: relative;
-        top: calc(var(--header-height) + 25px);
-        min-height: -moz-calc(-moz-calc(100vh - var(--browser-address-bar, 0px)) - var(--header-height) - var(--post-header-space) - var(--post-content-space));
-        min-height: calc(calc(100vh - var(--browser-address-bar, 0px)) - var(--header-height) - var(--post-header-space) - var(--post-content-space));
-        border-radius: 10px;
-        background: var(--background-color);
-        overflow: hidden;
-        margin-bottom: var(--post-content-space);
+    /* min-height: 100vh; */
+    max-height: 800px;
+    position: relative;
+    /* top: -moz-calc(var(--header-height)); */
+    /* top: calc(var(--header-height)); */
+    height: -moz-calc(-moz-calc(100vh - var(--browser-address-bar, 0px)) - var(--header-height) - var(--post-header-space) - var(--post-content-space));
+    height: calc(calc(100vh - var(--browser-address-bar, 0px)) - var(--header-height) - var(--post-header-space) - var(--post-content-space));
+    border-radius: 10px;
+    background: var(--background-color);
+    overflow: hidden;
+    margin-bottom: var(--post-content-space);
+    flex: 1 1 auto;
+    margin: auto;
     
     }
     
@@ -191,16 +195,18 @@
         align-items: flex-end;
         justify-content: center;
          */
-         min-height: 100vh;
+        
     display: flex;
     -moz-box-align: end;
     align-items: center;
     -moz-box-pack: center;
-    justify-content: center;
+    
     flex-direction: column;
     flex-wrap: nowrap;
     align-content: center;
     background-size: cover;
+    
+    padding: 0 0 1em 0;
     }
 
     .content {
