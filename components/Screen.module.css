@@ -156,12 +156,12 @@
 @media  only screen and  (min-width: 768px) and (min-device-width: 768px) { /* iPad/Desktop */
 
     .wrapper {
-        /* --post-header-space: 45px; */
+         --post-header-space: 45px; 
         --post-content-space: 30px;
         width: 550px;
         min-height: 100vh;
         max-height: 750px;
-        position: sticky;
+        position: relative;
         top: calc(var(--header-height) + 25px);
         min-height: -moz-calc(-moz-calc(100vh - var(--browser-address-bar, 0px)) - var(--header-height) - var(--post-header-space) - var(--post-content-space));
         min-height: calc(calc(100vh - var(--browser-address-bar, 0px)) - var(--header-height) - var(--post-header-space) - var(--post-content-space));
@@ -191,6 +191,7 @@
         align-items: flex-end;
         justify-content: center;
          */
+         min-height: 100vh;
     display: flex;
     -moz-box-align: end;
     align-items: center;
