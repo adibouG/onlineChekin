@@ -3,9 +3,9 @@ import styles from './index.module.css'
 import Card from '../../components/Card'
 
 
-const Success = ({ date  }) => {
+const Success = ({ date }) => {
     
-    date = date ||  new Date(((new Date().getTime()) + (24 * 60 * 60 * 1000 ))).toLocaleDateString()
+   
     let day = new Date(date).toLocaleDateString(false, { weekday: 'long' });
     const SUCCESS = 'Checked in!'
     const DETAILS = 'To pick up your room key, please use the QR-code in your e-mail at the key pick up device in the lobby.'

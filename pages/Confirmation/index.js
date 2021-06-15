@@ -25,11 +25,11 @@ const Confirmation = ({ reservation }) => {
 
     const options = [] ;
     if (reservation.options && reservation.options.length) {
-       for (let i of reservation.options) {
+       for (let i  of reservation.options) {
            options.push(
                <Item key={i}>
-                   <Title>Options</Title>
-                   <Value>{i}</Value>
+                   <Title key={reservation.options.indexOf(i)} >Options</Title>
+                   <Value key={i + reservation.options.indexOf(i)}>{i}</Value>
                </Item>
            )
         }
