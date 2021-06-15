@@ -17,16 +17,16 @@
 
 .container{
 
-  /* 
+   
     min-height: -moz-calc(100vh - var(--browser-address-bar, 0px));
     min-height: calc(100vh - var(--browser-address-bar, 0px));
-  */
+  
   /*
   position: fixed;
   */
   position: relative;
   min-width: 100vw;
-  min-height: 100vh;
+
     display: flex;
     flex-flow: column;
     flex-direction: column;
@@ -178,7 +178,7 @@
     }
     
     .header {
-        position: absolute;
+        margin-bottom: 10px;
     }
 
     .footerWrapper {
