@@ -15,7 +15,13 @@
 
 html,
 body {
-  padding: 0;
+   position: fixed ; 
+    min-height: 100vh;
+    min-width: 100vw;
+    overflow: hidden ;
+  
+  
+    padding: 0;
   margin: 0;
   font-family: var(--default-font) !important;
   color: var(--text-color);
@@ -50,13 +56,6 @@ a {
   background: var(--button-secondary-background-color) ;
   border-radius: 5px;
 }
-
-
-
-
-
-
-
 
 [type=button], 
 [type=reset], 

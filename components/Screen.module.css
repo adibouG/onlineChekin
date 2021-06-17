@@ -9,7 +9,7 @@
     grid-template-rows: 1fr auto;
     align-content: stretch;
     justify-content: stretch;
-    max-width: 1400px;
+    /* max-width: 1400px; */
     margin: auto;
 }
 
@@ -17,11 +17,15 @@
 
 .container{
 
+   
     min-height: -moz-calc(100vh - var(--browser-address-bar, 0px));
     min-height: calc(100vh - var(--browser-address-bar, 0px));
-    min-width: 100vw;
-
-    position: fixed;
+  
+  /*
+  position: fixed;
+  */
+  position: relative;
+  min-width: 100vw;
 
     display: flex;
     flex-flow: column;
@@ -46,10 +50,24 @@
 
 }
 
+.header_logoWrapper {
+    position: absolute;
+    background: transparent url(/logo.svg) center center no-repeat padding-box;
+    background-size: contain;
+    width: 100%;
+    height: -moz-calc(var(--header-height) - 12px);
+    height: calc(var(--header-height) - 20px);
+    opacity: 1;
+    margin: 6px 0 0 0;
+}
+
 .wrapper{
 
     width: 100%;
+/*
     height: calc( 100vh - var(--header-height));
+  */
+    height: calc( 100vh - ( calc( var(--header-height) + var(--header-height ))));
     position: relative;
     /* overflow: auto; not here as the wrapper contains the footer with the button  */
     top: 0;
@@ -63,6 +81,7 @@
     flex-direction: column;
     background: var(--background-color);
     flex-wrap: nowrap;
+    flex: 1 1 auto;
 }
 
 
@@ -71,11 +90,16 @@
     position: relative;
     /* position: absolute; */
     overflow: auto;
+    
+    -webkit-overflow-scrolling: auto;
     /* top: var(--header-height); */
     /* bottom: var(--footer-height); */
     width: 100%;
-    height: 100%;
-    padding: 10px 1em 1em 1em;
+   /* 
+   height: calc(100% + var(--footer-height));
+    height: 100% ;
+   */
+    padding: 10px 1em 1.5em 1em;
     display: -moz-box;
     display: flex;
     -moz-box-orient: vertical;
@@ -85,19 +109,29 @@
     -moz-box-pack: start;
     justify-content: flex-start;
     /* height: fit-content; */
-    flex: 1;
+    flex: 1 1 auto;
 }
 
+.footerWrapper{
+    position: relative;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: var(--footer-height);
+    background:transparent;
+}
+    
 
 .footer{
     
-    position: relative;
+    position: fixed;
     bottom: 0;
     width: 100%;
     height: var(--footer-height);
     z-index: 1;
     background-color: var(--background-color);
-    padding: 0px 10% 50px;
+    padding: 0px 2em 31px;
     display: -moz-box;
     display: flex;
     -moz-box-align: end;
@@ -124,29 +158,37 @@
 @media  only screen and  (min-width: 768px) and (min-device-width: 768px) { /* iPad/Desktop */
 
     .wrapper {
-        /* --post-header-space: 45px;
-        --post-content-space: 30px; */
+         --post-header-space: 45px; 
+        --post-content-space: 30px;
         width: 550px;
-        min-height: 100vh;
-        max-height: 750px;
-        position: sticky;
-        top: calc(var(--header-height) + 25px);
-        min-height: -moz-calc(-moz-calc(100vh - var(--browser-address-bar, 0px)) - var(--header-height) - var(--post-header-space) - var(--post-content-space));
-        min-height: calc(calc(100vh - var(--browser-address-bar, 0px)) - var(--header-height) - var(--post-header-space) - var(--post-content-space));
-        border-radius: 10px;
-        background: var(--background-color);
-        overflow: hidden;
-        margin-bottom: var(--post-content-space);
+    /* min-height: 100vh; */
+    max-height: 800px;
+    position: relative;
+    /* top: -moz-calc(var(--header-height)); */
+    /* top: calc(var(--header-height)); */
+    height: -moz-calc(-moz-calc(100vh - var(--browser-address-bar, 0px)) - var(--header-height) - var(--post-header-space) - var(--post-content-space));
+    height: calc(calc(100vh - var(--browser-address-bar, 0px)) - var(--header-height) - var(--post-header-space) - var(--post-content-space));
+    border-radius: 10px;
+    background: var(--background-color);
+    overflow: hidden;
+    margin-bottom: var(--post-content-space);
+    flex: 1 1 auto;
+    margin: auto;
     
     }
     
     .header {
-        position: absolute;
+        margin-bottom: 10px;
+    }
+
+    .footerWrapper {
+        position: relative; 
     }
 
     .footer {
-        /* position: absolute; */
-        padding: 0 10% 31px;
+        position: absolute; 
+
+        padding: 0px 1em 31px;
     }
     
     .container {
@@ -154,20 +196,25 @@
         align-items: flex-end;
         justify-content: center;
          */
+        
     display: flex;
     -moz-box-align: end;
     align-items: center;
     -moz-box-pack: center;
-    justify-content: center;
+    
     flex-direction: column;
     flex-wrap: nowrap;
     align-content: center;
+    background-size: cover;
+    
+    padding: 0 0 1em 0;
     }
 
     .content {
       /*  top: 50px;
          height: auto; */
-         
-    padding: 55px 1em 1em 1em;
+     
+    padding: 55px 1em 2em 1em;
+
     }
 }

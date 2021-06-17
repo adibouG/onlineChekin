@@ -1,16 +1,15 @@
 import React, { useEffect, useState , useRef } from 'react'
+
 import { useRouter } from 'next/router'
 import dynamic from 'next/dynamic'
 //import useSWR from 'swr'
 import axios from 'axios'
-import Card from '../components/Card'
-import Spinner from '../components/Spinner'
 import Screen from '../components/Screen'
 
 
 //const fetcher = url => fetch(url).then(res => res.json());
-const Failed = dynamic(() => import('./Failed/index.js'))
 const Welcome = dynamic(() => import('./Welcome/index.js'))
+const Failed = dynamic(() => import('./Failed/index.js'))
 const Confirmation = dynamic(() => import('./Confirmation/index.js'))
 const HotelPolicy = dynamic(() => import('./HotelPolicy/index.js'))
 const PersonalDetails = dynamic(() => import('./PersonalDetails/index.js'))
@@ -25,14 +24,14 @@ let qrUrl =`${backendUrl}/qrcode`;
 let isValidGuest = false ;
 let originalValue = {} ;
 
-const ForwardedRefComponent = React.forwardRef((props, ref) => (
+const PersonalDetailsWithForwrdRef = React.forwardRef((props, ref) => (
   <PersonalDetails {...props} forwardedRef={ref} />
 ))
 
 const Home = (props) => {
 
   const router = useRouter() ;
-  let  queryParams = new URLSearchParams(String(router.asPath).replace('/' , ''))
+  
   
   const steps = ['error', 'failed', 'welcome', 'confirm',  'policies' , 'details', 'payment' , 'success']
   
@@ -40,7 +39,7 @@ const Home = (props) => {
   
   //const { data, error } = useSWR('/api/fetch', fetcher)
 
-  //const [ name, setName ] = useState(null);
+  const [ name, setName ] = useState('');
   const [ token, setToken ] = useState(null);
   const [ step, setStep ] = useState(-1);
   const [ data, setData ] = useState(null);
@@ -58,36 +57,30 @@ const Home = (props) => {
   useEffect(() => {
     const vhCheck = require('vh-check')
     vhCheck('browser-address-bar')
-  
-    console.log(formRef)
-    console.log(nextButtonRef)
+
+
   });
 
   
   useEffect( () => {
+    let location = router.asPath ;
+    let  queryParams = new URLSearchParams(String(location).replace('/?' , '?'))
+    let tokenurl = queryParams.get('token')
+    let guestName = queryParams.get('name')
     
+    if (guestName) setName(guestName.replace(/\./g , ' '))
+    if (tokenurl) setToken(tokenurl)
+    else if (!tokenurl) setError('your start-checking-in token provided in your email could not be retrieved.')
 
-    console.log(router.query)
-    console.log(router.query.name)
-    console.log(router.query.token)
+    //if (window) (/mobile/i).test(window.navigator.userAgent) && !location.hash && setTimeout(() => window.scrollTo(0, 1) , 1000) ;​
     
-   // router.replace(  {
-  //   pathname: `/`,
-  //   query: {
-  //     token : token,
-  //     name:guestName
-  //   }
-  // },
-  ///',
-  //shallow: true}
-  //
   } , [] );
 
 
   
   useEffect( () => {
 
-    if(error) setStep(-2) ;
+    if (error) setStep(-2) ;
 
   }, [error] )
  
@@ -96,10 +89,14 @@ const Home = (props) => {
   
 
   useEffect( async () => {
-    let token = queryParams.get('token')
+
+    if (!token) return ;
+    
     let reservationId =`?token=${token}` ;
     let getUrl = url + reservationId
+
     console.log(getUrl)
+
     try{
       const request =   await axios.get(getUrl) ;
       originalValue = request.data.checkin ;
@@ -108,9 +105,26 @@ const Home = (props) => {
 
       console.log(e)
       setError(e.message);
-      
+
     }
-  } , [] );
+  } , [token] );
+
+
+
+  useEffect( async () => {
+
+    if (name && token){ //TODO:Remove token from url
+      router.replace(  {
+          pathname: `/`,
+          query: {}
+          }, '/', 
+          {shallow: true}
+        )
+    }
+  } , [name , token] );
+
+
+
 
    
   const setDB = async () => {
@@ -204,6 +218,12 @@ useEffect(() => {
     
   if (step === -1) {
     if (data) setStep(0);  
+    else if (error) setStep(-2);  
+  }  
+ 
+  if (step === 0) {
+  // if (data) setName( data.guest.firstName ));  
+   
   }  
 
   if (step === 1) {
@@ -273,19 +293,13 @@ useEffect(() => {
     setStep(Math.min(step + 1, steps.length - 1))
   }
 
-  const GUEST_DISPLAY_NAME = data ? 
-    ( data.guest.firstName + ' ' + data.guest.lastName ) : 
-     queryParams.get('name') ? queryParams.get('name').replaceAll('.' , ' ') : null 
+
   const content = (props) => {
     
-    if (error === 'expired' || error === 'notFound') {
-      return <Failed reason={error} step={step} {...props}/>
-    } else if (error) {
-      return `Error: ${error.message}`;
-    } else if ((!data && !GUEST_DISPLAY_NAME) || router.isFallback) {
-      return <Spinner/>
-    } else if (step < 1 ) {
-      return <Welcome step={step} guest={GUEST_DISPLAY_NAME} onContinue={next} {...props}/>
+    if (step < -1) {
+        return <Failed reason={error} step={step} onContinue={false} {...props}  />
+    }  else if (step === -1 || step === 0 ) {
+      return <Welcome step={step} guest={name} onContinue={next} {...props}/>
     } else if (step === 1) {
       return <Confirmation reservation={data.reservation} />
     } else if (step === 2) {
@@ -293,7 +307,7 @@ useEffect(() => {
                           update={updatePolicies} 
                           />
     }  else if (step === 3) {
-      return <ForwardedRefComponent ref={formRef} 
+      return <PersonalDetailsWithForwrdRef ref={formRef} 
                               guest={data.guest} 
                               update={updateGuestDetails} 
                               isValid={isValidGuest} 
@@ -302,7 +316,7 @@ useEffect(() => {
     } else if (step === 4) {
       return <Payment payment={data.payment} update={updatePayment}/>
     } else if (step === 5) {
-      return <Success day={data.reservation.startDate} {...props} />
+      return <Success date={data.reservation.startDate} {...props} />
     }
   }
   
@@ -315,7 +329,7 @@ useEffect(() => {
     ref={nextButtonRef}
     nextLabel={step === 4 ? 'Pay' : false }
     >
-      {content()}
+      {content(props)}
     </Screen>
 }
 
