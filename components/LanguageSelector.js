@@ -8,7 +8,7 @@ const LanguageSelector = (props) => {
     let supportedLanguages = props.supported || ['en'];
     
     let options = [ 
-        <option key={selectedLanguage} value={selectedLanguage}>{selectedLanguage.toUpperCase()}</option>
+        <option key={selectedLanguage} value={selectedLanguage} selected>{selectedLanguage.toUpperCase()}</option>
     ]
     for (let l of  supportedLanguages) {
 

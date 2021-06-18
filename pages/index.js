@@ -81,7 +81,9 @@ const Home = (props) => {
  
   
   useEffect(() => {
-    alert(lang)
+
+    
+  
   } , [ lang ] );
     
       

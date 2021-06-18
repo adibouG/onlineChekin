@@ -13,6 +13,7 @@
     right: 0px;
     z-index: 2;
     margin:15px;
+    outline: none!important;
 }
 
 .select {
@@ -25,4 +26,16 @@
     border-radius: 15px;
     padding: 0px 15px;
     margin: 0 30px ;
+    
+    outline: none!important;
+}
+
+ select.select {
+    
+    outline: none!important;
+}
+
+select.select button {
+    
+    outline: none!important;
 }
