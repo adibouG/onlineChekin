@@ -90,8 +90,8 @@ const Payment = ({ payment = {} , update}) => {
                             handleChange={setBank} 
                         /> 
                             
-                        {
-                        /*    <Select title='Select your bank' 
+                        {/*
+                        <Select title='Select your bank' 
                             name='bank' id='bank'  
                             selected={bank}
                             values={availableBanks} 

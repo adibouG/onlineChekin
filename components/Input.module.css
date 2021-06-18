@@ -143,7 +143,10 @@ font-size: .85em;
     border: none !important ;
     height: 100% !important;
     width:30px !important; 
-    
+    outline: none !important;
+    z-index: 3;
+    cursor: pointer;
+
 }
 
 .clearButton{

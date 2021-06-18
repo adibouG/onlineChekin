@@ -16,7 +16,7 @@ const Value = (props) => {
     return <div className={styles.value} {...props}/>
 }
 
-const Confirmation = ({ reservation }) => {
+const Confirmation = ({ reservation , text}) => {
 
     const startDate =  new Date(reservation.startDate)
     const endDate = new Date(reservation.endDate)
@@ -45,18 +45,18 @@ const Confirmation = ({ reservation }) => {
 
     return(
         <Stack>
-            <Header>Please confirm your reservation details</Header>
+            <Header>{text.header}</Header>
             
             <Item>
-                <Title>Your stay</Title>
+                <Title>{text.yourStay}</Title>
                 <Value>{startDate.toLocaleDateString()} - {endDate.toLocaleDateString()}</Value>
-                <Title>Number of night(s)</Title>
+                <Title>{text.nights}</Title>
                 <Value>{numOfNight}</Value>
-                <Title>Number of guests</Title>
+                <Title>{text.guests}</Title>
                 <Value>{reservation.guestCount}</Value>
             </Item>
             <Item>
-                <Title>Room type</Title>
+                <Title>{text.room}</Title>
                 <Value>{reservation.roomType}</Value>
             </Item>
             {options}

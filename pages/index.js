@@ -6,6 +6,7 @@ import dynamic from 'next/dynamic'
 import axios from 'axios'
 import Screen from '../components/Screen'
 
+import LanguageSelector from '../components/LanguageSelector.js'
 
 //const fetcher = url => fetch(url).then(res => res.json());
 const Welcome = dynamic(() => import('./Welcome/index.js'))
@@ -31,10 +32,11 @@ const PersonalDetailsWithForwrdRef = React.forwardRef((props, ref) => (
 const Home = (props) => {
 
   const router = useRouter() ;
-  
-  
+
+
   const steps = ['error', 'failed', 'welcome', 'confirm',  'policies' , 'details', 'payment' , 'success']
   
+
   const [disabled , setDisabled] = useState(false);
   
   //const { data, error } = useSWR('/api/fetch', fetcher)
@@ -53,15 +55,35 @@ const Home = (props) => {
   const formRef = useRef(null);
   const nextButtonRef = useRef(null);
   
-
+  const [lang , setLang] = useState(null);
+  const [text , setText] = useState(null);
+  
   useEffect(() => {
     const vhCheck = require('vh-check')
     vhCheck('browser-address-bar')
-
-
   });
+  
+  
+  
+  useEffect(() => {
+    
+    let userLanguage = window.navigator.userLanguage || window.navigator.language || 'en-GB' ;
+    setLang(getLang(userLanguage))
+    let text = require('public/text_en.json')
+    console.log('text')
+    console.log(text)
+    setText(text)
+    
+  } , [] );
 
   
+ 
+  
+  useEffect(() => {
+    alert(lang)
+  } , [ lang ] );
+    
+      
   useEffect( () => {
     let location = router.asPath ;
     let  queryParams = new URLSearchParams(String(location).replace('/?' , '?'))
@@ -124,9 +146,27 @@ const Home = (props) => {
   } , [name , token] );
 
 
+  const  handleLangChange = (v) => {
 
+    if (v.includes('-')) v = v.split('-')[0];
 
-   
+    setLang(v.toLowerCase())
+
+  } 
+
+const getLang = ( l = null) => {
+
+    let v = l || lang ;
+    if (v.includes('-')) {
+      v = v.split('-')[0];
+    } 
+
+    v = v.toLowerCase()
+
+   return v
+
+}   
+
   const setDB = async () => {
     let setRequest =  await axios.post(url , data) ;
     originalValue = setRequest.data.checkin ;
@@ -209,7 +249,7 @@ const getQrCode = async (data) => {
   }
   catch(e){
     console.log(e) ;
-    setError(e)
+    setError(e.message)
   }
 }
 
@@ -294,18 +334,31 @@ useEffect(() => {
   }
 
 
+
   const content = (props) => {
     
     if (step < -1) {
-        return <Failed reason={error} step={step} onContinue={false} {...props}  />
+        return <Failed reason={error} 
+                      text={text && text.Failed[getLang()]} 
+                      step={step} 
+                      onContinue={false} 
+                      {...props}  
+                />
     }  else if (step === -1 || step === 0 ) {
-      return <Welcome step={step} guest={name} onContinue={next} {...props}/>
+      return <Welcome step={step} 
+                      guest={name} 
+                      onContinue={next} 
+                      text={text && text.Welcome[getLang()]} 
+                      {...props}
+              />
     } else if (step === 1) {
-      return <Confirmation reservation={data.reservation} />
+      return <Confirmation reservation={data.reservation} 
+                          text={text && text.Confirmation[getLang()]} 
+              />
     } else if (step === 2) {
       return <HotelPolicy policy={data.privacyPolicy} 
                           update={updatePolicies} 
-                          />
+                />
     }  else if (step === 3) {
       return <PersonalDetailsWithForwrdRef ref={formRef} 
                               guest={data.guest} 
@@ -330,6 +383,11 @@ useEffect(() => {
     nextLabel={step === 4 ? 'Pay' : false }
     >
       {content(props)}
+      
+
+   
+        <LanguageSelector selected={lang} handleLangChange={handleLangChange}/>
+
     </Screen>
 }
 

@@ -3,17 +3,17 @@ import styles from './index.module.css'
 import Card from '../../components/Card'
 
 
-const Failed = ({ reason , onContinue = null , step , logo = null}) => {
+const Failed = ({ reason , text , onContinue = null , step , logo = null}) => {
 
-    const MESSAGE = reason === 'expired' ? 'Unfortunately the link has expired' : 'We can\'t find your reservation' ;
-    const DETAILS = 'In case of assistance, please call us at: +31 384629847 Or e-mail: support@hotelenzo.com';
+    const MESSAGE = reason === 'expired' ? text.expired : text.notFound ;
+    const DETAILS = text.assistance;
     let TITLE = null ;
     
     if( reason !== 'expired' &&  reason !== 'notFound' ) {
         TITLE = reason
     }
     return (
-    
+     
                 <div className={styles.screen}>
             <div className={styles.content}>
                 <div className={styles.logo} >

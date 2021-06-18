@@ -6,7 +6,7 @@
     min-height: 100vh;
     min-height: calc(100vh - var(--browser-address-bar, 0px));
     display: grid;
-    grid-template-rows: 1fr auto;
+    grid-template-rows: 1fr auto ;
     align-content: stretch;
     justify-content: stretch;
     /* max-width: 1400px; */
@@ -152,7 +152,15 @@
     padding: 0 2.5em;
 }
 
+.languageSelectorWrapper{
 
+    display:flex;
+    border:2px solid black;
+    height: 50px;
+    width: 100px;
+    background-color:white;
+
+}
 
 
 @media  only screen and  (min-width: 768px) and (min-device-width: 768px) { /* iPad/Desktop */

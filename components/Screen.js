@@ -6,6 +6,8 @@ const Screen =  React.forwardRef((props, ref) => {
     
     const { isLoading, canNavigate, onBack, onContinue , disabled , nextLabel , logo = null } = props ;
 
+    const nextButtonLabel = nextLabel || 'Confirm' ;
+
     if (isLoading) {
         return(<div className={styles.center}>{props.children}</div>)
     } else if (!canNavigate) {
@@ -32,11 +34,13 @@ const Screen =  React.forwardRef((props, ref) => {
                         <div className={styles.footer}>
                             <button className='secondary_button' onClick={onBack}>Back</button>
                             <button ref={ref} className={`primary_button ${styles.xl} ${disabled ? styles.disabled : false}`} disabled={disabled} onClick={onContinue}>
-                                {nextLabel ? `${nextLabel}` : 'Confirm'}
+                                {nextLabel ? `${nextLabel}` : nextButtonLabel}
                             </button>
                         </div>
                     </div>
+
                 </div>
+          
             </div>
         )
     }

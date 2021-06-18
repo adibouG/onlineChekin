@@ -1,0 +1,51 @@
+{
+    
+
+    "Failed" : {
+
+        "fr" : {  
+            "expired" :  "Malheureusement le lien est expiré" ,
+            "notFound" :  "Nous ne trouvons pas votre reservation" ,
+            "assistance" :  "Pour une assistance, veuillez nous contacter au : +31 384629847 Ou e-mail: support@hotelenzo.com" 
+
+        },
+        "en" : {  
+            "expired" :  "Unfortunately the link has expired" ,
+            "notFound" :  "We can't find your reservation" ,
+            "assistance" :  "In case of assistance, please call us at: +31 384629847 Or e-mail: support@hotelenzo.com" 
+       }
+    },
+
+    "Welcome" : {
+
+        "fr" : {  
+            "supertitle" :  "Bonjour" ,
+            "waitSubtitle" :  "Recuperation des details de la reservation... " ,
+            "subtitle" : "Etes vous pret pour le check-in? " ,
+            "buttonTitle" : "Oui, commencer le check-in" 
+        },
+        "en" : {  
+            "supertitle" :  "Welcome" ,
+            "waitSubtitle" :  "Getting your reservation details..." ,
+            "subtitle" : "Are you ready to check-in?" ,
+            "buttonTitle" : "Yes, start check-in" 
+        }
+    },
+    "Confirmation" : {
+
+            "fr" : {  
+                "header" :  "Veuillez confirmer les details de la reservation" ,
+                "yourStay" :  "Votre sejours" ,
+                "nights" : "Nombre de nuit(s)" ,
+                "guests" : "Nombre d'invité(s)" , 
+                "room" : "Type de chambre" 
+            },
+            "en" : {  
+                "header" :  "Please confirm your reservation details",
+                "yourStay" :  "Your stay" ,
+                "nights" : "Number of night(s)" ,
+                "guests" : "Number of guest(s)" , 
+                "room" : "Room type" 
+            }
+        }
+}

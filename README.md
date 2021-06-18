@@ -57,5 +57,5 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 ## Deploy on AWS
 
-Every change to the develop branch will trigger the gitlab ci/cd pipeline and update the EC2 instance hosting the develop version of the app .
-Actually an app instance is running for viewing and testing at http://ec2-52-17-51-8.eu-west-1.compute.amazonaws.com:3000 
+Every change to the develop branch will trigger the gitlab ci/cd pipeline and update the EC2 instance(s) hosting the in-development version of the app .
+Actually an app instance is running for viewing and testing at https://dev.cloud.enzosystems.com:3000 

@@ -4,7 +4,11 @@ import Card from '../../components/Card'
 import Image from 'next/image'
 
 
-const Welcome = ({ guest, onContinue , step , logo = null }) => {
+const Welcome = ({ text , guest, onContinue , step , logo = null }) => {
+    
+    console.log(text)
+ 
+ 
     return (
         <div className={styles.screen}>
             <div className={styles.content}>
@@ -17,10 +21,10 @@ const Welcome = ({ guest, onContinue , step , logo = null }) => {
                 }
                 </div> 
                 <Card   step={step}
-                        supertitle="Welcome!" 
+                        supertitle={text && text.supertitle ? text.supertitle : "Welcome!"} 
                         title={guest}
-                        subtitle={step === 0 ? "Are you ready to check-in?" : "Getting your reservation details..."}
-                        buttonTitle="Yes, start check-in"
+                        subtitle={ text && text.subtitle ? (step === 0 ? text.subtitle : text.waitsubtitle ): step === 0 ? "Are you ready to check-in?" : "Getting your reservation details..."}
+                        buttonTitle={ text && text.buttonTitle ? text.buttonTitle : "Yes, start check-in"}
                         onClick={onContinue}
                 />
             </div>

@@ -21,14 +21,17 @@ const Select = ({title, id, name, required, values , selected , handleChange}) =
     if (selected && values.includes(selected)) {
 
         list.push(
-            <li className={styles.Select_selected}>{selected}</li>
+            <li key={selected} className={styles.Select_selected}>{selected}</li>
         )
 
-        values.splice(values.indexOf(selected) , 1 );
+        list.push(
+            <li key={title} className={styles.Select_selected}>{title}</li>
+        )
+      //  values.splice(values.indexOf(selected) , 1 );
     }
     else {
         list.push(
-            <li className={styles.Select_selected}>{title}</li>
+            <li key={title} className={styles.Select_selected}>{title}</li>
         )
     }
     
@@ -47,7 +50,9 @@ const Select = ({title, id, name, required, values , selected , handleChange}) =
         <div ref={elmntRef} className={styles.Select} onClick={toggleList}>
             {
             /*
-             <div className={open ? styles.Select_arrow_active : styles.Select_arrow} ></div>*/}
+             <div className={open ? styles.Select_arrow_active : styles.Select_arrow} ></div>
+             */
+             }
             <ul className={open ? styles.Select_items : styles.Select_items_hidden}  
             onClick={handleSelect}>
             {list}

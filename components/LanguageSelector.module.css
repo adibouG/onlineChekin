@@ -1,0 +1,28 @@
+.wrapper{
+    position: fixed;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: flex-end;
+    -moz-box-align: center;
+    align-items: center;
+    width: 100%;
+    margin: 15px;
+    top: 0;
+    right: 0px;
+    z-index: 2;
+    margin:15px;
+}
+
+.select {
+    display: block;
+    height: 50px;
+    width: 100px;
+    background: #ede6db;
+    color: #474741;
+    border: 3px solid white;
+    border-radius: 15px;
+    padding: 0px 15px;
+    margin: 0 30px ;
+}
