@@ -33,8 +33,9 @@ const Home = (props) => {
 
   const router = useRouter() ;
 
-
+  
   const steps = ['error', 'failed', 'welcome', 'confirm',  'policies' , 'details', 'payment' , 'success']
+  const languageList = ['en', 'fr' ]
   
 
   const [disabled , setDisabled] = useState(false);
@@ -386,7 +387,10 @@ useEffect(() => {
       
 
    
-        <LanguageSelector selected={lang} handleLangChange={handleLangChange}/>
+        <LanguageSelector supported={languageList}
+            	            selected={lang} 
+            	            handleLangChange={handleLangChange}
+         />
 
     </Screen>
 }

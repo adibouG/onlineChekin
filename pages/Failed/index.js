@@ -12,9 +12,10 @@ const Failed = ({ reason , text , onContinue = null , step , logo = null}) => {
     if( reason !== 'expired' &&  reason !== 'notFound' ) {
         TITLE = reason
     }
+
     return (
      
-                <div className={styles.screen}>
+        <div className={styles.screen}>
             <div className={styles.content}>
                 <div className={styles.logo} >
                 {
