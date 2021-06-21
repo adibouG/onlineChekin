@@ -82,7 +82,6 @@ const Home = (props) => {
   
   useEffect(() => {
 
-    
   
   } , [ lang ] );
     
@@ -129,7 +128,8 @@ const Home = (props) => {
     }catch(e){
 
       console.log(e)
-      setError(e.message);
+      console.log(e.response.data.message)
+      setError(e.response.data.error || e.message);
 
     }
   } , [token] );
@@ -166,7 +166,7 @@ const getLang = ( l = null) => {
 
     v = v.toLowerCase()
 
-   return v
+   return v;
 
 }   
 

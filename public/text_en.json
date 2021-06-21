@@ -1,6 +1,5 @@
 {
     
-
     "Failed" : {
 
         "fr" : {  
@@ -46,6 +45,44 @@
                 "nights" : "Number of night(s)" ,
                 "guests" : "Number of guest(s)" , 
                 "room" : "Room type" 
+            }
+        },
+
+        "HotelPolicy" : {
+
+            "fr" : {  
+                
+            },
+            "en" : {  
+               
+            }
+        },
+
+        "Payment" : {
+
+            "fr" : {  
+                
+            },
+            "en" : {  
+               
+            }
+        },
+        "PersonalDetails" : {
+
+            "fr" : {  
+                
+            },
+            "en" : {  
+               
+            }
+        },
+        "Success" : {
+
+            "fr" : {  
+                
+            },
+            "en" : {  
+               
             }
         }
 }

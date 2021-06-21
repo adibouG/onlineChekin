@@ -4,12 +4,12 @@ import Card from '../../components/Card'
 
 
 const Failed = ({ reason , text , onContinue = null , step , logo = null}) => {
-
-    const MESSAGE = reason === 'expired' ? text.expired : text.notFound ;
+    console.log(reason)
+    const MESSAGE = reason === 'expiredLink' ? text.expired : text.notFound ;
     const DETAILS = text.assistance;
     let TITLE = null ;
     
-    if( reason !== 'expired' &&  reason !== 'notFound' ) {
+    if( reason !== 'expiredLink' &&  reason !== 'notFound' ) {
         TITLE = reason
     }
 

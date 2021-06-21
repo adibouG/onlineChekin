@@ -4,21 +4,17 @@ import styles from './LanguageSelector.module.css'
 
 const LanguageSelector = (props) => {
 
+    
     let selectedLanguage = props.selected || props.default || 'EN';
     let supportedLanguages = props.supported || ['en'];
+  
+    console.log(selectedLanguage)
     
-    let options = [ 
-        <option key={selectedLanguage} value={selectedLanguage} selected>{selectedLanguage.toUpperCase()}</option>
-    ]
+    let options = []
     for (let l of  supportedLanguages) {
-
-        if (l.toLowerCase() !== selectedLanguage.toLowerCase()) {
             options.push(
                 <option key={l} value={l}>{l.toUpperCase()}</option>
-            )
-
-        }
-
+           )
     }
   
  
@@ -35,7 +31,7 @@ const LanguageSelector = (props) => {
     return (
 <div className={styles.wrapper}>
    
-    <select className={styles.select} name={"lang"} onChange={handleLangChange}> 
+    <select value={selectedLanguage} className={styles.select} name={"lang"} onChange={handleLangChange}> 
       {options}
     </select>
 </div>
