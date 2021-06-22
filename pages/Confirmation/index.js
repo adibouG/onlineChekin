@@ -16,8 +16,9 @@ const Value = (props) => {
     return <div className={styles.value} {...props}/>
 }
 
-const Confirmation = ({ reservation , text}) => {
+const Confirmation = (props) => {
 
+    const { reservation , text } = props ;
     const startDate =  new Date(reservation.startDate)
     const endDate = new Date(reservation.endDate)
     

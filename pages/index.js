@@ -6,8 +6,16 @@ import dynamic from 'next/dynamic'
 import axios from 'axios'
 import Screen from '../components/Screen'
 
-import LanguageSelector from '../components/LanguageSelector.js'
+import Welcome from './Welcome/index.js'
+import Failed from './Failed/index.js'
+import Confirmation from './Confirmation/index.js'
+import HotelPolicy from './HotelPolicy/index.js'
+import PersonalDetails from './PersonalDetails/index.js'
+import Payment from './Payment/index.js'
+import Success from './Success/index.js'
 
+import LanguageSelector from '../components/LanguageSelector.js'
+/*
 //const fetcher = url => fetch(url).then(res => res.json());
 const Welcome = dynamic(() => import('./Welcome/index.js'))
 const Failed = dynamic(() => import('./Failed/index.js'))
@@ -17,6 +25,7 @@ const PersonalDetails = dynamic(() => import('./PersonalDetails/index.js'))
 const Payment = dynamic(() => import('./Payment/index.js'))
 const Success = dynamic(() => import('./Success/index.js'))
 
+*/
 
 let backendUrl = `${process.env.BACKEND_HOST}:${process.env.BACKEND_PORT}`;
 let url =`${backendUrl}/reservation`;
@@ -92,9 +101,9 @@ const Home = (props) => {
     let tokenurl = queryParams.get('token')
     let guestName = queryParams.get('name')
     
-    if (guestName) setName(guestName.replace(/\./g , ' '))
-    if (tokenurl) setToken(tokenurl)
-    else if (!tokenurl) setError('your start-checking-in token provided in your email could not be retrieved.')
+    if (guestName)  setName(guestName.replace(/\./g , ' '))
+    if (tokenurl) return setToken(tokenurl)
+    else if (!tokenurl) return setError('your start-checking-in token provided in your email could not be retrieved.')
 
     //if (window) (/mobile/i).test(window.navigator.userAgent) && !location.hash && setTimeout(() => window.scrollTo(0, 1) , 1000) ;​
     
@@ -104,7 +113,7 @@ const Home = (props) => {
   
   useEffect( () => {
 
-    if (error) setStep(-2) ;
+    if (error) return setStep(-2) ;
 
   }, [error] )
  
@@ -128,8 +137,8 @@ const Home = (props) => {
     }catch(e){
 
       console.log(e)
-      console.log(e.response.data.message)
-      setError(e.response.data.error || e.message);
+   
+      return setError(e.response.data.error || e.message);
 
     }
   } , [token] );
@@ -149,26 +158,23 @@ const Home = (props) => {
   } , [name , token] );
 
 
-  const  handleLangChange = (v) => {
-
-    if (v.includes('-')) v = v.split('-')[0];
-
-    setLang(v.toLowerCase())
-
-  } 
+ 
 
 const getLang = ( l = null) => {
 
     let v = l || lang ;
-    if (v.includes('-')) {
-      v = v.split('-')[0];
-    } 
-
+    if (v.includes('-')) v = v.split('-')[0];
     v = v.toLowerCase()
-
-   return v;
+    return v;
 
 }   
+
+ const  handleLangChange = (v) => {
+
+    v = getLang(v)
+    return setLang(v)
+
+  } 
 
   const setDB = async () => {
     let setRequest =  await axios.post(url , data) ;
@@ -355,8 +361,8 @@ useEffect(() => {
                       {...props}
               />
     } else if (step === 1) {
-      return <Confirmation reservation={data.reservation} 
-                          text={text && text.Confirmation[getLang()]} 
+      return <Confirmation  reservation={data.reservation} 
+                            text={text && text.Confirmation[getLang()]} 
               />
     } else if (step === 2) {
       return <HotelPolicy policy={data.privacyPolicy} 
