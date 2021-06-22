@@ -5,7 +5,9 @@ import dynamic from 'next/dynamic'
 //import useSWR from 'swr'
 import axios from 'axios'
 import Screen from '../components/Screen'
-
+import LanguageSelector from '../components/LanguageSelector.js'
+const TEXT = require('public/text_en.json')
+/*
 import Welcome from './Welcome/index.js'
 import Failed from './Failed/index.js'
 import Confirmation from './Confirmation/index.js'
@@ -13,9 +15,9 @@ import HotelPolicy from './HotelPolicy/index.js'
 import PersonalDetails from './PersonalDetails/index.js'
 import Payment from './Payment/index.js'
 import Success from './Success/index.js'
+*/
 
-import LanguageSelector from '../components/LanguageSelector.js'
-/*
+
 //const fetcher = url => fetch(url).then(res => res.json());
 const Welcome = dynamic(() => import('./Welcome/index.js'))
 const Failed = dynamic(() => import('./Failed/index.js'))
@@ -25,7 +27,6 @@ const PersonalDetails = dynamic(() => import('./PersonalDetails/index.js'))
 const Payment = dynamic(() => import('./Payment/index.js'))
 const Success = dynamic(() => import('./Success/index.js'))
 
-*/
 
 let backendUrl = `${process.env.BACKEND_HOST}:${process.env.BACKEND_PORT}`;
 let url =`${backendUrl}/reservation`;
@@ -66,7 +67,7 @@ const Home = (props) => {
   const nextButtonRef = useRef(null);
   
   const [lang , setLang] = useState(null);
-  const [text , setText] = useState(null);
+  const [text , setText] = useState(TEXT || null);
   
   useEffect(() => {
     const vhCheck = require('vh-check')
@@ -74,24 +75,31 @@ const Home = (props) => {
   });
   
   
+const getLang = ( l = null) => {
+
+    let v = l || lang ;
+    if (v.includes('-')) v = v.split('-')[0];
+    v = v.toLowerCase()
+    return v;
+
+}   
   
   useEffect(() => {
     
-    let userLanguage = window.navigator.userLanguage || window.navigator.language || 'en-GB' ;
-    setLang(getLang(userLanguage))
-    let text = require('public/text_en.json')
-    console.log('text')
-    console.log(text)
-    setText(text)
+    if (!text) setText(TEXT)
+    let userDefaultLanguage =  window.navigator.userLanguage || window.navigator.language || 'en' ;
+    userDefaultLanguage = getLang(userDefaultLanguage)
+    let appDefaultLanguage = languageList.includes(userDefaultLanguage) ? userDefaultLanguage :  getLang('en')
+    return setLang(appDefaultLanguage) ;
     
   } , [] );
 
   
- 
-  
+ //TO DO: 
+  //try dynamic import of the lang per screen ?
   useEffect(() => {
-
-  
+ // let text = require('public/text_en.json')
+  //setText(text[lang])
   } , [ lang ] );
     
       
@@ -160,14 +168,6 @@ const Home = (props) => {
 
  
 
-const getLang = ( l = null) => {
-
-    let v = l || lang ;
-    if (v.includes('-')) v = v.split('-')[0];
-    v = v.toLowerCase()
-    return v;
-
-}   
 
  const  handleLangChange = (v) => {
 
@@ -357,12 +357,12 @@ useEffect(() => {
       return <Welcome step={step} 
                       guest={name} 
                       onContinue={next} 
-                      text={text && text.Welcome[getLang()]} 
+                      text={text && text.Welcome[lang]} 
                       {...props}
               />
     } else if (step === 1) {
       return <Confirmation  reservation={data.reservation} 
-                            text={text && text.Confirmation[getLang()]} 
+                            text={text && text.Confirmation[lang]} 
               />
     } else if (step === 2) {
       return <HotelPolicy policy={data.privacyPolicy} 
