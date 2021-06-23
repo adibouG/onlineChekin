@@ -144,11 +144,11 @@ const getLang = ( l = null) => {
     try{
       const request =   await axios.get(getUrl) ;
       originalValue = request.data.checkin ;
-      if (request.data.status === 'complete') {
+      if (request.data.status.toLowerCase() === 'complete') {
             messageDisplayed =`this reservation was already checked in, the stay arrival date is ${request.data.stay.arrivalDate}` 
             return setError(messageDisplayed)
       }
-      else if (request.data.status === 'prechecked') {
+      else if (request.data.status.toLowerCase() === 'prechecked') {
             messageDisplayed =`this reservation was already pre-checked in`  ;
             setError(messageDisplayed)
       }

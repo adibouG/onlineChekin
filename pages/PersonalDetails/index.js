@@ -3,7 +3,7 @@ import styles from './index.module.css'
 import { Stack, Header } from '../../components/Stack.js'
 import Input from '../../components/Input.js'
 
-
+const emailRegExp = /([-!#-'*+/-9=?A-Z^-~]+(\.[-!#-'*+/-9=?A-Z^-~]+)*|"([]!#-[^-~ \t]|(\\[\t -~]))+")@[0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?(\.[0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?)/
 
 const PersonalDetails = (props) => {
     
@@ -97,7 +97,7 @@ const PersonalDetails = (props) => {
                 </div>
                 <div className={styles.group}>
                     <Input title='Email address' type='email'   name='email' id='email'
-                            handleChange={setEmail}  value={email}   
+                            handleChange={setEmail}  value={email}   pattern={emailRegExp}
                             required={true}  autocomplete='email' lpignore='true'
                     />
                     <Input title='Confirm email address' type='email'  name='emailConf' id='emailConf' 
