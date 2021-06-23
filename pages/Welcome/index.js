@@ -24,7 +24,18 @@ const Welcome = ({ text , guest, onContinue , step , error = null ,logo = null }
                 <Card   step={step}
                         supertitle={text && text.supertitle ? text.supertitle : "Welcome!"} 
                         title={guest}
-                        subtitle={ text && text.subtitle ? (step === 0 ? text.subtitle : text.waitsubtitle ): step === 0 ? (error ? error : "Are you ready to check-in?") : "Getting your reservation details..."}
+                        subtitle={   
+                            (step === 0 &&  error ? error : 
+                                ( text  ? 
+                                          (step === 0 ? 
+                                                text.subtitle : 
+                                                text.waitsubtitle
+                                            ) : 
+                                            (step === 0 ?
+                                                "Are you ready to check-in?" : 
+                                                "Getting your reservation details..."
+                                                )
+                                ))}
                         buttonTitle={ text ? ( error ? text.buttonTitleWithError : text.buttonTitle ): "Yes, start check-in"}
                         onClick={onContinue}
                 />

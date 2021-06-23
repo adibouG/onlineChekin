@@ -123,10 +123,10 @@ const getLang = ( l = null) => {
 
   
   useEffect( () => {
+    if (error && data) return setStep(0) ;
+    else if (error && !data) return setStep(-2) ;
 
-    if (error) return setStep(-2) ;
-
-  }, [error] )
+  }, [error , data] )
  
     
  
