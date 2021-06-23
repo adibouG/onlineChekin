@@ -3,8 +3,7 @@ import styles from './index.module.css'
 import { Stack, Header } from '../../components/Stack.js'
 import Input from '../../components/Input.js'
 
-const emailRegExp = /([-!#-'*+/-9=?A-Z^-~]+(\.[-!#-'*+/-9=?A-Z^-~]+)*|"([]!#-[^-~ \t]|(\\[\t -~]))+")@[0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?(\.[0-9A-Za-z]([0-9A-Za-z-]{0,61}[0-9A-Za-z])?)/
-
+const emailRegExp = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
 const PersonalDetails = (props) => {
     
     let { guest  , update , validate  , isValid , forwardedRef} = props ;
