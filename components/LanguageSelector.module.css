@@ -12,10 +12,10 @@
     top: 0;
     right: 0px;
     
-       padding: 0.55em 3em;
+       padding: 0.5em 3em;
     z-index: 2;
       outline: none!important;
-    height: calc(var(--header-height) - 20px);
+    height: calc(var(--header-height) - 10px);
 }
 
 .select {
