@@ -57,6 +57,7 @@ const Home = (props) => {
   const [ step, setStep ] = useState(-1);
   const [ data, setData ] = useState(null);
   const [ error, setError ] = useState(null);
+  const [ preChecked, setPreChecked ] = useState(false);
   
   const [ guestValidated, setGuestValidated ] = useState(false);
   const [ qrCode, setQrCode ] = useState(null);
@@ -110,7 +111,9 @@ const getLang = ( l = null) => {
     let guestName = queryParams.get('name')
     
     if (guestName)  setName(guestName.replace(/\./g , ' '))
+    
     if (tokenurl) return setToken(tokenurl)
+
     else if (!tokenurl) return setError('your start-checking-in token provided in your email could not be retrieved.')
 
     //if (window) (/mobile/i).test(window.navigator.userAgent) && !location.hash && setTimeout(() => window.scrollTo(0, 1) , 1000) ;​
@@ -137,11 +140,21 @@ const getLang = ( l = null) => {
     let getUrl = url + reservationId
 
     console.log(getUrl)
-
+    let messageDisplayed ;
     try{
       const request =   await axios.get(getUrl) ;
       originalValue = request.data.checkin ;
+      if (request.data.status === 'complete') {
+            messageDisplayed =`this reservation was already checked in, the stay arrival date is ${request.data.stay.arrivalDate}` 
+            return setError(messageDisplayed)
+      }
+      else if (request.data.status === 'prechecked') {
+            messageDisplayed =`this reservation was already pre-checked in`  ;
+            setError(messageDisplayed)
+      }
+  
       return setData(request.data.checkin) ;
+      
     }catch(e){
 
       console.log(e)
@@ -266,8 +279,8 @@ const getQrCode = async (data) => {
 useEffect(() => {
     
   if (step === -1) {
+    if (!data && error) setStep(-2);  
     if (data) setStep(0);  
-    else if (error) setStep(-2);  
   }  
  
   if (step === 0) {
@@ -348,16 +361,17 @@ useEffect(() => {
     
     if (step < -1) {
         return <Failed reason={error} 
-                      text={text && text.Failed[getLang()]} 
+                      text={text && text.Failed[lang]} 
                       step={step} 
                       onContinue={false} 
                       {...props}  
                 />
     }  else if (step === -1 || step === 0 ) {
-      return <Welcome step={step} 
+        return <Welcome step={step} 
                       guest={name} 
                       onContinue={next} 
                       text={text && text.Welcome[lang]} 
+                      error={error}
                       {...props}
               />
     } else if (step === 1) {
