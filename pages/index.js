@@ -389,7 +389,7 @@ useEffect(() => {
     onContinue={next}
     disabled={disabled}
     ref={nextButtonRef}
-    nextLabel={step === 4 ? 'Pay' : false }+
+    nextLabel={step === 4 ? 'Pay' : false }
     
     >
     <LanguageSelector supported={languageList}
