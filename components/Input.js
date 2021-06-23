@@ -46,6 +46,7 @@ const Input = ({title, id, type, name, pattern, required, value , autocomplete, 
 	        <label htmlFor={id}>{title}</label>
             <button className={value && value.length ? styles.clearButton_show : styles.clearButton} 
                     onClick={handleClear}
+                    tabIndex="-1"
             >
             </button>
         </div>
