@@ -8,25 +8,25 @@
     -moz-box-align: center;
     align-items: center;
     width: 100%;
-    margin: 15px;
+
     top: 0;
     right: 0px;
+    
+       padding: 0.55em 3em;
     z-index: 2;
-    margin:15px;
-    outline: none!important;
+      outline: none!important;
+    height: calc(var(--header-height) - 20px);
 }
 
 .select {
     display: block;
-    height: 50px;
+    height: 100%;
     width: 100px;
     background: #ede6db;
     color: #474741;
     border: 3px solid white;
     border-radius: 15px;
-    padding: 0px 15px;
-    margin: 0 30px ;
-    
+      padding: 0 0.5em 0 1em;
     outline: none!important;
 }
 

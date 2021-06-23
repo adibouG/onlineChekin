@@ -166,7 +166,7 @@ const getLang = ( l = null) => {
   } , [name , token] );
 
 
- 
+ 1
 
 
  const  handleLangChange = (v) => {
@@ -389,16 +389,18 @@ useEffect(() => {
     onContinue={next}
     disabled={disabled}
     ref={nextButtonRef}
-    nextLabel={step === 4 ? 'Pay' : false }
+    nextLabel={step === 4 ? 'Pay' : false }+
+    
     >
+    <LanguageSelector supported={languageList}
+            	            selected={lang} 
+            	            handleLangChange={handleLangChange}
+         />
       {content(props)}
       
 
    
-        <LanguageSelector supported={languageList}
-            	            selected={lang} 
-            	            handleLangChange={handleLangChange}
-         />
+        
 
     </Screen>
 }
