@@ -31,7 +31,7 @@ const Success = dynamic(() => import('./Success/index.js'))
 let backendUrl = `${process.env.BACKEND_HOST}:${process.env.BACKEND_PORT}`;
 let url =`${backendUrl}/reservation`;
 let qrUrl =`${backendUrl}/qrcode`;
-
+let resetUrl =`${backendUrl}/reset`; 
 let isValidGuest = false ;
 let originalValue = {} ;
 
@@ -155,6 +155,7 @@ const getLang = ( l = null) => {
       }
       else if (request.data.status.toLowerCase() === 'prechecked') {
             messageDisplayed =`this reservation was already pre-checked in`  ;
+            setPreChecked(true)
             setError(messageDisplayed)
       }
   
@@ -280,6 +281,19 @@ const getQrCode = async (data) => {
   }
 }
 
+const resetBooking = async (data) => {
+
+try{
+
+    let request = await axios.get(resetUrl + `?email=${data.email}`) ;
+    return request.data ;
+  }
+  catch(e){
+    console.log(e) ;
+    setError(e.message)
+  }
+
+} 
 
 useEffect(() => {
     
@@ -313,8 +327,9 @@ useEffect(() => {
   if (step === 4) {  
     setDisabled(!data.payment.paid)
   }
-  if (step === 5 && !data.reservation.status) {  
-     getQrCode(data) //token ?
+  if (step === 5){
+    if (!data.reservation.status && !preChecked)  getQrCode(data) //token ?
+    else resetBooking(data) 
   }
 } , [step , data] );
 
