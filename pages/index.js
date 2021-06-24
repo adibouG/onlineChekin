@@ -123,8 +123,13 @@ const getLang = ( l = null) => {
 
   
   useEffect( () => {
+
+    if (step > -1)  return ;
+   // if (error && data) return setStep(0) ;
+   // else if (error && !data) return setStep(-2) ;
     if (error && data) return setStep(0) ;
-    else if (error && !data) return setStep(-2) ;
+    else if (!error && data) return setStep(0) ;
+    else if (error && !data) return setStep(-2) ; 
 
   }, [error , data] )
  
@@ -179,7 +184,7 @@ const getLang = ( l = null) => {
   } , [name , token] );
 
 
- 1
+ 
 
 
  const  handleLangChange = (v) => {
@@ -279,13 +284,15 @@ const getQrCode = async (data) => {
 useEffect(() => {
     
   if (step === -1) {
-    if (!data && error) setStep(-2);  
-    if (data) setStep(0);  
+
   }  
  
   if (step === 0) {
-  // if (data) setName( data.guest.firstName ));  
-   
+    if (data) {
+      if (data.guest.firstName && data.guest.lastName)  {
+        setName( data.guest.firstName + " " + data.guest.lastName);  
+      }
+    }
   }  
 
   if (step === 1) {
@@ -298,15 +305,16 @@ useEffect(() => {
   if (step === 3) {
     
     setDisabled(!isValidGuest)
-    
+
+    if (isValidGuest){
+      if (data.email !== data.guest.email) data.email = data.guest.email
+    }    
   } 
   if (step === 4) {  
     setDisabled(!data.payment.paid)
-      
   }
-  if (step === 5) {  
-   // getQrCode(data) //token ?
-      
+  if (step === 5 && !data.reservation.status) {  
+     getQrCode(data) //token ?
   }
 } , [step , data] );
 
@@ -322,7 +330,6 @@ useEffect(() => {
    }
    if (step === 5) {  
     setDB() ;
-    getQrCode(data)
   }
  } , [step] );
 
