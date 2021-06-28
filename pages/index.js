@@ -125,8 +125,6 @@ const getLang = ( l = null) => {
   useEffect( () => {
 
     if (step > -1)  return ;
-   // if (error && data) return setStep(0) ;
-   // else if (error && !data) return setStep(-2) ;
     if (error && data) return setStep(0) ;
     else if (!error && data) return setStep(0) ;
     else if (error && !data) return setStep(-2) ; 
@@ -414,7 +412,7 @@ useEffect(() => {
     } else if (step === 4) {
       return <Payment payment={data.payment} update={updatePayment}/>
     } else if (step === 5) {
-      return <Success date={data.reservation.startDate} {...props} />
+      return <Success date={data.reservation.startDate} lang={getLang} {...props} />
     }
   }
   

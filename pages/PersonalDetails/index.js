@@ -105,7 +105,7 @@ const PersonalDetails = (props) => {
                         required={true} autocomplete='email' lpignore='true'
                     />
                     <Input title='Mobile' name='mobile' id='mobile' type='phone'
-                        handleChange={setMobile} value={mobile}  pattern='\d{6,12}'
+                        handleChange={setMobile} value={mobile}  pattern='^\+?\d{6,15}'
                         required={true} autocomplete='mobile' lpignore='true'
                     />
                 </div>
