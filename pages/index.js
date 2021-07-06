@@ -1,442 +1,308 @@
-import React, { useEffect, useState , useRef } from 'react'
-
-import { useRouter } from 'next/router'
-import dynamic from 'next/dynamic'
-//import useSWR from 'swr'
-import axios from 'axios'
-import Screen from '../components/Screen'
-import LanguageSelector from '../components/LanguageSelector.js'
-const TEXT = require('public/text_en.json')
-/*
-import Welcome from './Welcome/index.js'
-import Failed from './Failed/index.js'
-import Confirmation from './Confirmation/index.js'
-import HotelPolicy from './HotelPolicy/index.js'
-import PersonalDetails from './PersonalDetails/index.js'
-import Payment from './Payment/index.js'
-import Success from './Success/index.js'
-*/
-
-
+import React, {useEffect, useState, useRef} from 'react';
+import {useRouter} from 'next/router';
+import dynamic from 'next/dynamic';
+//import useSWR from 'swr';
+import axios from 'axios';
+import Screen from '../components/Screen';
+import LanguageSelector from '../components/LanguageSelector.js';
 //const fetcher = url => fetch(url).then(res => res.json());
-const Welcome = dynamic(() => import('./Welcome/index.js'))
-const Failed = dynamic(() => import('./Failed/index.js'))
-const Confirmation = dynamic(() => import('./Confirmation/index.js'))
-const HotelPolicy = dynamic(() => import('./HotelPolicy/index.js'))
-const PersonalDetails = dynamic(() => import('./PersonalDetails/index.js'))
-const Payment = dynamic(() => import('./Payment/index.js'))
-const Success = dynamic(() => import('./Success/index.js'))
+const Welcome = dynamic(() => import('./Welcome/index.js'));
+const Failed = dynamic(() => import('./Failed/index.js'));
+const Confirmation = dynamic(() => import('./Confirmation/index.js'));
+const HotelPolicy = dynamic(() => import('./HotelPolicy/index.js'));
+const PersonalDetails = dynamic(() => import('./PersonalDetails/index.js'));
+const Payment = dynamic(() => import('./Payment/index.js'));
+const Success = dynamic(() => import('./Success/index.js'));
 
+const TEXT = require('./text/text.json');
 
 let backendUrl = `${process.env.BACKEND_HOST}:${process.env.BACKEND_PORT}`;
 let url =`${backendUrl}/reservation`;
 let qrUrl =`${backendUrl}/qrcode`;
 let resetUrl =`${backendUrl}/reset`; 
-let isValidGuest = false ;
-let originalValue = {} ;
+
+
 
 const PersonalDetailsWithForwrdRef = React.forwardRef((props, ref) => (
   <PersonalDetails {...props} forwardedRef={ref} />
 ))
 
+//CONSTANTS DEFINITIONS 
+const DEFAULT_LANG = 'en';
+//TODO:move text in the text file with translations
+const NOTOKENERROR = 'your start-checking-in token provided in your email could not be retrieved.' ;
+
+const STATUS = { 
+  COMPLETE : { 
+    VALUE : 'complete',
+    MESSAGE : (arrivalDate) => `this reservation was already checked in, the stay arrival date is ${arrivalDate}` 
+  },
+  PRECHECKED : {
+    VALUE : 'prechecked',
+    MESSAGE : `this reservation was already pre-checked in` 
+  },
+  PENDING :{ 
+    VALUE : 'pending'
+  }
+}
+
+
 const Home = (props) => {
-
-  const router = useRouter() ;
-
-  
-  const steps = ['error', 'failed', 'welcome', 'confirm',  'policies' , 'details', 'payment' , 'success']
-  const languageList = ['en', 'fr' ]
-  
-
-  const [disabled , setDisabled] = useState(false);
-  
-  //const { data, error } = useSWR('/api/fetch', fetcher)
-
+  const router = useRouter() ;  
+  const steps = ['error', 'failed', 'welcome', 'confirm',  'policies' , 'details', 'payment' ,'paymentProcess' , 'success'];
+  const languageList = ['en', 'fr' ];
+  //State values :
+  const [disabled , setDisabled] = useState(false);  
+  //const { data, error } = useSWR('/api/fetch', fetcher);
   const [ name, setName ] = useState('');
   const [ token, setToken ] = useState(null);
   const [ step, setStep ] = useState(-1);
   const [ data, setData ] = useState(null);
   const [ error, setError ] = useState(null);
   const [ preChecked, setPreChecked ] = useState(false);
-  
   const [ guestValidated, setGuestValidated ] = useState(false);
+  const [ paymentprocessing, setPaymentprocessing ] = useState(false);
   const [ qrCode, setQrCode ] = useState(null);
- 
-
-
-  const formRef = useRef(null);
-  const nextButtonRef = useRef(null);
-  
   const [lang , setLang] = useState(null);
   const [text , setText] = useState(TEXT || null);
-  
-  useEffect(() => {
-    const vhCheck = require('vh-check')
-    vhCheck('browser-address-bar')
-  });
-  
-  
-const getLang = ( l = null) => {
-
-    let v = l || lang ;
+  //ref:
+  const formRef = useRef(null);
+  const nextButtonRef = useRef(null);
+  const originalValue = useRef(null);
+   //getLang get the language to into the correct format , take the state value if none provided
+  const getLang = ( l = null) => {
+    let v = l || lang;
     if (v.includes('-')) v = v.split('-')[0];
-    v = v.toLowerCase()
+    v = v.toLowerCase();
     return v;
-
-}   
-  
+  }
+  //effects :  
+  //set the viewport height according to the address bar size
   useEffect(() => {
-    
-    if (!text) setText(TEXT)
-    let userDefaultLanguage =  window.navigator.userLanguage || window.navigator.language || 'en' ;
-    userDefaultLanguage = getLang(userDefaultLanguage)
-    let appDefaultLanguage = languageList.includes(userDefaultLanguage) ? userDefaultLanguage :  getLang('en')
+    const vhCheck = require('vh-check');
+    vhCheck('browser-address-bar');
+  });
+
+  useEffect(() => {
+    if (!text) setText(TEXT); //if no text set it ;
+    let userDefaultLanguage =  window.navigator.userLanguage || window.navigator.language || DEFAULT_LANG ; //get the user default language value
+    let appDefaultLanguage = languageList.includes(getLang(userDefaultLanguage)) ? getLang(userDefaultLanguage) :  getLang(DEFAULT_LANG); //set the language
     return setLang(appDefaultLanguage) ;
-    
-  } , [] );
+  }, []);
 
-  
- //TO DO: 
+  //TO DO: 
   //try dynamic import of the lang per screen ?
-  useEffect(() => {
- // let text = require('public/text_en.json')
+  // useEffect(() => {
+  // let text = require('public/text_en.json')
   //setText(text[lang])
-  } , [ lang ] );
-    
-      
-  useEffect( () => {
+  //} , [ lang ] );
+
+  useEffect(() => {
     let location = router.asPath ;
-    let  queryParams = new URLSearchParams(String(location).replace('/?' , '?'))
-    let tokenurl = queryParams.get('token')
-    let guestName = queryParams.get('name')
-    
-    if (guestName)  setName(guestName.replace(/\./g , ' '))
-    
-    if (tokenurl) return setToken(tokenurl)
+    let  queryParams = new URLSearchParams(String(location).replace('/?' , '?'));
+    let tokenurl = queryParams.get('token');
+    let guestName = queryParams.get('name');
+    if (guestName) setName(guestName.replace(/\./g , ' '));
+    if (tokenurl) return setToken(tokenurl);
+    else if (!tokenurl) return setError(NOTOKENERROR);
+    //if (window) (/mobile/i).test(window.navigator.userAgent) && !location.hash && setTimeout(() => window.scrollTo(0, 1) , 1000) ;​ 
+  }, []);
 
-    else if (!tokenurl) return setError('your start-checking-in token provided in your email could not be retrieved.')
+  useEffect(() => { 
+    //Remove token from url once it is retrieved (to prevent any token stealing/injections from requests referer url)
+    if (name && token) router.replace({ pathname: `/`, query: {} }, '/', { shallow: true }) ;
+  }, [name, token]);
 
-    //if (window) (/mobile/i).test(window.navigator.userAgent) && !location.hash && setTimeout(() => window.scrollTo(0, 1) , 1000) ;​
-    
-  } , [] );
 
-
-  
-  useEffect( () => {
-
+  useEffect(() => {
+    //set the step according to the data retrieval results
     if (step > -1)  return ;
-    if (error && data) return setStep(0) ;
-    else if (!error && data) return setStep(0) ;
-    else if (error && !data) return setStep(-2) ; 
-
-  }, [error , data] )
+    if (data) return setStep(0) ;
+    if (error && !data) return setStep(-2) ; 
+  }, [error, data]);
  
-    
- 
-  
-
   useEffect( async () => {
-
-    if (!token) return ;
-    
+    //get the reservation data , using the token retrieved from the url 
+    if (!token) return ; 
     let reservationId =`?token=${token}` ;
-    let getUrl = url + reservationId
-
-    console.log(getUrl)
+    let getUrl = url + reservationId ;
     let messageDisplayed ;
     try{
-      const request =   await axios.get(getUrl) ;
-      originalValue = request.data.checkin ;
-      if (request.data.status.toLowerCase() === 'complete') {
-            messageDisplayed =`this reservation was already checked in, the stay arrival date is ${request.data.stay.arrivalDate}` 
+      const request = await axios.get(getUrl) ;
+      originalValue.current = request.data.checkin ; //save the original data for later compare
+      if (request.data.status.toLowerCase() === STATUS.COMPLETE.VALUE) {
+            messageDisplayed = STATUS.COMPLETE.MESSAGE(request.data.stay.arrivalDate); 
+            setPreChecked(false);
             return setError(messageDisplayed)
       }
-      else if (request.data.status.toLowerCase() === 'prechecked') {
-            messageDisplayed =`this reservation was already pre-checked in`  ;
-            setPreChecked(true)
+      else if (request.data.status.toLowerCase() ===  STATUS.PRECHECKED.VALUE) {
+            messageDisplayed = STATUS.PRECHECKED.MESSAGE ;
+            setPreChecked(true);
             setError(messageDisplayed)
+            return setData(request.data.checkin) ;
+          }
+      else if (request.data.status.toLowerCase() ===  STATUS.PENDING.VALUE) {
+        setPreChecked(false);
+        return setData(request.data.checkin) ;
       }
-  
-      return setData(request.data.checkin) ;
-      
     }catch(e){
-
-      console.log(e)
-   
+      console.log(e);
       return setError(e.response.data.error || e.message);
-
     }
-  } , [token] );
+  }, [token]);
 
-
-
-  useEffect( async () => {
-
-    if (name && token){ //TODO:Remove token from url
-      router.replace(  {
-          pathname: `/`,
-          query: {}
-          }, '/', 
-          {shallow: true}
-        )
+  useEffect(() => {
+    if (step === -1 || step === 0) {
+      if (data && data.guest.firstName && data.guest.lastName) return setName(data.guest.firstName + " " + data.guest.lastName);  
+      else return;
     }
-  } , [name , token] );
+    if (step === 1 && disabled) return setDisabled(false);  
+    if (step === 2) return setDisabled(!data.privacyPolicy.accepted);
+    if (step === 3) return setDisabled(!guestValidated);
+    if (step === 4) return setDisabled(!data.payment.paid);
+    if (step === 5){
+      if (!data.reservation.status && !preChecked)  return getQrCode(data); //token ?
+      else return resetBooking(data) ;
+    }
+  }, [step, data]);
 
+ useEffect(() => {
+   if (step === 3 || step === 4 || step === 5) return setDB() ;
+ } , [step] );
 
- 
+ useEffect(() => {
+   if (step === 3 && guestValidated) {
+        const details = getFormValues() ;      
+        if (data.email !== data.guest.email) data.email = data.guest.email ;
+        let newData = {...data , guest : details } ;
+        setData(newData) ;
+    }
+ } , [guestValidated] );
 
-
- const  handleLangChange = (v) => {
-
-    v = getLang(v)
-    return setLang(v)
-
-  } 
+//Functions
+  const handleLangChange = (v) => setLang(getLang(v));
 
   const setDB = async () => {
     let setRequest =  await axios.post(url , data) ;
-    originalValue = setRequest.data.checkin ;
+    originalValue.current = setRequest.data.checkin ;
     return setData(setRequest.data.checkin) ;
   }
-
   
+  const validateGuest = (value) => setGuestValidated(value) ;
   
-  const validateGuest = (v) => {
-    isValidGuest = v ;
-    setGuestValidated(v) ;
-    setDisabled(!isValidGuest)
+  const updateGuestDetails = (guestDetail, value) => {
+    if (data.guest[guestDetail] !== value) return setData({ ...data, guest : { ...data.guest, [guestDetail] : value }});
   }
 
 
-  const updateGuestDetails = (guestDetail , value) => {
-   
-    if (data.guest[guestDetail] !== value) { 
-      setData({ 
-        ...data ,
-        guest : {
-          ...data.guest ,
-          [guestDetail] : value 
-        }
-      })
+  const getFormValues = () => { 
+    let details = {} ;
+    //formRef.current => document.getElementById('form') ;
+    if (!formRef.current) return;
+    for ( let i = 0; i < 15; i += 2) {
+        if (formRef.current[i].name in data.guest) details[formRef.current[i].name] = formRef.current[i].value ;
     } 
-  }
-
- 
-  const updatePayment = ({ amount , currency , method , bank , isPaid}) => {
-
-    
-    setData( {
-      ...data, 
-      payment : { 
-        ...data.payment ,
-        paid : true 
-      }
-    }
-    )
-    
-    setDisabled(!isPaid);
-  }
-
-const getFormValues = () => { 
-  let details = {} ;
-  debugger
-  let f = formRef.current // document.getElementById('form') ;
-  for ( let i = 0 ; i < 15 ; i+=2) {
-
-      if (f[i].name in data.guest) details[f[i].name] = f[i].value  ;
+    return details;
   } 
 
-  return details;
-} 
+  const updatePayment = ({ amount , currency , method , bank , isPaid}) => {
+    if (data.payment.paid) return;
+    if (data.payment.paid !== isPaid) return setData({...data, payment : { ...data.payment, paid : true }}) ;
+  }
 
-
+  const processPayment = () => {
+    setPaymentprocessing(true);
+    setTimeout(() => {
+      setPaymentprocessing(false);
+      setStep(5);
+    }, 3000 );
+  }
 
   const updatePolicies = ({name , value}) => {
-
-      setData( {
-            ...data, 
-            privacyPolicy : { 
-              ...data.privacyPolicy ,
-              accepted : value 
-            }
-          }
-      )
-}
-
-const getQrCode = async (data) => {
-
-  
-  try{
-
-    let request = await axios.post(qrUrl , data ) ;
-    let response = request.data ;
-    let qrCode = request.data.qrcode ;
-    setQrCode(qrCode) ;
-  }
-  catch(e){
-    console.log(e) ;
-    setError(e.message)
-  }
-}
-
-const resetBooking = async (data) => {
-
-try{
-
-    let request = await axios.get(resetUrl + `?email=${data.email}`) ;
-    return request.data ;
-  }
-  catch(e){
-    console.log(e) ;
-    setError(e.message)
+    if (data.privacyPolicy.accepted !== value) setData({...data, privacyPolicy : { ...data.privacyPolicy, accepted : value }});
   }
 
-} 
-
-useEffect(() => {
-    
-  if (step === -1) {
-
-  }  
- 
-  if (step === 0) {
-    if (data) {
-      if (data.guest.firstName && data.guest.lastName)  {
-        setName( data.guest.firstName + " " + data.guest.lastName);  
-      }
+  const getQrCode = async (data) => {
+    try{
+      let request = await axios.post(qrUrl, data) ;
+      let qrCode = request.data.qrcode ;
+      return setQrCode(qrCode) ;
+    }catch(e){
+      console.log(e) ;
+      return setError(e.message);
     }
-  }  
+  }
 
-  if (step === 1) {
-    if (disabled) setDisabled(false);  
-  }  
-
-  if (step === 2) {
-    setDisabled(!data.privacyPolicy.accepted)
-  }  
-  if (step === 3) {
-    
-    setDisabled(!isValidGuest)
-
-    if (isValidGuest){
-      if (data.email !== data.guest.email) data.email = data.guest.email
-    }    
+  const resetBooking = async (data) => {
+    try{
+      let request = await axios.get(resetUrl + `?email=${data.email}`) ;
+      return request.data ;
+    }catch(e){
+      console.log(e) ;
+      return setError(e.message);
+    }
   } 
-  if (step === 4) {  
-    setDisabled(!data.payment.paid)
-  }
-  if (step === 5){
-    if (!data.reservation.status && !preChecked)  getQrCode(data) //token ?
-    else resetBooking(data) 
-  }
-} , [step , data] );
 
+  const previous = () => setStep(Math.max(step - 1, 0)) ;
 
-
- useEffect(() => {
-
-   if (step === 3) {
-      setDB() ;
-   } 
-   if (step === 4) {  
-     setDB() ;
-   }
-   if (step === 5) {  
-    setDB() ;
-  }
- } , [step] );
-
-
-
-  const previous = () => {
-    setStep(Math.max(step - 1, 0))
-  }
-
-  const next = () => { 
-   
-    if (step === 2) {
-    
-    }  
-    if (step === 3) { 
-
-      let details = getFormValues() ;
-      
-      setData({ 
-        ...data ,
-        guest : details
-      })
-    }
-    if (step === 4) {
-     
-      //trigger payment  
-
-    }
-
-    setStep(Math.min(step + 1, steps.length - 1))
-  }
-
-
+  const next = () => setStep(Math.min(step + 1, steps.length - 1));
 
   const content = (props) => {
-    
-    if (step < -1) {
-        return <Failed reason={error} 
-                      text={text && text.Failed[lang]} 
-                      step={step} 
-                      onContinue={false} 
-                      {...props}  
-                />
-    }  else if (step === -1 || step === 0 ) {
-        return <Welcome step={step} 
-                      guest={name} 
-                      onContinue={next} 
-                      text={text && text.Welcome[lang]} 
-                      error={error}
-                      {...props}
-              />
-    } else if (step === 1) {
-      return <Confirmation  reservation={data.reservation} 
-                            text={text && text.Confirmation[lang]} 
-              />
-    } else if (step === 2) {
-      return <HotelPolicy policy={data.privacyPolicy} 
-                          update={updatePolicies} 
-                />
-    }  else if (step === 3) {
-      return <PersonalDetailsWithForwrdRef ref={formRef} 
-                              guest={data.guest} 
-                              update={updateGuestDetails} 
-                              isValid={isValidGuest} 
-                              validate={validateGuest}
-      />
-    } else if (step === 4) {
-      return <Payment payment={data.payment} update={updatePayment}/>
-    } else if (step === 5) {
-      return <Success date={data.reservation.startDate} lang={getLang} {...props} />
-    }
+    if (step < -1) return <Failed reason={error} 
+                                  text={text && text.Failed[lang]} 
+                                  step={step} 
+                                  onContinue={false} 
+                                  {...props}  
+                          />
+    else if (step === -1 || step === 0 ) return <Welcome  step={step} 
+                                                          guest={name} 
+                                                          onContinue={next} 
+                                                          text={text && text.Welcome[lang]} 
+                                                          error={error}
+                                                          {...props}
+                                                />
+    else if (step === 1) return <Confirmation reservation={data.reservation} 
+                                              text={text && text.Confirmation[lang]} 
+                                />
+    else if (step === 2) return <HotelPolicy  policy={data.privacyPolicy} 
+                                              update={updatePolicies} 
+                                              text={text && text.HotelPolicy[lang]} 
+                                />
+    else if (step === 3) return <PersonalDetailsWithForwrdRef ref={formRef} 
+                                                              guest={data.guest} 
+                                                              update={updateGuestDetails} 
+                                                              isValid={guestValidated} 
+                                                              validate={validateGuest}
+                                                              text={text && text.PersonalDetails[lang]} 
+                                />
+    else if (step === 4) return <Payment  payment={data.payment}
+                                          update={updatePayment}
+                                          onContinue={processPayment}
+                                          isProcessing={paymentprocessing}
+                                          text={text && text.Payment[lang]} 
+                                />
+    else if (step === 5) return <Success  date={data.reservation.startDate} 
+                                          lang={getLang} {...props} 
+                                          text={text && text.Success[lang]} 
+                                />
   }
   
-  return <Screen 
-    isLoading={!data} 
-    canNavigate={step > 0 && step !== 5} 
-    onBack={previous}
-    onContinue={next}
-    disabled={disabled}
-    ref={nextButtonRef}
-    nextLabel={step === 4 ? 'Pay' : false }
-    
-    >
-    <LanguageSelector supported={languageList}
-            	            selected={lang} 
-            	            handleLangChange={handleLangChange}
-         />
-      {content(props)}
-      
-
-   
-        
-
-    </Screen>
+  return(
+     <Screen  isLoading={!data} 
+              canNavigate={step > 0 && step !== 5} 
+              onBack={previous}
+              onContinue={next}
+              disabled={disabled}
+              ref={nextButtonRef}
+              nextLabel={step === 4 ? 'Pay' : false }
+      >
+        <LanguageSelector supported={languageList}
+                	        selected={lang} 
+                 	        handleLangChange={handleLangChange}
+        />
+        {content(props)}
+      </Screen>
+  )
 }
 
 

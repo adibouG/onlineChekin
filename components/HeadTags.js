@@ -1,4 +1,4 @@
-import Head from 'next/head'
+import Head from 'next/head';
 
 function HeadTags() {
   return (
@@ -9,18 +9,11 @@ function HeadTags() {
         <meta name="apple-mobile-web-app-status-bar-style" content="black" />
         <meta name = "viewport" content = "width = device-width , initial-scale = 1, user-scalable = no" />
         <meta name = "viewport" content = "height = device-height, initial-scale = 1 , user-scalable = no" />
-{
-  /*    <!--
+{/*<!--
           <meta name="format-detection" content="telephone=no" />
           <meta property="og:title" content="Check In" key="CheckIn" /> 
-        -->
-*/
-}
-          </Head>
-      <Head>
-       
+-->*/}
       </Head>
-    
     </div>
   )
 }

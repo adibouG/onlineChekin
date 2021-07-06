@@ -22,24 +22,12 @@
     padding-bottom: 2em;
 }
 
-@media screen and (min-device-width: 768px) { /* iPad/Desktop */
-    .stack {
-        padding-top: 0;
-        padding-bottom: 0;
-    }
-}
-
-
-  .hotelPolicy__wrapper {
-
+.hotelPolicy__wrapper {
     overflow-y: auto;
     text-align: left;
-    /* width: 468px;
-    height: 592px; */
     border: 2px solid #E8E8E8;
     border-radius: 10px;
     opacity: 0.8;
-
     display: flex;
     flex-flow: column;
     align-items: flex-start;
@@ -47,40 +35,25 @@
     padding:20px
   }
 
-  .policyBlock {
-   /* width: 429px;
-     height: 601px; */
+.policyBlock {
     display: flex;
     flex-flow: column;
     align-items: flex-start;
 }
 
-
-
-
-  .policyBlock__policyName {
-
+.policyBlock__policyName {
     display: block;
     margin: 0 0 40px 0;
+}
 
-  }
+.policyBlock__policyName__text{
+    font-weight: normal;
+}
 
-    .policyBlock__policyName__text{
-        font-weight: normal;
-    }
-
-
-  .policyBlock__policyRules__text {
-/* 
-    width: 429px;
-    height: 601px; */
-    
+.policyBlock__policyRules__text {
     word-break: break-word;
     font-size: 16px;
-    /* font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-medium) var(--unnamed-font-size-16)/21px HelveticaNeue-Medium; */
-    /* letter-spacing: var(--unnamed-character-spacing-0); */
-    /* color: var(--unnamed-color-343a40); */
-    text-align: left;
+     text-align: left;
     font: normal normal medium 16px/21px HelveticaNeue-Medium;
     letter-spacing: 0px;
     color: #343A40;
@@ -92,7 +65,6 @@
     flex-direction: row;
     height: 24px;
     align-items: center;
-
 }
 
 .hotelPolicy__selectorWrapper {
@@ -104,34 +76,29 @@
     align-items: center;
     margin: 20px 0 0 0;
     width:190px;
-
 }
 
-
-
 .policySelector__label {
-
     display: inline-block;
-    /* height: 24px; */
-    /* width: auto; */
     font-size: 16px;
     width: 137px;
     height: 19px;
-
-    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-medium) var(--unnamed-font-size-16)/var(--unnamed-line-spacing-19) var(--unnamed-font-family-roboto);
-    letter-spacing: var(--unnamed-character-spacing-0);
-    color: var(--unnamed-color-343a40);
-    text-align: left;
+     text-align: left;
     font: normal normal medium 16px/19px Roboto;
     letter-spacing: 0px;
     color: #343A40;
     opacity: 1;
+}
+
+.policySelector__label__text {
 
 }
 
 
 
-.policySelector__label__text {
-
-
+@media screen and (min-device-width: 768px) { /* iPad/Desktop */
+    .stack {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
 }

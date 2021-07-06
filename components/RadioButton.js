@@ -1,13 +1,13 @@
 import React from 'react';
 import styles from './RadioButton.module.css';
-import Image from 'next/image'
-const RadioButton = ({name , id , value , src , w , h , isChecked , handleChange = false}) => {
+import Image from 'next/image';
+const RadioButton = ({ name, id, value, src, w, h, isChecked, handleChange = false }) => {
 
     const onChange = (e) => {
         let name = e.target.name ;
         let value = e.target.value ;
         let checked = e.target.checked ;
-        if (handleChange) handleChange({name , value , checked})
+        if (handleChange) return handleChange({ name, value, checked });
     }
 
     return(

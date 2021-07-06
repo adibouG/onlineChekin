@@ -1,0 +1,88 @@
+{
+    "Failed" : {
+        "fr" : {  
+            "expired" :  "Malheureusement le lien est expiré" ,
+            "notFound" :  "Nous ne trouvons pas votre reservation" ,
+            "assistance" :  "Pour une assistance, veuillez nous contacter au : +31 384629847 Ou e-mail: support@hotelenzo.com" 
+        },
+        "en" : {  
+            "expired" :  "Unfortunately the link has expired" ,
+            "notFound" :  "We can't find your reservation" ,
+            "assistance" :  "In case of assistance, please call us at: +31 384629847 Or e-mail: support@hotelenzo.com" 
+       }
+    },
+    "Welcome" : {
+        "fr" : {  
+            "supertitle" :  "Bonjour" ,
+            "waitSubtitle" :  "Recuperation des details de la reservation... " ,
+            "subtitle" : "Etes vous pret pour le check-in? " ,
+            "buttonTitle" : "Oui, commencer le check-in" ,
+            "buttonTitleWithError" : "Continuer"
+        },
+        "en" : {  
+            "supertitle" :  "Welcome" ,
+            "waitSubtitle" :  "Getting your reservation details..." ,
+            "subtitle" : "Are you ready to check-in?" ,
+            "buttonTitle" : "Yes, start check-in" ,
+            "buttonTitleWithError" : "Continue"
+        }
+    },
+    "Confirmation" : {
+        "fr" : {  
+            "header" :  "Veuillez confirmer les details de la reservation" ,
+            "yourStay" :  "Votre sejours" ,
+            "nights" : "Nombre de nuit(s)" ,
+            "guests" : "Nombre d'invité(s)" , 
+            "room" : "Type de chambre" 
+        },
+        "en" : {  
+            "header" :  "Please confirm your reservation details",
+            "yourStay" :  "Your stay" ,
+            "nights" : "Number of night(s)" ,
+            "guests" : "Number of guest(s)" , 
+            "room" : "Room type" 
+        }
+    },
+    "HotelPolicy" : {
+        "fr" : {  
+            "header": "Veuillez accepter nos termes et conditions" ,
+            "validateLabel" : "J'accepte les conditions"  
+        },
+        "en" : {  
+            "header": "Please accept our hotel and privacy policies" ,
+            "validateLabel" : "I accept all policies"  
+        }
+    },
+    "Payment" : {
+        "fr" : {  
+            "header" : "Veuillez completer votre paiement",
+            "title" : "Montant à payer",
+            "selectorLabel": "Choisissez votre methode de paiement"
+        },
+        "en" : {  
+            "header" : "Please complete your payment",
+            "title" : "Amount to pay",
+            "selectorLabel": "Choose your payment method"
+        }
+    },
+    "PersonalDetails" : {
+        "fr" : {  
+            "header": "Veuillez completer vos details"
+        },
+        "en" : {  
+            "header": "Please fill in your details"
+        }
+    },
+    "Success" : {
+        "fr" : {  
+            "supertitle" : "Enregistrement terminé!",
+            "title" : "Pour récupèrer votre clé, veuillez utiliser le QR code envoyé par email avec le dispenseur de clé situé dans l'hotel.",
+            "subtitle" : "Dans l'attente de vous voir $day !"
+        },
+        "en" : {  
+            "supertitle" : "Checked in!",
+            "title" : "To pick up your room key, please use the QR-code in your e-mail at the key pick up device in the lobby.",
+            "subtitle" : "Looking forward seeing you $day !"
+        }
+    }
+}

@@ -1,37 +1,27 @@
-import * as React from 'react'
-import styles from './index.module.css'
-import Card from '../../components/Card'
+import * as React from 'react';
+import styles from '../css/index.module.css';
+import Card from '../../components/Card';
 
-const weekDays = {
-    en : ['Monday' , 'Tuesday' , 'Wednesday' , 'Thursday' , 'Friday' , 'Saturday' , 'Sunday'] ,
- //fr : ['Lundi' , 'Mardi' , 'Mercredi' , 'Thursday' , 'Friday' , 'Saturday' , 'Sunday']
-}
-
- const Success = (props) => {
-    
-    let {date , lang} = props;
-
-    let day  = new Date(date).toLocaleDateString(lang(), { weekday: 'long' });
-    
-    const SUCCESS = 'Checked in!'
-    const DETAILS = 'To pick up your room key, please use the QR-code in your e-mail at the key pick up device in the lobby.'
-    const BYE = `Looking forward seeing you ${day}!`
-
+const Success = (props) => {
+    let { date, lang, text } = props;
+    let day = new Date(date).toLocaleDateString(lang(), { weekday: 'long' });     
     const onContinue = () => false ;
-    
+    let subtitleText = text ? text.subtitle.replace('$day' , day) : "";
+    let supertitleText = text ? text.supertitle : "" ;
+    let titleText = text ? text.title : "" ;
     return (
         <div className={styles.screen}>
             <div className={styles.content}>
                 <div className={styles.logo}/>
                 <Card step={5}
-                    supertitle={SUCCESS}
-                    title={DETAILS}
-                    subtitle={BYE}
+                    supertitle={supertitleText}
+                    title={titleText}
+                    subtitle={subtitleText}
                 />
             </div>
         </div>
     )
 }
 
-export default Success
+export default Success;
 

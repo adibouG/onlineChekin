@@ -1,24 +1,18 @@
-import  React  from 'react'
-import Image from 'next/image'
-import styles from './Screen.module.css'
+import  React  from 'react';
+import Image from 'next/image';
+import styles from './Screen.module.css';
 
 const Screen =  React.forwardRef((props, ref) => {
-    
-    const { isLoading, canNavigate, onBack, onContinue , disabled , nextLabel , logo = null } = props ;
-
+    const { isLoading, canNavigate, onBack, onContinue, disabled, nextLabel, logo = null } = props ;
     const nextButtonLabel = nextLabel || 'Confirm' ;
-
-    if (isLoading) {
-        return(<div className={styles.center}>{props.children}</div>)
-    } else if (!canNavigate) {
-        return(<div className={`${styles.grid} ${styles.grid_no_nav} background`}>{props.children}</div>)
-    } else {
+    if (isLoading) return(<div className={styles.center}>{props.children}</div>) ;
+    else if (!canNavigate) return(<div className={`${styles.grid} ${styles.grid_no_nav} background`}>{props.children}</div>);
+    else {
         return(
             <div className={`${styles.container} possible_background`}>
                 <div className={styles.header}>
                     <div className={styles.header_logoWrapper}>
-                    {
-                        logo &&
+                    {   logo &&
                         <Image w={logo.width} h={logo.height}  
                                 src={logo.src} alt={logo.alt}  
                         />
@@ -29,7 +23,6 @@ const Screen =  React.forwardRef((props, ref) => {
                     <div className={styles.content}>
                         {props.children}
                     </div>
-
                     <div className={styles.footerWrapper}>
                         <div className={styles.footer}>
                             <button className='secondary_button' onClick={onBack}>Back</button>
@@ -38,12 +31,10 @@ const Screen =  React.forwardRef((props, ref) => {
                             </button>
                         </div>
                     </div>
-
                 </div>
-          
             </div>
-        )
+        );
     }
 })
 
-export default Screen
+export default Screen;
