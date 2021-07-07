@@ -4,7 +4,7 @@ import { Stack, Header } from '../../components/Stack.js';
 import Input from '../../components/Input.js';
 
 const MAILREGEXP = "[A-Za-z0-9._%+-]{2,}@[a-zA-Z]{1,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})";
-const PHONEREGEXP = '^\+?\d{6,15}';
+const PHONEREGEXP = "^(\\+?)((( ?)\\d){6,})";//"(?[\d +\/()–-]{6,}\)?[ .\/–-]?\d+";
 const PersonalDetails = (props) => {
     let { text, guest, update, validate, isValid, forwardedRef } = props ;
    const [firstName, setFirstName] = useState(guest.firstName || "" );

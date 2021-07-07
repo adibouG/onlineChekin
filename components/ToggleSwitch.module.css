@@ -2,7 +2,8 @@
     position: relative;
     display: inline-block;
     width: 40px;
-    height: 25px;
+    height: 24px;
+    margin-inline-end: 10px;
   }
   
   .switch input { 
@@ -25,17 +26,13 @@
     transition: .4s;
   }
 
-  .roundSlider {
-    border-radius: 15px;
-  }
-
   .roundSlider:before {
     position: absolute;
     content: "";
     height: 18px;
     width: 18px;
-    left: 3px;
-    bottom: 3px;
+    left: 2px;
+    bottom: 2px;
     background-color: #BFBFBF;
     -webkit-transition: .4s;
     transition: .4s;
@@ -48,7 +45,6 @@
   
   input:focus + .roundSlider {
     box-shadow: 0 0 2px 1px #8BBAFE ;
-
   }
   
   input:focus + .roundSlider:before {
@@ -57,11 +53,10 @@
 
   }
   
-  
   input:checked + .roundSlider:before {
-    -webkit-transform: translateX(13px);
-    -ms-transform: translateX(13px);
-    transform: translateX(13px);
+    -webkit-transform: translateX(16px);
+    -ms-transform: translateX(16px);
+    transform: translateX(16px);
     background-color: #FFF;
   }
   
@@ -74,14 +69,10 @@
     border-radius: 50%;
   }
 
-
   .switchWrapper{
-
-    
     display: flex;
     flex-flow: row-reverse;
     width: 100%;
     align-items: center;
     justify-content: space-between;
-
   }

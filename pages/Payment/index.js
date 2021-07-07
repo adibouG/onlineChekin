@@ -5,14 +5,21 @@ import Input from '../../components/Input.js';
 import RadioButton from '../../components/RadioButton.js';
 import Select from '../../components/Select.js';
 import Spinner from '../../components/Spinner.js';
-
+//import applepay from './images/applepayTest.svg' ;
+//import ideal from './images/ideal.svg' ;
 const MethodGroup = (props) => {
     const { names, selected, setMethod } = props;
     let group = [] ;
     for (let i of names) {
         let src = i.toLowerCase();
+        let img = src;
         group.push(
-            <RadioButton key={i} w={69} h={60} handleChange={setMethod} name={"payMethod"} id={i}  value={i}   src={src}   isChecked={selected === i} />
+            <RadioButton    key={i} w={69} h={60} 
+                            handleChange={setMethod} name={"payMethod"} 
+                            id={i} value={i} 
+                            src={src} img={img}
+                            isChecked={selected === i} 
+            />
         );
     }    
     return(    
@@ -22,14 +29,14 @@ const MethodGroup = (props) => {
     )
 }
                                         
-const Payment = ({ isProcessing , payment = {}, update, text }) => {
+const Payment = ({ isProcessing, payment = {}, update, text }) => {
     const [amount , setAmount] = useState(payment.amount || 0 );
     const [currency , setCurrency] = useState(payment.currency || "€" );
     const [paid , setPaid] = useState(payment.paid || false );
     const [paymentMethod , setPaymentMethod] = useState( null );
-    const [bank , setBank] = useState( null );
-    const availableMethods = ['Ideal' , 'Visa' , 'PayPal' , 'ApplePay' ] ;
-    const availableBanks = ['RaboBank' , 'Ing' ] ;
+    const [bank, setBank] = useState( null );
+    const availableMethods = ['Ideal', 'Visa', 'PayPal', 'ApplePay'] ;
+    const availableBanks = ['RaboBank', 'Ing'] ;
     let selected ;
     const selectPaymentMethod = ({name, value, checked}) => (name === "payMethod" && checked && setPaymentMethod(value)) ;
 
@@ -67,7 +74,8 @@ const Payment = ({ isProcessing , payment = {}, update, text }) => {
                     <div className={styles.displayMethods_body}>
                         <MethodGroup names={availableMethods} setMethod={selectPaymentMethod} selected={paymentMethod} />
                         <div className={styles.displayMethods_body_bank} >
-                            <Input title='Select your bank' name='bank' id='bank' type='select' 
+                            <Input  title='Select your bank' name='bank' 
+                                    id='bank' type='select' 
                                     value={availableBanks} handleChange={setBank} 
                             /> 
                         {/*

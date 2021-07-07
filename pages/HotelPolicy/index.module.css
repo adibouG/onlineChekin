@@ -75,7 +75,7 @@
     flex-direction: row;
     align-items: center;
     margin: 20px 0 0 0;
-    width:190px;
+    max-width:250px;
 }
 
 .policySelector__label {
