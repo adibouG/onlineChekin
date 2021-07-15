@@ -1,37 +1,31 @@
-import React, {useEffect, useState, useRef} from 'react';
-import {useRouter} from 'next/router';
+import React, { useEffect, useState, useRef } from 'react';
+import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
-//import useSWR from 'swr';
 import axios from 'axios';
-import Screen from '../components/Screen';
+//import useSWR from 'swr';
+import TEXT from './text/text.json';
+import SETTINGS from '../settings.json';
 import LanguageSelector from '../components/LanguageSelector.js';
-//const fetcher = url => fetch(url).then(res => res.json());
+import Screen from '../components/Screen';
 const Welcome = dynamic(() => import('./Welcome/index.js'));
 const Failed = dynamic(() => import('./Failed/index.js'));
 const Confirmation = dynamic(() => import('./Confirmation/index.js'));
+const Success = dynamic(() => import('./Success/index.js'));
 const HotelPolicy = dynamic(() => import('./HotelPolicy/index.js'));
 const PersonalDetails = dynamic(() => import('./PersonalDetails/index.js'));
 const Payment = dynamic(() => import('./Payment/index.js'));
-const Success = dynamic(() => import('./Success/index.js'));
-
-const TEXT = require('./text/text.json');
 
 let backendUrl = `${process.env.BACKEND_HOST}:${process.env.BACKEND_PORT}`;
-let url =`${backendUrl}/reservation`;
-let qrUrl =`${backendUrl}/qrcode`;
-let resetUrl =`${backendUrl}/reset`; 
-
-
+let url =`${backendUrl}${SETTINGS.API.GET_RESERVATION}`;
+let qrUrl =`${backendUrl}${SETTINGS.API.GET_QRCODE}`;
+let resetUrl =`${backendUrl}${SETTINGS.API.RESET_RESERVATION}`; 
 
 const PersonalDetailsWithForwrdRef = React.forwardRef((props, ref) => (
   <PersonalDetails {...props} forwardedRef={ref} />
 ))
-
-//CONSTANTS DEFINITIONS 
-const DEFAULT_LANG = 'en';
+const {DEFAULT_LANG} = SETTINGS;
 //TODO:move text in the text file with translations
-const NOTOKENERROR = 'your start-checking-in token provided in your email could not be retrieved.' ;
-
+const NOTOKENERROR = TEXT.ERROR.NOTOKEN;
 const STATUS = { 
   COMPLETE : { 
     VALUE : 'complete',
@@ -46,13 +40,12 @@ const STATUS = {
   }
 }
 
-
 const Home = (props) => {
   const router = useRouter() ;  
-  const steps = ['error', 'failed', 'welcome', 'confirm',  'policies' , 'details', 'payment' ,'paymentProcess' , 'success'];
-  const languageList = ['en', 'fr' ];
+  const steps = [ 'error', 'failed', 'welcome', 'confirm', 'policies', 'details', 'payment', 'paymentProcess', 'success' ];
+  const languageList = ['en', 'fr'];
   //State values :
-  const [disabled , setDisabled] = useState(false);  
+  const [ disabled, setDisabled ] = useState(false);  
   //const { data, error } = useSWR('/api/fetch', fetcher);
   const [ name, setName ] = useState('');
   const [ token, setToken ] = useState(null);
@@ -63,8 +56,8 @@ const Home = (props) => {
   const [ guestValidated, setGuestValidated ] = useState(false);
   const [ paymentprocessing, setPaymentprocessing ] = useState(false);
   const [ qrCode, setQrCode ] = useState(null);
-  const [lang , setLang] = useState(null);
-  const [text , setText] = useState(TEXT || null);
+  const [ lang , setLang ] = useState(null);
+  const [ text , setText ] = useState(TEXT || null);
   //ref:
   const formRef = useRef(null);
   const nextButtonRef = useRef(null);
@@ -90,8 +83,7 @@ const Home = (props) => {
     return setLang(appDefaultLanguage) ;
   }, []);
 
-  //TO DO: 
-  //try dynamic import of the lang per screen ?
+  //TO DO: dynamic import of the lang per screen ?
   // useEffect(() => {
   // let text = require('public/text_en.json')
   //setText(text[lang])
@@ -99,12 +91,12 @@ const Home = (props) => {
 
   useEffect(() => {
     let location = router.asPath ;
-    let  queryParams = new URLSearchParams(String(location).replace('/?' , '?'));
+    let queryParams = new URLSearchParams(String(location).replace('/?', '?'));
     let tokenurl = queryParams.get('token');
     let guestName = queryParams.get('name');
     if (guestName) setName(guestName.replace(/\./g , ' '));
     if (tokenurl) return setToken(tokenurl);
-    else if (!tokenurl) return setError(NOTOKENERROR);
+    else return setError(NOTOKENERROR);
     //if (window) (/mobile/i).test(window.navigator.userAgent) && !location.hash && setTimeout(() => window.scrollTo(0, 1) , 1000) ;​ 
   }, []);
 
@@ -112,7 +104,6 @@ const Home = (props) => {
     //Remove token from url once it is retrieved (to prevent any token stealing/injections from requests referer url)
     if (name && token) router.replace({ pathname: `/`, query: {} }, '/', { shallow: true }) ;
   }, [name, token]);
-
 
   useEffect(() => {
     //set the step according to the data retrieval results
@@ -122,7 +113,7 @@ const Home = (props) => {
   }, [error, data]);
  
   useEffect( async () => {
-    //get the reservation data , using the token retrieved from the url 
+    //get the reservation data, using the token retrieved from the url 
     if (!token) return ; 
     let reservationId =`?token=${token}` ;
     let getUrl = url + reservationId ;
@@ -134,18 +125,16 @@ const Home = (props) => {
             messageDisplayed = STATUS.COMPLETE.MESSAGE(request.data.stay.arrivalDate); 
             setPreChecked(false);
             return setError(messageDisplayed)
-      }
-      else if (request.data.status.toLowerCase() ===  STATUS.PRECHECKED.VALUE) {
+      } else if (request.data.status.toLowerCase() ===  STATUS.PRECHECKED.VALUE) {
             messageDisplayed = STATUS.PRECHECKED.MESSAGE ;
             setPreChecked(true);
             setError(messageDisplayed)
             return setData(request.data.checkin) ;
-          }
-      else if (request.data.status.toLowerCase() ===  STATUS.PENDING.VALUE) {
+      } else if (request.data.status.toLowerCase() ===  STATUS.PENDING.VALUE) {
         setPreChecked(false);
         return setData(request.data.checkin) ;
       }
-    }catch(e){
+    } catch(e) {
       console.log(e);
       return setError(e.response.data.error || e.message);
     }
@@ -156,34 +145,34 @@ const Home = (props) => {
       if (data && data.guest.firstName && data.guest.lastName) return setName(data.guest.firstName + " " + data.guest.lastName);  
       else return;
     }
-    if (step === 1 && disabled) return setDisabled(false);  
-    if (step === 2) return setDisabled(!data.privacyPolicy.accepted);
-    if (step === 3) return setDisabled(!guestValidated);
-    if (step === 4) return setDisabled(!data.payment.paid);
-    if (step === 5){
+    else if (step === 1 && disabled) return setDisabled(false);  
+    else if (step === 2) return setDisabled(!data.privacyPolicy.accepted);
+    else if (step === 3) return setDisabled(!guestValidated);
+    else if (step === 4) return setDisabled(!data.payment.paid);
+    else if (step === 5){
       if (!data.reservation.status && !preChecked)  return getQrCode(data); //token ?
       else return resetBooking(data) ;
     }
   }, [step, data]);
 
- useEffect(() => {
-   if (step === 3 || step === 4 || step === 5) return setDB() ;
- } , [step] );
+  useEffect(() => {
+    if (step === 3 || step === 4 || step === 5) return setDB() ;
+  }, [step] );
 
- useEffect(() => {
+  useEffect(() => {
    if (step === 3 && guestValidated) {
-        const details = getFormValues() ;      
-        if (data.email !== data.guest.email) data.email = data.guest.email ;
-        let newData = {...data , guest : details } ;
-        setData(newData) ;
-    }
- } , [guestValidated] );
+     const details = getFormValues() ;      
+     if (data.email !== data.guest.email) data.email = data.guest.email ;
+     let newData = { ...data, guest: details } ;
+     setData(newData) ;
+   }
+  }, [guestValidated] );
 
 //Functions
   const handleLangChange = (v) => setLang(getLang(v));
 
   const setDB = async () => {
-    let setRequest =  await axios.post(url , data) ;
+    let setRequest =  await axios.post(url, data) ;
     originalValue.current = setRequest.data.checkin ;
     return setData(setRequest.data.checkin) ;
   }
@@ -191,53 +180,52 @@ const Home = (props) => {
   const validateGuest = (value) => setGuestValidated(value) ;
   
   const updateGuestDetails = (guestDetail, value) => {
-    if (data.guest[guestDetail] !== value) return setData({ ...data, guest : { ...data.guest, [guestDetail] : value }});
+    if (data.guest[guestDetail] !== value) return setData({ ...data, guest: { ...data.guest, [guestDetail]: value }});
   }
-
 
   const getFormValues = () => { 
     let details = {} ;
-    //formRef.current => document.getElementById('form') ;
     if (!formRef.current) return;
     for ( let i = 0; i < 15; i += 2) {
-        if (formRef.current[i].name in data.guest) details[formRef.current[i].name] = formRef.current[i].value ;
+      if (formRef.current[i].name in data.guest) details[formRef.current[i].name] = formRef.current[i].value ;
     } 
     return details;
   } 
 
-  const updatePayment = ({ amount , currency , method , bank , isPaid}) => {
+  const updatePayment = ({ amount, currency, method, bank, isPaid }) => {
     if (data.payment.paid) return;
-    if (data.payment.paid !== isPaid) return setData({...data, payment : { ...data.payment, paid : true }}) ;
+    if (data.payment.paid !== isPaid) return setData({...data, payment: { ...data.payment, paid: true }}) ;
   }
 
   const processPayment = () => {
     setPaymentprocessing(true);
+    //add a delay to fake the asynchronous payment request 
     setTimeout(() => {
       setPaymentprocessing(false);
       setStep(5);
     }, 3000 );
   }
 
-  const updatePolicies = ({name , value}) => {
-    if (data.privacyPolicy.accepted !== value) setData({...data, privacyPolicy : { ...data.privacyPolicy, accepted : value }});
+  const updatePolicies = ({ name, value }) => {
+    if (data.privacyPolicy.accepted !== value) setData({ ...data, privacyPolicy: { ...data.privacyPolicy, accepted: value }});
   }
 
   const getQrCode = async (data) => {
-    try{
+    try {
       let request = await axios.post(qrUrl, data) ;
       let qrCode = request.data.qrcode ;
       return setQrCode(qrCode) ;
-    }catch(e){
+    } catch(e) {
       console.log(e) ;
       return setError(e.message);
     }
   }
 
   const resetBooking = async (data) => {
-    try{
+    try {
       let request = await axios.get(resetUrl + `?email=${data.email}`) ;
       return request.data ;
-    }catch(e){
+    } catch(e) {
       console.log(e) ;
       return setError(e.message);
     }
@@ -305,38 +293,4 @@ const Home = (props) => {
   )
 }
 
-
-
-
-
-
-/*
-
-export async function getStaticPaths() {
-  return {
-    // Only `/posts/1` and `/posts/2` are generated at build time
-    params: [{ params: { id: '1' } }, { params: { id: '2' } }],
-    // Enable statically generating additional pages
-    // For example: `/posts/3`
-    fallback: true,
-  }
-}
-
-// This also gets called at build time
-export async function getStaticProps({ params }) {
-  // params contains the post `id`.
-  // If the route is like /posts/1, then params.id is 1
-  const res = await axios.(`https://.../posts/${params.id}`)
-  const post = await res.json()
-
-  // Pass post data to the page via props
-  return {
-    props: { post },
-    // Re-generate the post at most once per second
-    // if a request comes in
-    revalidate: 1,
-  }
-}
-*/
-
-export default Home
+export default Home;

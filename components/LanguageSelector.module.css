@@ -8,13 +8,11 @@
     -moz-box-align: center;
     align-items: center;
     width: 100%;
-
     top: 0;
     right: 0px;
-    
-       padding: 0.5em 3em;
+    padding: 0.5em 3em;
     z-index: 2;
-      outline: none!important;
+    outline: none!important;
     height: calc(var(--header-height) - 10px);
 }
 
@@ -26,16 +24,14 @@
     color: #474741;
     border: 3px solid white;
     border-radius: 15px;
-      padding: 0 0.5em 0 1em;
+    padding: 0 0.5em 0 1em;
     outline: none!important;
 }
 
  select.select {
-    
     outline: none!important;
 }
 
 select.select button {
-    
     outline: none!important;
 }

@@ -1,0 +1,8 @@
+{
+    "API" : {
+        "GET_RESERVATION": "/reservation",
+        "GET_QRCODE": "/qrcode",
+        "RESET_RESERVATION": "/reset"
+    },
+    "DEFAULT_LANG": "en"
+}

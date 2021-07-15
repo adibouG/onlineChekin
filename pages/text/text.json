@@ -84,5 +84,11 @@
             "title" : "To pick up your room key, please use the QR-code in your e-mail at the key pick up device in the lobby.",
             "subtitle" : "Looking forward seeing you $day !"
         }
+    },
+    "ERROR": {
+        "NOTOKEN": {
+            "en": "your start-checking-in token provided in your email could not be retrieved."        
+        }
+        
     }
 }

@@ -1,8 +1,7 @@
-import '../styles/globals.css'
+import '../styles/globals.css';
 import HeadTags from '../components/HeadTags.js';
-
-
-function MyApp({ Component, props }) {
+function MyApp({ Component, props }) 
+{
   return (
     <>
       <HeadTags />
@@ -11,4 +10,4 @@ function MyApp({ Component, props }) {
   )
 }
 
-export default MyApp
+export default MyApp;
