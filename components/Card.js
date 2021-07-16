@@ -10,13 +10,13 @@ const Card = ({ step, supertitle, title, subtitle, buttonTitle, onClick , style=
         titleStyle = style.failed_title;
         subTitleStyle = style.expired_assist_text;
     } else if (step === 5) {
-        superTitleStyle = style.successSupertitle;
-        titleStyle = style.successtitle;
-        subTitleStyle = style.successSubtitle;
+        superTitleStyle = styles.successSupertitle;
+        titleStyle = styles.successtitle;
+        subTitleStyle = styles.successSubtitle;
     } else {
-        superTitleStyle = style.supertitle;
-        titleStyle = style.title;
-        subTitleStyle = style.subtitle;
+        superTitleStyle = styles.supertitle;
+        titleStyle = styles.title;
+        subTitleStyle = styles.subtitle;
     }
     return (
         <div className={ step === 5 ? styles.successCard : styles.card}>
