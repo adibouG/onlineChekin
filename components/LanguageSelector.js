@@ -9,7 +9,6 @@ const LanguageSelector = (props) => {
             <option key={l} value={l}>{l.toUpperCase()}</option>
         );
     }
-
     const handleLangChange = (e) => { 
         if (selectedLanguage === e.target.value) return ;
         if (props.handleLangChange) return props.handleLangChange(e.target.value);

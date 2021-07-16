@@ -2,22 +2,30 @@ import * as React from "react"
 import styles from './Card.module.css'
 import Spinner from './Spinner'
 
-const Card = ({ step , supertitle, title, subtitle, buttonTitle, onClick , style= null }) => 
-{
-    let superTitleStyle = step < -1 && style ? style.expired_text : step === 5 ? styles.successSupertitle : styles.supertitle ; 
-    let titleStyle = step < -1 && style ? style.failed_title : step === 5 ?  styles.successtitle : styles.title ;
-    let subTitleStyle = step < -1 && style ? style.expired_assist_text : step === 5 ?  styles.successSubtitle : styles.subtitle ;
-
+const Card = ({ step, supertitle, title, subtitle, buttonTitle, onClick , style= null }) => {
+    let superTitleStyle, titleStyle, subTitleStyle ; 
+    //set the correct css style for the card 
+    if (step < -1 && style) {
+        superTitleStyle = style.expired_text;
+        titleStyle = style.failed_title;
+        subTitleStyle = style.expired_assist_text;
+    } else if (step === 5) {
+        superTitleStyle = style.successSupertitle;
+        titleStyle = style.successtitle;
+        subTitleStyle = style.successSubtitle;
+    } else {
+        superTitleStyle = style.supertitle;
+        titleStyle = style.title;
+        subTitleStyle = style.subtitle;
+    }
     return (
         <div className={ step === 5 ? styles.successCard : styles.card}>
             <div className={step === 5 || step < -1   ? styles.flex : styles.grid}>
                 <div className={superTitleStyle}>{`${supertitle}`}</div>
                 <div className={`${titleStyle} card-title`}>{title}</div>
                 <div className={subTitleStyle}>{subtitle}</div>
-                {   step === 0  ?
-                        <button className='primary_button' onClick={onClick}>{buttonTitle}</button>
-                    :
-                       step === -1 && <Spinner />
+                { step === 0 ? <button className='primary_button' onClick={onClick}>{buttonTitle}</button>
+                    : step === -1 && <Spinner />
                 }
             </div>
         </div>

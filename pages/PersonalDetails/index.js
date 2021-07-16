@@ -15,32 +15,29 @@ const PersonalDetails = (props) => {
    const [email, setEmail] = useState(guest.email || "");
    const [mobile, setMobile] = useState(guest.mobile || "");
    const [emailConf, setEmailConf] = useState('');
-
    useEffect(() => {
         if (guest.email && isValid && email) setEmailConf(email) ;    
    }, [])
-
    //useImperativeHandle(ref, () => ({getMyState: () => {return firstName}}), []);
     useEffect(() => {
         let valid = false ;
         if(firstName && lastName && address && postalCode && city && email && emailConf && mobile) {
             valid = true ;
             let f = forwardedRef.current; //document.getElementById('form') ; //we want to use/get the css validation result
-            for ( let i = 0; i < 15; i+=2) {
+            for (let i = 0; i < 15; i+=2) {
                 if (!f[i].validity.valid) valid = false ;
             } 
         }
         validate(valid);
-    } , [firstName, lastName, address, postalCode, city, email, emailConf, mobile]);
+    }, [firstName, lastName, address, postalCode, city, email, emailConf, mobile]);
  
   const checkAndSaveDetails = (e) => {
-    let fieldname = e.target.name ;
-    let fieldValue = e.target.value ;
-    let valid = e.target.validity.valid ;
-    e.stopPropagation() ;
+    let fieldname = e.target.name;
+    let fieldValue = e.target.value;
+    let valid = e.target.validity.valid;
+    e.stopPropagation();
     e.preventDefault();
-    if (fieldname in guest && fieldValue.length && valid) update(fieldname, eval(`${fieldname}`))
-    
+    if (fieldname in guest && fieldValue.length && valid) update(fieldname, eval(`${fieldname}`));
   }
 
     return(
@@ -93,8 +90,8 @@ const PersonalDetails = (props) => {
                     />
                 </div>
             </form>
-            </Stack>
-        )
-    }
+        </Stack>
+    )
+}
 
 export default PersonalDetails;

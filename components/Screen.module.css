@@ -15,18 +15,12 @@
 
 
 
-.container{
-
-   
+.container{   
     min-height: -moz-calc(100vh - var(--browser-address-bar, 0px));
     min-height: calc(100vh - var(--browser-address-bar, 0px));
-  
-  /*
-  position: fixed;
-  */
-  position: relative;
-  min-width: 100vw;
-
+  /*  position: fixed;  */
+    position: relative;
+    min-width: 100vw;
     display: flex;
     flex-flow: column;
     flex-direction: column;
@@ -34,11 +28,9 @@
     align-content: center;
     justify-content: flex-start;
     align-items: center;
-
 }
 
 .header{
-
     position: relative;
     top: 0;
     width: 100%;
@@ -47,7 +39,6 @@
     border-bottom: 10px solid var(--brand-secondary-color);
     z-index: 1;
     flex: 0 0 auto;
-
 }
 
 .header_logoWrapper {
@@ -62,11 +53,8 @@
 }
 
 .wrapper{
-
     width: 100%;
-/*
-    height: calc( 100vh - var(--header-height));
-  */
+/* height: calc( 100vh - var(--header-height));  */
     height: calc( 100vh - ( calc( var(--header-height) + var(--header-height ))));
     position: relative;
     /* overflow: auto; not here as the wrapper contains the footer with the button  */
@@ -84,19 +72,16 @@
     flex: 1 1 auto;
 }
 
-
 .content{
-
     position: relative;
     /* position: absolute; */
     overflow: auto;
-    
     -webkit-overflow-scrolling: auto;
     /* top: var(--header-height); */
     /* bottom: var(--footer-height); */
     width: 100%;
    /* 
-   height: calc(100% + var(--footer-height));
+    height: calc(100% + var(--footer-height));
     height: 100% ;
    */
     padding: 10px 1em 1.5em 1em;
@@ -121,10 +106,8 @@
     height: var(--footer-height);
     background:transparent;
 }
-    
 
 .footer{
-    
     position: fixed;
     bottom: 0;
     width: 100%;
@@ -140,28 +123,22 @@
     justify-content: space-between;
 }
 
-
 .disabled {
     background-color: #baD1D1D1 ;
     cursor: not-allowed;
-    
 }
-
 
 .xl {
     padding: 0 2.5em;
 }
 
 .languageSelectorWrapper{
-
     display:flex;
     border:2px solid black;
     height: 50px;
     width: 100px;
     background-color:white;
-
 }
-
 
 @media  only screen and  (min-width: 768px) and (min-device-width: 768px) { /* iPad/Desktop */
 
@@ -169,20 +146,19 @@
          --post-header-space: 45px; 
         --post-content-space: 30px;
         width: 550px;
-    /* min-height: 100vh; */
-    max-height: 800px;
-    position: relative;
-    /* top: -moz-calc(var(--header-height)); */
-    /* top: calc(var(--header-height)); */
-    height: -moz-calc(-moz-calc(100vh - var(--browser-address-bar, 0px)) - var(--header-height) - var(--post-header-space) - var(--post-content-space));
-    height: calc(calc(100vh - var(--browser-address-bar, 0px)) - var(--header-height) - var(--post-header-space) - var(--post-content-space));
-    border-radius: 10px;
-    background: var(--background-color);
-    overflow: hidden;
-    margin-bottom: var(--post-content-space);
-    flex: 1 1 auto;
-    margin: auto;
-    
+        /* min-height: 100vh; */
+        max-height: 800px;
+        position: relative;
+        /* top: -moz-calc(var(--header-height)); */
+        /* top: calc(var(--header-height)); */
+        height: -moz-calc(-moz-calc(100vh - var(--browser-address-bar, 0px)) - var(--header-height) - var(--post-header-space) - var(--post-content-space));
+        height: calc(calc(100vh - var(--browser-address-bar, 0px)) - var(--header-height) - var(--post-header-space) - var(--post-content-space));
+        border-radius: 10px;
+        background: var(--background-color);
+        overflow: hidden;
+        margin-bottom: var(--post-content-space);
+        flex: 1 1 auto;
+        margin: auto;
     }
     
     .header {
@@ -204,25 +180,22 @@
         align-items: flex-end;
         justify-content: center;
          */
-        
-    display: flex;
-    -moz-box-align: end;
-    align-items: center;
-    -moz-box-pack: center;
-    
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-content: center;
-    background-size: cover;
-    
-    padding: 0 0 1em 0;
+        display: flex;
+        -moz-box-align: end;
+        align-items: center;
+        -moz-box-pack: center;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        align-content: center;
+        background-size: cover;
+        padding: 0 0 1em 0;
     }
 
     .content {
-      /*  top: 50px;
-         height: auto; */
-     
-    padding: 55px 1em 2em 1em;
-
+      /*  
+        top: 50px;
+        height: auto; 
+     */
+        padding: 55px 1em 2em 1em;
     }
 }

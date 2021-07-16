@@ -1,13 +1,10 @@
 import React  from 'react';
-
 class SvgImage extends React.Component {
-    
     constructor(props) {
         super(props);
         this.state = {};
         this.svgRef = React.createRef(null);
     }
-
     componentDidMount() {
         debugger
         if (this.props.url && this.svgRef.current) {
@@ -30,9 +27,7 @@ class SvgImage extends React.Component {
             <div    ref={this.svgRef} 
                     className={this.props.svgStyle} 
                     dangerouslySetInnerHTML={this.createInnerHtml()}
-            >
-                
-            </div>
+            ></div>
         );
     }
 }

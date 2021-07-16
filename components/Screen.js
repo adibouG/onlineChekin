@@ -20,14 +20,12 @@ const Screen =  React.forwardRef((props, ref) => {
                     </div>
                 </div>
                 <div className={styles.wrapper}>
-                    <div className={styles.content}>
-                        {props.children}
-                    </div>
+                    <div className={styles.content}>{props.children}</div>
                     <div className={styles.footerWrapper}>
                         <div className={styles.footer}>
                             <button className='secondary_button' onClick={onBack}>Back</button>
                             <button ref={ref} className={`primary_button ${styles.xl} ${disabled ? styles.disabled : false}`} disabled={disabled} onClick={onContinue}>
-                                {nextLabel ? `${nextLabel}` : nextButtonLabel}
+                            { nextLabel ? `${nextLabel}` : nextButtonLabel }
                             </button>
                         </div>
                     </div>

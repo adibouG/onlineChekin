@@ -112,23 +112,23 @@ const Home = (props) => {
     if (error && !data) return setStep(-2) ; 
   }, [error, data]);
  
-  useEffect( async () => {
+  useEffect(async () => {
     //get the reservation data, using the token retrieved from the url 
     if (!token) return ; 
     let reservationId =`?token=${token}` ;
     let getUrl = url + reservationId ;
     let messageDisplayed ;
     try{
-      const request = await axios.get(getUrl) ;
+      const request = await axios.get(getUrl);
       originalValue.current = request.data.checkin ; //save the original data for later compare
       if (request.data.status.toLowerCase() === STATUS.COMPLETE.VALUE) {
             messageDisplayed = STATUS.COMPLETE.MESSAGE(request.data.stay.arrivalDate); 
             setPreChecked(false);
-            return setError(messageDisplayed)
+            return setError(messageDisplayed);
       } else if (request.data.status.toLowerCase() ===  STATUS.PRECHECKED.VALUE) {
             messageDisplayed = STATUS.PRECHECKED.MESSAGE ;
             setPreChecked(true);
-            setError(messageDisplayed)
+            setError(messageDisplayed);
             return setData(request.data.checkin) ;
       } else if (request.data.status.toLowerCase() ===  STATUS.PENDING.VALUE) {
         setPreChecked(false);
@@ -194,7 +194,7 @@ const Home = (props) => {
 
   const updatePayment = ({ amount, currency, method, bank, isPaid }) => {
     if (data.payment.paid) return;
-    if (data.payment.paid !== isPaid) return setData({...data, payment: { ...data.payment, paid: true }}) ;
+    if (data.payment.paid !== isPaid) return setData({ ...data, payment: { ...data.payment, paid: true }}) ;
   }
 
   const processPayment = () => {

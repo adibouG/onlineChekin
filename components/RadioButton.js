@@ -2,9 +2,7 @@ import React from 'react';
 import styles from './RadioButton.module.css';
 import Image from 'next/image';
 //import SvgImage from './SvgImage.js';
-
 const RadioButton = ({ name, id, value, w, h, isChecked, src, img, handleChange = false }) => {
-
     const onChange = (e) => {
         let name = e.target.name ;
         let value = e.target.value ;

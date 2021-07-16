@@ -30,20 +30,19 @@ const MethodGroup = (props) => {
 }
                                         
 const Payment = ({ isProcessing, payment = {}, update, text }) => {
-    const [amount , setAmount] = useState(payment.amount || 0 );
-    const [currency , setCurrency] = useState(payment.currency || "€" );
-    const [paid , setPaid] = useState(payment.paid || false );
-    const [paymentMethod , setPaymentMethod] = useState( null );
+    const [amount, setAmount] = useState(payment.amount || 0 );
+    const [currency, setCurrency] = useState(payment.currency || "€" );
+    const [paid, setPaid] = useState(payment.paid || false );
+    const [paymentMethod, setPaymentMethod] = useState( null );
     const [bank, setBank] = useState( null );
     const availableMethods = ['Ideal', 'Visa', 'PayPal', 'ApplePay'] ;
     const availableBanks = ['RaboBank', 'Ing'] ;
     let selected ;
-    const selectPaymentMethod = ({name, value, checked}) => (name === "payMethod" && checked && setPaymentMethod(value)) ;
-
+    const selectPaymentMethod = ({ name, value, checked }) => (name === "payMethod" && checked && setPaymentMethod(value)) ;
     useEffect(() => {
         if (paid) setAmount(0);
         if (amount === 0 ) setPaid(true);
-        if  (paymentMethod &&  bank) return update({amount, currency, paymentMethod, bank, paid}) ;
+        if  (paymentMethod &&  bank) return update({ amount, currency, paymentMethod, bank, paid }) ;
     }, [amount, paid, paymentMethod, bank])
  
     return (

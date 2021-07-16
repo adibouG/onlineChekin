@@ -3,21 +3,23 @@ import styles from './index.module.css';
 import ToggleSwitch from '../../components/ToggleSwitch.js' ;
 import { Stack, Header } from '../../components/Stack.js';
 
+//component to return a policy rule as formatted block with a switch to accept
 const PolicyBlock = ({ text, validateLabel, policy, handleAccept}) => {
-    if (!policy) return;
-    let splitedPolicyTerm = policy.content.split('\n\n') ;
-    let policyName = (polName) => 
+    //return 
+    const policyName = (name) => 
         <div className={styles.policyBlock__policyName} >
             <span className={styles.policyBlock__policyName__text} >
-                {polName}
+                {name}
             </span>
-        </div>;
-    let policyRules = (rules) => 
+        </div> ;
+    const policyRules = (rules) => 
         <div className={styles.policyBlock__policyRules} >
             <span className={styles.policyBlock__policyRules__text} >
                 {rules}
             </span>
         </div> ;
+    if (!policy) return;
+    let splitedPolicyTerm = policy.content.split('\n\n') ;
     let title = policyName(splitedPolicyTerm[0]);
     let body = policyRules(splitedPolicyTerm[1]);
 
@@ -37,7 +39,7 @@ const PolicyBlock = ({ text, validateLabel, policy, handleAccept}) => {
         </div>
     )
 } 
-
+//Hotel policies screen with 1 policy 
 const HotelPolicy = ({text, update, policy}) => {
     return (
         <Stack>
