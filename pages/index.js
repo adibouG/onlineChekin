@@ -23,7 +23,7 @@ let resetUrl =`${backendUrl}${SETTINGS.API.RESET_RESERVATION}`;
 const PersonalDetailsWithForwrdRef = React.forwardRef((props, ref) => (
   <PersonalDetails {...props} forwardedRef={ref} />
 ))
-const {DEFAULT_LANG} = SETTINGS;
+const { DEFAULT_LANG } = SETTINGS;
 //TODO:move text in the text file with translations
 const NOTOKENERROR = TEXT.ERROR.NOTOKEN;
 const STATUS = { 
@@ -51,6 +51,7 @@ const Home = (props) => {
   const [ token, setToken ] = useState(null);
   const [ step, setStep ] = useState(-1);
   const [ data, setData ] = useState(null);
+  const [ hotel, setHotel ] = useState(null);
   const [ error, setError ] = useState(null);
   const [ preChecked, setPreChecked ] = useState(false);
   const [ guestValidated, setGuestValidated ] = useState(false);
@@ -90,20 +91,26 @@ const Home = (props) => {
   //} , [ lang ] );
 
   useEffect(() => {
-    let location = router.asPath ;
-    let queryParams = new URLSearchParams(String(location).replace('/?', '?'));
-    let tokenurl = queryParams.get('token');
-    let guestName = queryParams.get('name');
-    if (guestName) setName(guestName.replace(/\./g , ' '));
-    if (tokenurl) return setToken(tokenurl);
-    else return setError(NOTOKENERROR);
+    try{
+      let location = router.asPath ;
+      let queryParams = new URLSearchParams(String(location).replace('/?', '?'));
+      let hotelID = queryParams.has('hotel') ? queryParams.get('hotel') : null;
+      let tokenurl = queryParams.has('token') ? queryParams.get('token') : null;
+      let guestName = queryParams.has('name') ? queryParams.get('name') : null;
+      if (guestName) setName(guestName.replace(/\./g , ' '));
+      if (hotelID) setHotel(hotelID);
+      if (tokenurl) return setToken(tokenurl);
+      else return setError(NOTOKENERROR);
     //if (window) (/mobile/i).test(window.navigator.userAgent) && !location.hash && setTimeout(() => window.scrollTo(0, 1) , 1000) ;​ 
+    } catch (e) {
+        setError(e.message);
+    }
   }, []);
 
   useEffect(() => { 
     //Remove token from url once it is retrieved (to prevent any token stealing/injections from requests referer url)
-    if (name && token) router.replace({ pathname: `/`, query: {} }, '/', { shallow: true }) ;
-  }, [name, token]);
+    if (name && token && hotel) return router.replace({ pathname: `/`, query: {} }, '/', { shallow: true }) ;
+  }, [name, token, hotel]);
 
   useEffect(() => {
     //set the step according to the data retrieval results
@@ -122,18 +129,19 @@ const Home = (props) => {
       const request = await axios.get(getUrl);
       originalValue.current = request.data.checkin ; //save the original data for later compare
       if (request.data.status.toLowerCase() === STATUS.COMPLETE.VALUE) {
-            messageDisplayed = STATUS.COMPLETE.MESSAGE(request.data.stay.arrivalDate); 
-            setPreChecked(false);
-            return setError(messageDisplayed);
+        messageDisplayed = STATUS.COMPLETE.MESSAGE(request.data.stay.arrivalDate); 
+        setPreChecked(false);
+        if (hotel !== request.data.hotel_id) setHotel(request.data.hotel_id);
+        return setError(messageDisplayed);
       } else if (request.data.status.toLowerCase() ===  STATUS.PRECHECKED.VALUE) {
-            messageDisplayed = STATUS.PRECHECKED.MESSAGE ;
-            setPreChecked(true);
-            setError(messageDisplayed);
-            return setData(request.data.checkin) ;
+        messageDisplayed = STATUS.PRECHECKED.MESSAGE ;
+        setPreChecked(true);
+        setError(messageDisplayed);
       } else if (request.data.status.toLowerCase() ===  STATUS.PENDING.VALUE) {
         setPreChecked(false);
-        return setData(request.data.checkin) ;
       }
+      if (hotel !== request.data.hotel_id) setHotel(request.data.hotel_id);
+      return setData(request.data.checkin) ;
     } catch(e) {
       console.log(e);
       return setError(e.response.data.error || e.message);
@@ -150,8 +158,8 @@ const Home = (props) => {
     else if (step === 3) return setDisabled(!guestValidated);
     else if (step === 4) return setDisabled(!data.payment.paid);
     else if (step === 5){
-      if (!data.reservation.status && !preChecked)  return getQrCode(data); //token ?
-      else return resetBooking(data) ;
+      if (preChecked) resetBooking(data) ;
+      return getQrCode(data);
     }
   }, [step, data]);
 
@@ -172,9 +180,15 @@ const Home = (props) => {
   const handleLangChange = (v) => setLang(getLang(v));
 
   const setDB = async () => {
-    let setRequest =  await axios.post(url, data) ;
-    originalValue.current = setRequest.data.checkin ;
-    return setData(setRequest.data.checkin) ;
+    let payload = { hotel_id: hotel, checkin: data };
+    try {
+      let request =  await axios.post(url, payload) ;
+      originalValue.current = request.data.checkin ;
+      if (request.data.status.toLowerCase() ===  STATUS.PRECHECKED.VALUE) setPreChecked(true);
+      return setData(request.data.checkin) ;
+    } catch (e) {
+      setError(e);
+    }
   }
   
   const validateGuest = (value) => setGuestValidated(value) ;
