@@ -125,7 +125,7 @@ const Home = (props) => {
     let reservationId =`?token=${token}` ;
     let getUrl = url + reservationId ;
     let messageDisplayed ;
-    try{
+    try {
       const request = await axios.get(getUrl);
       originalValue.current = request.data.checkin ; //save the original data for later compare
       if (request.data.status.toLowerCase() === STATUS.COMPLETE.VALUE) {
@@ -137,14 +137,11 @@ const Home = (props) => {
         messageDisplayed = STATUS.PRECHECKED.MESSAGE ;
         setPreChecked(true);
         setError(messageDisplayed);
-      } else if (request.data.status.toLowerCase() ===  STATUS.PENDING.VALUE) {
-        setPreChecked(false);
-      }
+      } else if (request.data.status.toLowerCase() ===  STATUS.PENDING.VALUE) setPreChecked(false);
       if (hotel !== request.data.hotel_id) setHotel(request.data.hotel_id);
       return setData(request.data.checkin) ;
     } catch(e) {
-      console.log(e);
-      return setError(e.response.data.error || e.message);
+      return setError(e.response.data || e.message);
     }
   }, [token]);
 
