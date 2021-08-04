@@ -16,9 +16,9 @@ const PersonalDetails = dynamic(() => import('./PersonalDetails/index.js'));
 const Payment = dynamic(() => import('./Payment/index.js'));
 
 let backendUrl = `${process.env.BACKEND_HOST}:${process.env.BACKEND_PORT}`;
-let url =`${backendUrl}${SETTINGS.API.GET_RESERVATION}`;
-let qrUrl =`${backendUrl}${SETTINGS.API.GET_QRCODE}`;
-let resetUrl =`${backendUrl}${SETTINGS.API.RESET_RESERVATION}`; 
+let url =`${backendUrl}${SETTINGS.API_ENDPOINT.GET_RESERVATION}`;
+let qrUrl =`${backendUrl}${SETTINGS.API_ENDPOINT.GET_QRCODE}`;
+let resetUrl =`${backendUrl}${SETTINGS.API_ENDPOINT.RESET_RESERVATION}`; 
 
 const PersonalDetailsWithForwrdRef = React.forwardRef((props, ref) => (
   <PersonalDetails {...props} forwardedRef={ref} />
@@ -141,7 +141,7 @@ const Home = (props) => {
       if (hotel !== request.data.hotel_id) setHotel(request.data.hotel_id);
       return setData(request.data.checkin) ;
     } catch(e) {
-      return setError(e.response.data || e.message);
+      return setError((e.response && e.response.data) || e.message);
     }
   }, [token]);
 
@@ -151,9 +151,12 @@ const Home = (props) => {
       else return;
     }
     else if (step === 1 && disabled) return setDisabled(false);  
-    else if (step === 2) return setDisabled(!data.privacyPolicy.accepted);
+    else if (step === 2) {
+      if (!data.privacyPolicy) return setStep(3);
+      else return setDisabled(data.privacyPolicy && !data.privacyPolicy.accepted);
+    }
     else if (step === 3) return setDisabled(!guestValidated);
-    else if (step === 4) return setDisabled(!data.payment.paid);
+    else if (step === 4) return setDisabled(data.payment && !data.payment.paid);
     else if (step === 5){
       if (preChecked) resetBooking(data) ;
       return getQrCode(data);
