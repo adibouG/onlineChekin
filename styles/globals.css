@@ -1,5 +1,5 @@
 :root {
-  --default-font: Roboto, Oxygen, Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  --default-font: 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', 'sans-serif';
   --text-color: #343A40;
   --background-color: #fff;
   --button-background-color: #0069D9;
@@ -10,7 +10,9 @@
   --header-height: 55px;
   --footer-height: 110px;
   --title-font-size:1.2em;
+  /* 
   --background: url("https://enzosystems.com/wp-content/uploads/2018/10/Enzosystems_Header_FrontPage.jpg") no-repeat center center fixed;
+*/
 }
 
 html,

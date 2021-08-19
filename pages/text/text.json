@@ -3,12 +3,14 @@
         "fr" : {  
             "expired" :  "Malheureusement le lien est expiré" ,
             "notFound" :  "Nous ne trouvons pas votre reservation" ,
-            "assistance" :  "Pour une assistance, veuillez nous contacter au : +31 384629847 Ou e-mail: support@hotelenzo.com" 
+            "assistance" :  "Pour une assistance, veuillez nous contacter au : +31 384629847 Ou e-mail: support@hotelenzo.com" ,
+            "NOTOKEN": "le token de votre lien n'a pu être récuperé."         
         },
-        "en" : {  
-            "expired" :  "Unfortunately the link has expired" ,
-            "notFound" :  "We can't find your reservation" ,
-            "assistance" :  "In case of assistance, please call us at: +31 384629847 Or e-mail: support@hotelenzo.com" 
+    "en" : {  
+        "expired" :  "Unfortunately the link has expired" ,
+        "notFound" :  "We can't find your reservation" ,
+        "assistance" :  "In case of assistance, please call us at: +31 384629847 Or e-mail: support@hotelenzo.com", 
+        "NOTOKEN": "your start-checking-in token provided in your email could not be retrieved."         
        }
     },
     "Welcome" : {
@@ -86,9 +88,11 @@
         }
     },
     "ERROR": {
-        "NOTOKEN": {
-            "en": "your start-checking-in token provided in your email could not be retrieved."        
+        "en": {
+            "NOTOKEN": "your start-checking-in token provided in your email could not be retrieved."         
+        },
+        "fr": {
+            "NOTOKEN": "le token de votre lien n'a pu être récuperé."         
         }
-        
     }
 }

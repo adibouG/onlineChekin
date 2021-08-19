@@ -1,4 +1,4 @@
-import React , {useRef , useState, useEffect} from 'react'
+import React , {useRef , useState} from 'react';
 import styles from './Select.module.css' ;
 
 const Select = ({ title, id, name, required, values, selected, handleChange }) => { 
@@ -25,13 +25,12 @@ const Select = ({ title, id, name, required, values, selected, handleChange }) =
         )
     }
 
-    values.forEach((v , i) => {
+    values.forEach((v , i) => 
         list.push( 
-                <li key={i} value={v} className={styles.Select_items}>
-                    {v}
-                </li>           
-            )
-        }
+            <li key={i} value={v} className={styles.Select_items}>
+                {v}
+            </li>           
+        )
     )
    
     return(

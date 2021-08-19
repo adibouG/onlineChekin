@@ -128,9 +128,7 @@ font-size: .85em;
 .field input:-webkit-autofill:hover, 
 .field input:-webkit-autofill:focus,
 .field input:-webkit-autofill::first-line {
-    -webkit-box-shadow: 0 0 0px 1000px #fff inset;
-    font-family: var(--default-font);
-   
+    -webkit-box-shadow: 0 0 0px 1000px #fff inset;   
     color: #868D96;
 }
 

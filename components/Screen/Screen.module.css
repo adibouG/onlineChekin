@@ -43,13 +43,18 @@
 
 .header_logoWrapper {
     position: absolute;
-    background: transparent url(/logo.svg) center center no-repeat padding-box;
+    background: transparent;
     background-size: contain;
     width: 100%;
     height: -moz-calc(var(--header-height) - 12px);
     height: calc(var(--header-height) - 20px);
     opacity: 1;
     margin: 6px 0 0 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
 }
 
 .wrapper{
@@ -77,13 +82,7 @@
     /* position: absolute; */
     overflow: auto;
     -webkit-overflow-scrolling: auto;
-    /* top: var(--header-height); */
-    /* bottom: var(--footer-height); */
     width: 100%;
-   /* 
-    height: calc(100% + var(--footer-height));
-    height: 100% ;
-   */
     padding: 10px 1em 1.5em 1em;
     display: -moz-box;
     display: flex;
@@ -146,11 +145,8 @@
          --post-header-space: 45px; 
         --post-content-space: 30px;
         width: 550px;
-        /* min-height: 100vh; */
         max-height: 800px;
         position: relative;
-        /* top: -moz-calc(var(--header-height)); */
-        /* top: calc(var(--header-height)); */
         height: -moz-calc(-moz-calc(100vh - var(--browser-address-bar, 0px)) - var(--header-height) - var(--post-header-space) - var(--post-content-space));
         height: calc(calc(100vh - var(--browser-address-bar, 0px)) - var(--header-height) - var(--post-header-space) - var(--post-content-space));
         border-radius: 10px;
@@ -176,10 +172,6 @@
     }
     
     .container {
-        /* display: flex;
-        align-items: flex-end;
-        justify-content: center;
-         */
         display: flex;
         -moz-box-align: end;
         align-items: center;

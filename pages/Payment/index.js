@@ -1,9 +1,9 @@
 import  React, { useState, useEffect }  from 'react';
 import styles from './index.module.css';
-import { Stack, Header } from '../../components/Stack.js';
-import Input from '../../components/Input.js';
-import RadioButton from '../../components/RadioButton.js';
-import Select from '../../components/Select.js';
+import { Stack, Header } from '../../components/Screen/Stack.js';
+import Input from '../../components/InputField/Input.js';
+import RadioButton from '../../components/RadioButton/RadioButton.js';
+import Select from '../../components/SelectField/Select.js';
 import Spinner from '../../components/Spinner.js';
 //import applepay from './images/applepayTest.svg' ;
 //import ideal from './images/ideal.svg' ;
@@ -15,7 +15,8 @@ const MethodGroup = (props) => {
         let img = src;
         group.push(
             <RadioButton    key={i} w={69} h={60} 
-                            handleChange={setMethod} name={"payMethod"} 
+                            handleChange={setMethod} 
+                            name={"payMethod"} 
                             id={i} value={i} 
                             src={src} img={img}
                             isChecked={selected === i} 
@@ -85,7 +86,6 @@ const Payment = ({ isProcessing, payment = {}, update, text }) => {
                                     handleChange={setBank} 
                             />
                         */}
-
                         { isProcessing && <Spinner /> }
                        </div>
                     </div>

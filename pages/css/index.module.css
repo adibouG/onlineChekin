@@ -18,8 +18,14 @@
 .logo {
     width: 100%;
     height: 20vh;
-    background: transparent url('/logo.svg') center center no-repeat padding-box;
+    background: transparent;
     background-size: contain;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
 }
 
 

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styles from './index.module.css';
-import { Stack, Header } from '../../components/Stack.js';
+import { Stack, Header } from '../../components/Screen/Stack.js';
 
 const Item = (props) => <div className={styles.item}>{props.children}</div>;
 const Title = (props) => <div className={styles.title} {...props}/>;

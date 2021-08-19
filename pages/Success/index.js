@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styles from '../css/index.module.css';
-import Card from '../../components/Card';
+import Card from '../../components/Card/Card.js';
 
 const Success = (props) => {
     let { date, lang, text } = props;

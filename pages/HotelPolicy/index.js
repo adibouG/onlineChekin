@@ -1,11 +1,11 @@
 import * as React from 'react';
 import styles from './index.module.css';
-import ToggleSwitch from '../../components/ToggleSwitch.js' ;
-import { Stack, Header } from '../../components/Stack.js';
+import ToggleSwitch from '../../components/TogglerButton/ToggleSwitch.js' ;
+import { Stack, Header } from '../../components/Screen/Stack.js';
 
 //component to return a policy rule as formatted block with a switch to accept
-const PolicyBlock = ({ text, validateLabel, policy, handleAccept}) => {
-    //return 
+const PolicyBlock = ({ text, policyText, validateLabel, policy, handleAccept}) => {
+    debugger 
     const policyName = (name) => 
         <div className={styles.policyBlock__policyName} >
             <span className={styles.policyBlock__policyName__text} >
@@ -18,10 +18,24 @@ const PolicyBlock = ({ text, validateLabel, policy, handleAccept}) => {
                 {rules}
             </span>
         </div> ;
-    if (!policy) return;
-    let splitedPolicyTerm = policy.content.split('\n\n') ;
-    let title = policyName(splitedPolicyTerm[0]);
-    let body = policyRules(splitedPolicyTerm[1]);
+
+    let splitedPolicyTerm, title, body;
+    
+    if (!policy) { 
+        splitedPolicyTerm = "" ;
+        title = "";
+        body = "";
+    } else {
+        let splitter ;
+        if (policy.content.contains('\n\n')) splitter = '\n\n';
+        else if (policy.content.contains('\n')) splitter = '\n';
+        else if (policy.content.contains('<br>')) splitter = '<br>';
+        else if (policy.content.contains('<br/>')) splitter = '<br/>';
+        else if (policy.content.contains('<br />')) splitter = '<br />';
+        splitedPolicyTerm = policy.content.split(splitter) ;
+        title = policyName(splitedPolicyTerm[0]);
+        body = policyRules(splitedPolicyTerm[1]);
+    } 
 
     return (
         <div className={styles.policyBlock}>
@@ -40,7 +54,7 @@ const PolicyBlock = ({ text, validateLabel, policy, handleAccept}) => {
     )
 } 
 //Hotel policies screen with 1 policy 
-const HotelPolicy = ({text, update, policy}) => {
+const HotelPolicy = ({text, update, policy, policyText}) => {
     return (
         <Stack>
             <Header>

@@ -1,12 +1,12 @@
 import * as React from 'react';
 import styles from './index.module.css';
 import styles2 from './../css/index.module.css';
-import Card from '../../components/Card';
+import Card from '../../components/Card/Card.js';
 const Failed = ({ reason, text, step, onContinue = null, logo = null }) => {
     const MESSAGE = reason === 'expiredLink' ? text.expired : text.notFound ;
     const DETAILS = text.assistance;
     let TITLE = null ;
-    if( reason !== 'expiredLink' &&  reason !== 'notFound' ) TITLE = reason ;
+    if( reason !== 'expiredLink' &&  reason !== 'notFound' ) TITLE = text[reason] ;
     return (
         <div className={styles2.screen}>
             <div className={styles2.content}>
