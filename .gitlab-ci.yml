@@ -41,4 +41,4 @@ aws_deploy_job:
       - '[ -f /.dockerenv ] && echo -e "HOST *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
 
     script:
-      - bash .gitlab-deploy.sh $CI_DEPLOY_USER $CI_DEPLOY_PASSWORD  
+      - bash .gitlab-deploy.sh $CI_DEPLOY_USER $CI_DEPLOY_PASSWORD $EC2_USER $EC2_PASSWORD $BASTION_USER $BASTION_PWD  
